@@ -46,6 +46,7 @@ git clone https://github.com/xiaojunnanya/whaledev.git
 ## 参与贡献
 
 这个项目的存在感谢项目中所有的贡献者。
+<br/>
 <a href="https://github.com/xiaojunnanya/whaledev/graphs/contributors" target="_blank">
 <img src="https://contrib.rocks/image?repo=xiaojunnanya/whaledev">
 </a>
