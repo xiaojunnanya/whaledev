@@ -1,1 +1,63 @@
-123
+<div align="center">
+
+# 鲸灵开发 低代码平台
+
+使建筑更简单，开发更高效
+
+</div>
+
+<div align="center">
+
+![GitHub Repo stars](https://img.shields.io/github/stars/xiaojunnanya/whaledev)
+
+![GitHub package.json version](https://img.shields.io/github/package-json/v/xiaojunnanya/whaledev)
+![GitHub License](https://img.shields.io/github/license/xiaojunnanya/whaledev)
+![language](https://img.shields.io/github/languages/top/xiaojunnanya/whaledev)
+![last](https://img.shields.io/github/last-commit/xiaojunnanya/whaledev.svg)
+
+</div>
+
+## 介绍
+
+等待中...
+
+## 在线使用
+
+等待中...
+
+## 本地开发
+
+```bash
+# 克隆代码
+git clone https://github.com/xiaojunnanya/whaledev.git
+```
+
+项目说明
+
+| 目录             | 说明     |
+| ---------------- | -------- |
+| packges/frontEnd | 前端项目 |
+| packges/backEnd  | 后端服务 |
+
+### 快速开始
+
+运行需要 node 环境，建议`node:18`以上版本。使用`npm`作为依赖管理工具，仓库开源者使用 node 版本为`20.18.0`。
+
+## 参与贡献
+
+这个项目的存在感谢项目中所有的贡献者。
+<a href="https://github.com/xiaojunnanya/whaledev/graphs/contributors" target="_blank">
+<img src="https://contrib.rocks/image?repo=xiaojunnanya/whaledev">
+</a>
+
+## Star History
+
+如果你发现此项目对你有所帮助，请考虑在 [GitHub](https://github.com/xiaojunnanya/whaledev) 上给它一个 ⭐️ !
+
+<img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xiaojunnanya/whaledev&type=Date" />
+</picture>
+</a>
+
+## licence
+
+此项目根据 MIT 许可证授权-有关更多信息，请参阅[许可证](./LICENSE)文件。
