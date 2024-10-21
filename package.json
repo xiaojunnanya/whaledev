@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "鲸灵开发",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "push": "github.sh",
+    "prepare": "husky"
   },
   "author": "鲸落",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^9.1.6"
+  }
 }

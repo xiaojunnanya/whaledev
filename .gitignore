@@ -27,6 +27,7 @@ build
 *.launch
 .settings/
 *.sublime-workspace
+.husky/_
 
 
 # Tests
