@@ -1,0 +1,10 @@
+{
+  "name": "whaledev",
+  "version": "1.0.0",
+  "description": "鲸灵开发",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "鲸落",
+  "license": "ISC"
+}
