@@ -4,13 +4,20 @@
   "description": "鲸灵开发",
   "scripts": {
     "push": "github.sh",
-    "prepare": "husky"
+    "dev": "npm --prefix ./packages/frontEnd run dev",
+    "start": "npm --prefix ./packages/backEnd run start",
+    "open": "concurrently \"npm run dev\" \"npm run start\""
   },
   "author": "鲸落",
   "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "husky": "^9.1.6"
+    "concurrently": "^9.0.1",
+    "husky": "^9.1.6",
+    "lerna": "^8.1.8"
   }
 }

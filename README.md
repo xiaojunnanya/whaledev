@@ -2,7 +2,7 @@
 
 # 鲸灵开发 低代码平台
 
-使建筑更简单，开发更高效
+使构建更简单，开发更高效
 
 </div>
 
@@ -30,6 +30,14 @@
 ```bash
 # 克隆代码
 git clone https://github.com/xiaojunnanya/whaledev.git
+
+# 安装依赖
+npm install
+
+# 运行项目
+npm run dev # 前端服务
+npm run start # 后端服务
+npm run open # 同时启动前后端
 ```
 
 项目说明
