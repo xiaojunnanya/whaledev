@@ -6,7 +6,7 @@
     "push": "github.sh",
     "dev": "npm --prefix ./packages/frontEnd run dev",
     "start": "npm --prefix ./packages/backEnd run start",
-    "open": "concurrently \"npm run dev\" \"npm run start\""
+    "open": "concurrently -n \"frontend,backend\" -c \"magenta,cyan\" \"npm run dev\" \"npm run start\""
   },
   "author": "鲸落",
   "license": "ISC",
