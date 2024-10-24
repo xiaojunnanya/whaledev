@@ -42,10 +42,10 @@ npm run open # 同时启动前后端
 
 项目说明
 
-| 目录             | 说明     |
-| ---------------- | -------- |
-| packges/frontEnd | 前端项目 |
-| packges/backEnd  | 后端服务 |
+| 目录              | 说明     |
+| ----------------- | -------- |
+| packages/frontEnd | 前端项目 |
+| packages/backEnd  | 后端服务 |
 
 ### 快速开始
 
