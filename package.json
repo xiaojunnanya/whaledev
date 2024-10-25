@@ -7,7 +7,7 @@
     "dev": "npm --prefix ./packages/frontEnd run dev",
     "start": "npm --prefix ./packages/backEnd run start",
     "doc": "npm --prefix ./packages/document run docs:dev",
-    "open": "concurrently -n \"frontend,backend\" -c \"magenta,cyan\" \"npm run dev\" \"npm run start\""
+    "open": "concurrently -n \"frontend,backend,docs\" -c \"magenta,cyan,black\" \"npm run dev\" \"npm run start\" \"npm run doc\""
   },
   "author": "鲸落",
   "license": "ISC",

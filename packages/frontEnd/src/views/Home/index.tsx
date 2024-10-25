@@ -6,7 +6,13 @@ import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
 export default memo(() => {
   return (
     <HeaderStyle>
-      <Button>开发文档</Button>
+      <Button
+        onClick={() => {
+          window.open('http://localhost:4173/')
+        }}
+      >
+        开发文档
+      </Button>
       <div>首页中间还在思考中....</div>
       <Button type="primary">快速开始</Button>
 

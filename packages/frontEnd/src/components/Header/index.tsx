@@ -19,7 +19,13 @@ export default memo(() => {
         <h1>鲸灵开发</h1>
       </div>
       <div className="head-right">
-        <div>开发文档</div>
+        <div
+          onClick={() => {
+            window.open('http://localhost:4173/')
+          }}
+        >
+          开发文档
+        </div>
         <div>|</div>
         <div
           onClick={() => {
