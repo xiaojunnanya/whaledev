@@ -20,11 +20,5 @@
     "concurrently": "^9.0.1",
     "husky": "^9.1.6",
     "lerna": "^8.1.8"
-  },
-  "dependencies": {
-    "@ant-design/icons": "^5.5.1",
-    "react-router-dom": "^6.27.0",
-    "styled-components": "^6.1.13",
-    "zustand": "^5.0.0"
   }
 }
