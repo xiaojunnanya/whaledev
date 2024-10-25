@@ -19,7 +19,7 @@ export default memo(() => {
         <h1>鲸灵开发</h1>
       </div>
       <div className="head-right">
-        <div>使用文档</div>
+        <div>开发文档</div>
         <div>|</div>
         <div
           onClick={() => {
