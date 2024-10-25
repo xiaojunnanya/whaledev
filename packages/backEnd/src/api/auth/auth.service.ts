@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { EmailCodeDto } from './dto/auth.dto';
 import { createTransport, Transporter } from 'nodemailer';
 import * as path from 'path';
@@ -8,7 +8,12 @@ import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config';
 
 @Injectable()
 export class AuthService {
-  transporter: Transporter;
+  private readonly transporter: Transporter;
+  private readonly emailTemplatePath = path.join(
+    __dirname,
+    '../../../public/email.html',
+  );
+  private readonly validity = 5; // 验证码有效期（分钟）
 
   constructor() {
     this.transporter = createTransport({
@@ -27,15 +32,11 @@ export class AuthService {
     const code: string = Math.random().toString().slice(2, 8);
 
     try {
-      const htmlPath: string = path.join(
-        __dirname,
-        '../../../public/email.html',
-      );
-      const emailTemplate = fs.readFileSync(htmlPath, 'utf-8');
-      const validity: number = 5; // 有效期5min
+      const emailTemplate = fs.readFileSync(this.emailTemplatePath, 'utf-8');
+
       const emailConfig = {
         code,
-        validity,
+        validity: this.validity,
         name: AUTHOR.NAME,
       };
 
@@ -51,7 +52,7 @@ export class AuthService {
         html: emailHtml,
       });
     } catch (error) {
-      console.log(error);
+      Logger.error('发送邮件失败', error);
     }
 
     return `This action sends email code to ${emailCode.email}`;
