@@ -5,7 +5,7 @@
   "scripts": {
     "push": "github.sh",
     "dev": "npm --prefix ./packages/frontEnd run dev",
-    "start": "npm --prefix ./packages/backEnd run start",
+    "start": "npm --prefix ./packages/backEnd run start:dev",
     "doc": "npm --prefix ./packages/document run docs:dev",
     "open": "concurrently -n \"frontend,backend,docs\" -c \"magenta,cyan,black\" \"npm run dev\" \"npm run start\" \"npm run doc\""
   },
