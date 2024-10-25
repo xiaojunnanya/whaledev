@@ -51,9 +51,9 @@ const App = memo(() => {
     <>
       {msgContextHolder}
 
-      {/* <header>
+      <header style={{ height: '48px' }}>
         <Header></Header>
-      </header> */}
+      </header>
 
       <ConfigProvider locale={zhCN}>{useRoutes(routes)}</ConfigProvider>
 
