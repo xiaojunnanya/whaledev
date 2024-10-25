@@ -51,11 +51,9 @@ const App = memo(() => {
     <>
       {msgContextHolder}
 
-      {pathname !== '/login' && (
-        <header>
-          <Header></Header>
-        </header>
-      )}
+      {/* <header>
+        <Header></Header>
+      </header> */}
 
       <ConfigProvider locale={zhCN}>{useRoutes(routes)}</ConfigProvider>
 

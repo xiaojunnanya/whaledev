@@ -1,7 +1,5 @@
 import { memo } from 'react'
 
-const index = memo(() => {
+export default memo(() => {
   return <div>index</div>
 })
-
-export default index
