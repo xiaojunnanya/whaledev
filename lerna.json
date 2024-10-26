@@ -3,6 +3,5 @@
   "version": "independent",
   "lerna": "8.1.8",
   "npmClient": "npm",
-  "packages": ["packages/*"],
-  "hoist": true
+  "packages": ["packages/*"]
 }
