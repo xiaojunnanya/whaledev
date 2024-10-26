@@ -6,7 +6,8 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { errorResponseType } from './type'
+import { errorResponseType } from '@/type'
+import { formatDate } from '@/utils'
 
 // 捕获异常
 @Catch()
@@ -30,9 +31,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? errorMessage
         : (errorMessage as { error: string }).error
 
-    const errorResponse: errorResponseType<null> = {
+    const errorResponse: errorResponseType = {
       code: status,
-      timestamp: new Date().toString(),
+      timestamp: formatDate(),
       error: errorMessage,
       type: 'system',
     }

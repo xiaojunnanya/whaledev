@@ -1,14 +1,15 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { EmailCodeDto } from './dto/auth.dto';
+import { Controller, Post, Body, Res } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { EmailCodeDto } from './dto/auth.dto'
+import { Response } from 'express'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('emailCode')
-  sendEmailCode(@Body() emailCode: EmailCodeDto) {
-    return this.authService.sendEmailCode(emailCode);
+  sendEmailCode(@Res() res: Response, @Body() emailCode: EmailCodeDto) {
+    return this.authService.sendEmailCode(emailCode, res)
   }
 
   // @Post()
