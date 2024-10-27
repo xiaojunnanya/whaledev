@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum EmailCodeType {
+  login
+  register
+  forget
+}
+
+// 所有的名称都要用下划线
+// @unique：唯一
+// @default(dbgenerated("NOW()")) 创建时间
+// @default(dbgenerated("NOW() ON UPDATE NOW()")) 更新时间
+
+// 邮箱验证码表
+model email_code{
+  id Int @id @default(autoincrement())
+  email String @unique
+  code String
+  type EmailCodeType
+  // 这里的创建时间就用更新时间来表示，时间五分钟过期
+  created_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+}
+
+// 用户表
+model user{
+  id Int @id @default(autoincrement())
+  user_id String @unique
+  email String @unique
+  password String
+  username String? @default("鲸灵开发用户")
+  avatar String? @default("/avatar/default-avatar.jpg")
+  created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+}

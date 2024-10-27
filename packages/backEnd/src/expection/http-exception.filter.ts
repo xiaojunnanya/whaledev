@@ -11,7 +11,7 @@ import { formatDate } from '@/utils'
 
 // 捕获异常
 @Catch()
-export class AllExceptionsFilter implements ExceptionFilter {
+export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const response = ctx.getResponse<Response>()

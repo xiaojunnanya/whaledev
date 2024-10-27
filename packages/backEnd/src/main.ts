@@ -6,8 +6,8 @@ import {
   Logger,
   ValidationPipe,
 } from '@nestjs/common'
-import { AllExceptionsFilter } from './common/expection/http-exception.filter'
 import { LogInterceptor } from './aop/log.interceptor'
+import AllExceptionsFilter from './expection/http-exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
