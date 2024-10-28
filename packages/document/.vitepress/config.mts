@@ -11,14 +11,16 @@ export default defineConfig({
     logo: '/images/favicon.ico',
     nav: [
       { text: '首页', link: '/' },
+      { text: '平台', link: '/docs/whale' },
+      { text: '项目规划', link: '/docs/whale-plan' },
       { text: '开发纪录', link: '/docs/develop-record' },
     ],
 
     sidebar: [
-      {
-        text: '开发文档',
-        items: [{ text: '重难点', link: '/docs/develop-record' }],
-      },
+      // {
+      //   text: '开发文档',
+      //   items: [{ text: '重难点', link: '/docs/develop-record' }],
+      // },
     ],
 
     socialLinks: [

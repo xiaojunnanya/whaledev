@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /docs/develop-record
+      link: /docs/whale
     # - theme: alt
     #   text: 在线体验
     #   link:
