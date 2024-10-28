@@ -1,7 +1,8 @@
-import { Button, FloatButton } from 'antd'
+import { Button, FloatButton, Popover } from 'antd'
 import { memo } from 'react'
 import { HeaderStyle } from './style'
 import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
+import wechat from '@/assets/images/png/wechat.png'
 
 export default memo(() => {
   return (
@@ -23,7 +24,13 @@ export default memo(() => {
           style={{ insetInlineEnd: 25 }}
           icon={<MessageOutlined />}
         >
-          <FloatButton icon={<CommentOutlined />} />
+          <Popover
+            content={<img src={wechat} alt="wechat" style={{ width: 200 }} />}
+            title="加我微信"
+            placement="left"
+          >
+            <FloatButton icon={<CommentOutlined />} />
+          </Popover>
         </FloatButton.Group>
       </>
     </HeaderStyle>

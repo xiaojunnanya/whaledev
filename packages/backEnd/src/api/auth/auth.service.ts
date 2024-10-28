@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { EmailCodeDto } from './dto/auth.dto'
 import { createTransport, Transporter } from 'nodemailer'
-import * as path from 'path'
 import * as fs from 'fs'
 import * as ejs from 'ejs'
 import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config/index.config'
@@ -109,6 +108,7 @@ export class AuthService {
       },
     })
 
+    // 遗留的问题：需要修改为redis存储
     if ((type === 'register' && !msg) || (type !== 'register' && msg)) {
       this.sendAndStorage({
         emailCode,
