@@ -3,5 +3,11 @@
   "version": "independent",
   "lerna": "8.1.8",
   "npmClient": "npm",
-  "packages": ["packages/*"]
+  "packages": ["packages/*"],
+  "useWorkspaces": true,
+  "command": {
+    "bootstrap": {
+      "hoist": true
+    }
+  }
 }
