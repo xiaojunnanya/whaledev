@@ -7,8 +7,7 @@ import { PrismaClient } from '@prisma/client'
     {
       provide: 'PrismaService',
       useFactory: () => {
-        const prisma = new PrismaClient()
-        return prisma
+        return new PrismaClient()
       },
     },
   ],

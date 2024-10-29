@@ -3,10 +3,11 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './api/auth/auth.module'
 import { CustomResponseMiddleware } from './middleware/custom-response.middleware'
-import { PrismaModule } from 'prisma/prisma.module'
+import { PrismaModule } from '@/global/prisma.module'
+import { RedisModule } from '@/global/redis.module'
 
 @Module({
-  imports: [PrismaModule, AuthModule],
+  imports: [PrismaModule, RedisModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -15,7 +15,6 @@ datasource db {
 
 
 enum EmailCodeType {
-  login
   register
   forget
 }

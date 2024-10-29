@@ -6,8 +6,8 @@ export class EmailCodeDto {
   @IsNotEmpty({ message: '邮箱不能为空' })
   email: string
 
-  @IsIn(['login', 'register', 'forget'], {
-    message: 'type 只能为 login、register、forget 中的一个',
+  @IsIn(['register', 'forget'], {
+    message: 'type 只能为 register、forget 中的一个',
   })
   type: codeTypeType
 }

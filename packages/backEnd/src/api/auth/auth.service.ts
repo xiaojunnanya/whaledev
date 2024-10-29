@@ -7,6 +7,7 @@ import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config/index.config'
 import { Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { codeTypeType } from './type/index.type'
+import Redis from 'ioredis'
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,10 @@ export class AuthService {
   private readonly emailTemplatePath = './public/email.html'
   private readonly validity = 5 // 验证码有效期（分钟）
 
-  constructor(@Inject('PrismaService') private readonly prisma: PrismaClient) {
+  constructor(
+    @Inject('PrismaService') private readonly prisma: PrismaClient,
+    @Inject('RedisService') private readonly redis: Redis,
+  ) {
     this.transporter = createTransport({
       host: 'smtp.qq.com', // smtp服务的域名
       port: 587, // smtp服务的端口
@@ -57,27 +61,6 @@ export class AuthService {
     }
   }
 
-  async sendAndStorage(data: {
-    emailCode: EmailCodeDto
-    code: string
-    res: Response
-    email: string
-    type: codeTypeType
-  }) {
-    const { emailCode, code, res, email, type } = data
-    // TODO: 发送验证码并存储到数据库
-    await this.sendEmailCodeFun(emailCode, res, code)
-
-    // 存储验证码
-    await this.prisma.email_code.create({
-      data: {
-        email,
-        type,
-        code,
-      },
-    })
-  }
-
   async sendEmailCode(emailCode: EmailCodeDto, res: Response) {
     //  生成一个长度为 6 的随机字符串
     const code: string = Math.random().toString().slice(2, 8)
@@ -86,39 +69,26 @@ export class AuthService {
      *  有信息表示注册过，提示当前邮箱已注册，请直接登录
      *  没信息则没有注册过，发送验证码
      *
-     * 登录：先判断邮箱是否有个人信息（用户信息表查询）
-     *  有信息表示登录过，发送验证码
-     *  没有信息表示没有注册过，提示当前邮箱未注册，请先注册
-     *
+
      * 忘记密码：先判断邮箱是否有个人信息（用户信息表查询）
      *  有信息表示注册过，发送验证码
      *  没有信息表示没有注册过，提示当前邮箱未注册，请先注册
      *
      */
 
-    const { type, email } = emailCode
-
-    let returnMessage = '发送成功'
+    let returnMsg = '发送成功'
 
     let isSend = true
 
-    const msg = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    })
+    const { type, email } = emailCode
 
-    // 遗留的问题：需要修改为redis存储
-    if ((type === 'register' && !msg) || (type !== 'register' && msg)) {
-      this.sendAndStorage({
-        emailCode,
-        code,
-        res,
-        email,
-        type,
-      })
+    const msg = await this.prisma.user.findUnique({ where: { email } })
+
+    if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
+      await this.sendEmailCodeFun(emailCode, res, code)
+      await this.redis.setex(email, this.validity * 60, code)
     } else {
-      returnMessage =
+      returnMsg =
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
@@ -127,7 +97,7 @@ export class AuthService {
 
     res.customResponse({
       code: 200,
-      message: returnMessage,
+      message: returnMsg,
       data: isSend ? { code } : null,
     })
   }

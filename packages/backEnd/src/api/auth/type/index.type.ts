@@ -1,1 +1,1 @@
-export type codeTypeType = 'login' | 'register' | 'forget'
+export type codeTypeType = 'register' | 'forget'
