@@ -37,7 +37,8 @@ npm install
 # 运行项目
 npm run dev # 前端服务
 npm run start # 后端服务
-npm run open # 同时启动前后端
+npm run doc # 文档服务
+npm run open # 同时启动前端、后端和文档
 ```
 
 项目说明
@@ -67,6 +68,6 @@ npm run open # 同时启动前后端
 </picture>
 </a>
 
-## licence
+## 许可证
 
 此项目根据 MIT 许可证授权-有关更多信息，请参阅[许可证](./LICENSE)文件。
