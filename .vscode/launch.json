@@ -1,13 +1,14 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "whaledev-frontend",
-            "url": " http://localhost:5173",
-            "userDataDir": false,
-            "webRoot": "${workspaceFolder}"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "canary",
+      "name": "whaledev-frontend",
+      "url": " http://localhost:5173",
+      "userDataDir": false,
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
 }

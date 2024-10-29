@@ -24,16 +24,6 @@ enum EmailCodeType {
 // @default(dbgenerated("NOW()")) 创建时间
 // @default(dbgenerated("NOW() ON UPDATE NOW()")) 更新时间
 
-// 邮箱验证码表
-model email_code{
-  id Int @id @default(autoincrement())
-  email String
-  code String
-  type EmailCodeType
-  // 这里的创建时间就用更新时间来表示，时间五分钟过期
-  created_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
-}
-
 // 用户表
 model user{
   id Int @id @default(autoincrement())
