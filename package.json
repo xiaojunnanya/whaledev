@@ -4,10 +4,11 @@
   "description": "鲸灵开发",
   "scripts": {
     "push": "github.sh",
-    "dev": "npm --prefix ./packages/frontEnd run dev",
-    "start": "npm --prefix ./packages/backEnd run start:dev",
-    "doc": "npm --prefix ./packages/document run docs:dev",
-    "open": "concurrently -n \"frontend,backend,docs\" -c \"magenta,cyan,black\" \"npm run dev\" \"npm run start\" \"npm run doc\""
+    "start:front": "npm --prefix ./packages/frontEnd run dev",
+    "start:back": "npm --prefix ./packages/backEnd run start:dev",
+    "start:doc": "npm --prefix ./packages/document run docs:dev",
+    "start": "concurrently -n \"front,back,docs\" -c \"magenta,cyan,black\" \"npm run start:front\" \"npm run start:back\" \"npm run start:doc\"",
+    "start:db": "npm --prefix ./packages/backEnd run mysql:init"
   },
   "author": "鲸落",
   "license": "ISC",

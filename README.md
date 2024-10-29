@@ -35,10 +35,13 @@ git clone https://github.com/xiaojunnanya/whaledev.git
 npm install
 
 # 运行项目
-npm run dev # 前端服务
-npm run start # 后端服务
-npm run doc # 文档服务
-npm run open # 同时启动前端、后端和文档
+npm run start:front # 前端服务
+npm run start:back # 后端服务
+npm run start:doc # 文档服务
+npm run start # 同时启动前端、后端和文档
+
+# 初始化Mysql数据库
+npm run start:db
 ```
 
 项目说明

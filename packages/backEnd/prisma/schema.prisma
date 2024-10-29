@@ -28,7 +28,7 @@ enum EmailCodeType {
 // 邮箱验证码表
 model email_code{
   id Int @id @default(autoincrement())
-  email String @unique
+  email String
   code String
   type EmailCodeType
   // 这里的创建时间就用更新时间来表示，时间五分钟过期
