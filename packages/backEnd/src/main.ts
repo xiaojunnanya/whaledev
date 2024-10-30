@@ -6,7 +6,6 @@ import {
   Logger,
   ValidationPipe,
 } from '@nestjs/common'
-import { LogInterceptor } from './aop/log.interceptor'
 import AllExceptionsFilter from './expection/http-exception.filter'
 
 async function bootstrap() {
@@ -35,10 +34,7 @@ async function bootstrap() {
   // 捕获所有的错误
   app.useGlobalFilters(new AllExceptionsFilter())
 
-  // 全局绑定日志拦截器，打印请求日志
-  app.useGlobalInterceptors(new LogInterceptor())
-
-  await app.listen(3001)
-  Logger.log('开始使用nest，端口号3001')
+  await app.listen(3173)
+  Logger.log('开始使用nest，端口号3173')
 }
 bootstrap()

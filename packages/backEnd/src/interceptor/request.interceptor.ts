@@ -8,7 +8,7 @@ import {
 import { Observable, tap } from 'rxjs'
 
 @Injectable()
-export class LogInterceptor implements NestInterceptor {
+export class RequestInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler<any>,

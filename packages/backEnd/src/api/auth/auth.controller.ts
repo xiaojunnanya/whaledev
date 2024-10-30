@@ -1,15 +1,19 @@
 import { Controller, Post, Body, Res } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { EmailCodeDto } from './dto/auth.dto'
-import { Response } from 'express'
+import { EmailCodeDto, RegisterDto } from './dto/auth.dto'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('emailCode')
-  sendEmailCode(@Res() res: Response, @Body() emailCode: EmailCodeDto) {
-    return this.authService.sendEmailCode(emailCode, res)
+  sendEmailCode(@Body() emailCode: EmailCodeDto) {
+    return this.authService.sendEmailCode(emailCode)
+  }
+
+  @Post('register')
+  register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto)
   }
 
   // @Post()
