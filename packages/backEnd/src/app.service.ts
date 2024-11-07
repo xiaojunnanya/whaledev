@@ -5,7 +5,7 @@ export class AppService {
   getHello() {
     return {
       code: 200,
-      message: 'Welcome to back-end!',
+      message: 'Welcome to whaledev back-end!',
       data: null,
     }
   }
