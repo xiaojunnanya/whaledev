@@ -16,7 +16,7 @@ export default memo(() => {
         }}
       >
         <img src={logo} alt="鲸灵开发" />
-        <h1>鲸灵开发</h1>
+        <h1>WhaleDev 鲸灵开发</h1>
       </div>
       <div className="head-right">
         <div

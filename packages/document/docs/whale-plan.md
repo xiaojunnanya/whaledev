@@ -8,7 +8,13 @@
 6. 用户行为监控
 7. 支持其他页面 iframe 嵌套
 8. 支持微服务微前端
-9. 用户角色：超级管理员、普通用户
+9. 用户角色：超级管理员、普通用户(权限管理：登录权限、用户权限)
 10. 首页参考：https://www.marscode.cn/home https://www.designevo.com/cn/
 11. 结合 AI
 12. 后端接口命名规范：baseurl + /whaledev/v1/ + controller + action
+13. 双 token 无感刷新
+14. 支持三方登录：Github 等
+15. 短链路
+16. 支持多语言（国际化）
+17. 所有的删除都是软删除
+18. 数据库的调用需要封装，使用三方的方法需要封装

@@ -1,21 +1,26 @@
-import { Button, FloatButton, Popover } from 'antd'
+import { FloatButton, Popover } from 'antd'
 import { memo } from 'react'
 import { HeaderStyle } from './style'
-import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
+import {
+  ArrowRightOutlined,
+  CommentOutlined,
+  MessageOutlined,
+} from '@ant-design/icons'
 import wechat from '@/assets/images/png/wechat.png'
 
 export default memo(() => {
   return (
     <HeaderStyle>
-      <Button
-        onClick={() => {
-          window.open('http://localhost:4173/')
-        }}
-      >
-        开发文档
-      </Button>
-      <div>首页中间还在思考中....</div>
-      <Button type="primary">快速开始</Button>
+      <div className="middle">
+        <div className="container">
+          <div className="m1">用 编排 创造页面</div>
+          <div className="m2">让搭建更简单，让开发更高效</div>
+          <div className="m3">
+            <span className="startBtn">快速开始</span>
+            <ArrowRightOutlined />
+          </div>
+        </div>
+      </div>
 
       <>
         <FloatButton.Group

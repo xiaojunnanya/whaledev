@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react'
 import { useGlobal } from './stores/global'
 import zhCN from 'antd/es/locale/zh_CN'
 import { useLocation, useRoutes } from 'react-router-dom'
+import theme from './assets/theme'
 import routes from './router'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -55,7 +56,16 @@ const App = memo(() => {
         <Header></Header>
       </header>
 
-      <ConfigProvider locale={zhCN}>{useRoutes(routes)}</ConfigProvider>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          token: {
+            colorPrimary: theme.color.primaryColor,
+          },
+        }}
+      >
+        {useRoutes(routes)}
+      </ConfigProvider>
 
       {pathname === '/' && (
         <footer>
