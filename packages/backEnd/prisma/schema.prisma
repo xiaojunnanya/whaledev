@@ -34,4 +34,5 @@ model user{
   avatar String? @default("/avatar/default-avatar.jpg")
   created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+  status Int @default(0) // 0:正常 1:封禁
 }
