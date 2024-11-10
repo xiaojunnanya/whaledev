@@ -1,32 +1,16 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { HeaderResolver, I18nModule } from 'nestjs-i18n'
-import * as path from 'path'
 import { AuthModule } from './api/auth/auth.module'
 import { PrismaModule } from './global/prisma.module'
 import { RedisModule } from './global/redis.module'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { ResponseInterceptor } from './interceptor/response.interceptor'
 import { RequestInterceptor } from './interceptor/request.interceptor'
+import { RouterMiddleware } from './middleware/router.middleware'
 
 @Module({
-  imports: [
-    I18nModule.forRoot({
-      fallbackLanguage: 'zh',
-      fallbacks: {
-        'zh-CN': 'zh',
-      },
-      loaderOptions: {
-        path: path.join(__dirname, '/i18n/'),
-        watch: true,
-      },
-      resolvers: [new HeaderResolver(['Accept-Language'])],
-    }),
-    AuthModule,
-    PrismaModule,
-    RedisModule,
-  ],
+  imports: [AuthModule, PrismaModule, RedisModule],
   controllers: [AppController],
   providers: [
     AppService,
@@ -40,4 +24,10 @@ import { RequestInterceptor } from './interceptor/request.interceptor'
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RouterMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL }) // 对所有路由生效
+  }
+}
