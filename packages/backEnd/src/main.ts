@@ -12,7 +12,10 @@ async function bootstrap() {
   // 捕获所有的错误
   app.useGlobalFilters(new AllExceptionsFilter())
 
-  app.setGlobalPrefix('/whaledev/v1')
+  // 添加全局路由前缀
+  app.setGlobalPrefix('/whaledev/v1', {
+    exclude: ['/'],
+  })
 
   await app.listen(3173)
   Logger.log('开始使用nest，端口号3173')
