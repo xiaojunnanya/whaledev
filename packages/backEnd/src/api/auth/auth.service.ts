@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { EmailCodeDto, RegisterDto } from './dto/auth.dto'
 import { createTransport, Transporter } from 'nodemailer'
 import * as fs from 'fs'
@@ -29,6 +29,12 @@ export class AuthService {
     })
   }
 
+  /**
+   * 发送邮件验证码
+   * @param emailCode 邮箱信息
+   * @param code 验证码
+   * @returns
+   */
   async sendEmailCodeFun(emailCode: EmailCodeDto, code: string) {
     try {
       const emailTemplate = fs.readFileSync(this.emailTemplatePath, 'utf-8')
@@ -51,7 +57,6 @@ export class AuthService {
         html: emailHtml,
       })
     } catch (error) {
-      Logger.error('发送邮件失败', error)
       return {
         code: 200,
         message: '发送邮件失败，请稍后再试',
@@ -85,7 +90,7 @@ export class AuthService {
 
     if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
       await this.sendEmailCodeFun(emailCode, code)
-      await this.redis.setex(email, this.validity, code)
+      await this.redis.setex(email, this.validity * 60, code)
     } else {
       returnMsg =
         type === 'register'
@@ -104,9 +109,9 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const { email, emailCode, password, confirmPassword, code } = registerDto
 
-    const res1 = await this.prisma.user.findUnique({ where: { email } })
+    const userRes = await this.prisma.user.findUnique({ where: { email } })
 
-    if (res1) {
+    if (userRes) {
       return {
         code: 0,
         message: '当前邮箱已注册，请直接登录',
@@ -139,9 +144,7 @@ export class AuthService {
       }
     }
 
-    // code 的验证
-
-    //验证完code
+    // 遗留的问题：图形验证码 code 的验证
 
     // 注册+删除redisCode
     await this.prisma.user.create({

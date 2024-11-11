@@ -24,6 +24,8 @@ enum EmailCodeType {
 // @default(dbgenerated("NOW()")) 创建时间
 // @default(dbgenerated("NOW() ON UPDATE NOW()")) 更新时间
 
+// 所有的表都需要有: id, created_time, updated_time, status
+
 // 用户表
 model user{
   id Int @id @default(autoincrement())
