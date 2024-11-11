@@ -17,10 +17,13 @@ export default defineConfig({
     ],
 
     sidebar: [
-      // {
-      //   text: '开发文档',
-      //   items: [{ text: '重难点', link: '/docs/develop-record' }],
-      // },
+      {
+        text: 'WhaleDev',
+        items: [
+          { text: '介绍', link: '/docs/whale' },
+          { text: '鸣谢', link: '/docs/acknowledgement' },
+        ],
+      },
     ],
 
     socialLinks: [
