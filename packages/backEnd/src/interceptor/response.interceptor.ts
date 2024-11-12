@@ -36,3 +36,13 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
     )
   }
 }
+
+export const createResponse = (
+  code: returnType['code'],
+  message: returnType['message'],
+  data: returnType['data'] = null,
+): returnType => ({
+  code,
+  message,
+  data,
+})
