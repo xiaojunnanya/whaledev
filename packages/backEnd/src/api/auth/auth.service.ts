@@ -4,11 +4,11 @@ import { createTransport, Transporter } from 'nodemailer'
 import * as fs from 'fs'
 import * as ejs from 'ejs'
 import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config/index.config'
-import { PrismaClient } from '@prisma/client'
 import Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
 import { createResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
+import { PrismaService } from '@/db/mysql/prisma.service'
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
   private readonly validity = 5 // 验证码有效期（分钟）
 
   constructor(
-    @Inject('PrismaService') private readonly prisma: PrismaClient,
+    private readonly prisma: PrismaService,
     @Inject('RedisService') private readonly redis: Redis,
   ) {
     this.transporter = createTransport({
@@ -85,7 +85,7 @@ export class AuthService {
 
     const { type, email } = emailCode
 
-    const msg = await this.prisma.user.findUnique({ where: { email } })
+    const msg = await this.prisma.findUserByEmail(email)
 
     if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
       await this.sendEmailCodeFun(emailCode, code)
@@ -132,7 +132,7 @@ export class AuthService {
 
     let returnMsg = ''
     if (type === 'register') {
-      // 注册+
+      // 注册
       await this.prisma.user.create({
         data: {
           user_id: uuidv4(),
@@ -142,7 +142,7 @@ export class AuthService {
       })
       returnMsg = '注册成功'
     } else {
-      // 修改密码+删除redisCode
+      // 修改密码
       await this.prisma.user.update({
         where: { email },
         data: {

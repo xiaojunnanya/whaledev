@@ -9,7 +9,7 @@
 7. 支持其他页面 iframe 嵌套
 8. 支持微服务微前端
 9. 用户角色：超级管理员、普通用户(权限管理：登录权限、用户权限)
-10. 首页参考：https://www.marscode.cn/home https://www.designevo.com/cn/
+10. 首页参考：https://www.marscode.cn/home https://www.designevo.com/cn/ https://github.com/xun082/online-edit-web
 11. 结合 AI
 12. 后端接口命名规范：baseurl + /whaledev/v1/ + controller + action,命名风格使用下划线+小写
 13. 双 token 无感刷新
