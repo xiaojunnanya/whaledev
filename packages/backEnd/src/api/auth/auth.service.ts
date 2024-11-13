@@ -3,7 +3,8 @@ import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
 import { createTransport, Transporter } from 'nodemailer'
 import * as fs from 'fs'
 import * as ejs from 'ejs'
-import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config/index.config'
+import * as svgCaptcha from 'svg-captcha'
+import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config'
 import Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
 import { createResponse } from '@/interceptor/response.interceptor'
@@ -79,7 +80,7 @@ export class AuthService {
      *
      */
 
-    let returnMsg = '发送成功'
+    let returnMsg = '发送成功，请注意查收您的邮箱'
 
     let isSend = true
 
@@ -171,5 +172,19 @@ export class AuthService {
     // 遗留的问题：图形验证码 code 的验证
 
     return createResponse(0, '登录成功', userRes)
+  }
+
+  // 返回图形验证码
+  async getImgCode(res: any) {
+    const captcha = svgCaptcha.create({
+      size: 4, //生成几个验证码
+      fontSize: 50, //文字大小
+      width: 120, //宽度
+      height: 44, //高度
+      background: '#22B9F2', //背景颜色
+    })
+
+    res.type('image/svg+xml')
+    res.status(200).send(captcha.data)
   }
 }

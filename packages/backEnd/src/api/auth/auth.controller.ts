@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common'
+import { Controller, Post, Body, Res, Get } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
 
@@ -24,5 +24,10 @@ export class AuthController {
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto)
+  }
+
+  @Get('imgCode')
+  getImgCode(@Res() res: any) {
+    return this.authService.getImgCode(res)
   }
 }

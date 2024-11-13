@@ -13,7 +13,7 @@ import { customCode, responseType } from '@/type'
 export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
-    const response = ctx.getResponse<Response>()
+    const res = ctx.getResponse<Response>()
     const code = exception.getStatus()
     console.log('exception', exception)
     // 对class-validator的异常做兼容
@@ -35,6 +35,6 @@ export default class AllExceptionsFilter implements ExceptionFilter {
       type: 'system',
     }
 
-    response.status(code).json(errorResponse)
+    res.status(code).json(errorResponse)
   }
 }
