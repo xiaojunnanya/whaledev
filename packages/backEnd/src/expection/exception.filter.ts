@@ -14,7 +14,7 @@ export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
-    const code = exception.getStatus()
+    const code = exception.getStatus() as responseType['code']
     console.log('exception', exception)
     // 对class-validator的异常做兼容
     const { message: validatorErr } = exception.getResponse() as {
@@ -26,7 +26,7 @@ export default class AllExceptionsFilter implements ExceptionFilter {
       : exception.message || customCode[98]
 
     const errorResponse: responseType = {
-      code: 98,
+      code: code,
       timestamp: formatDate(),
       data: {
         data: null,

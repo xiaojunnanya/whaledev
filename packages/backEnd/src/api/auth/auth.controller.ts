@@ -6,7 +6,7 @@ import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('emailCode')
+  @Post('email_code')
   sendEmailCode(@Body() emailCode: EmailCodeDto) {
     return this.authService.sendEmailCode(emailCode)
   }
@@ -26,7 +26,7 @@ export class AuthController {
     return this.authService.login(loginDto)
   }
 
-  @Get('imgCode')
+  @Get('img_code')
   getImgCode(@Res() res: any) {
     return this.authService.getImgCode(res)
   }

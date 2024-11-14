@@ -169,6 +169,10 @@ export class AuthService {
 
     if (userRes.password !== password) return createResponse(0, '密码错误')
 
+    // 遗留的问题：双token
+    // access_token、 refresh_token
+    // https://juejin.cn/post/7271139265442021391?searchId=20241114091839E80756ABB8BB2500A876
+
     // 遗留的问题：图形验证码 code 的验证
 
     return createResponse(0, '登录成功', userRes)
@@ -181,7 +185,7 @@ export class AuthService {
       fontSize: 50, //文字大小
       width: 120, //宽度
       height: 44, //高度
-      background: '#22B9F2', //背景颜色
+      background: '#0099FF', //背景颜色
     })
 
     res.type('image/svg+xml')
