@@ -32,7 +32,6 @@ export default memo(() => {
 
     if (status === 0 && messageType === 'success') {
       setMessage({ type: 'success', text: data.message })
-      // 遗留的问题：token存储，但是如果使用单token刷新，token在请求头中，放在响应拦截器中处理
       // 遗留的问题：登录成功应该跳转到界面设计页
       naviage('/')
     } else {

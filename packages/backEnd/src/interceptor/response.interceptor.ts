@@ -33,6 +33,11 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
           data = null,
         } = response as returnType
 
+        if (data && data.token) {
+          res.setHeader('authorization', data.token)
+          delete data.token
+        }
+
         const returnMsg: responseType = {
           code,
           timestamp: formatDate(),
@@ -44,7 +49,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
           type: 'custom',
         }
 
-        return returnMsg
+        res.send(returnMsg)
       }),
     )
   }

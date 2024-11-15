@@ -23,7 +23,7 @@ class WhaleRequest {
           config.url = `${config.url}?time=${new Date().getTime()}`
 
         const token = localStorage.getItem('token')
-        if (token) config.headers['Authorization'] = 'Bearer ' + token
+        if (token) config.headers['authorization'] = 'Bearer ' + token
         return config
       },
       error => {
@@ -34,12 +34,12 @@ class WhaleRequest {
     // 响应拦截器
     this.instance.interceptors.response.use(
       res => {
-        const { data, status } = res
+        const { data, status, headers } = res
+        const token = headers['authorization']
+        if (token) localStorage.setItem('token', token)
         // 遗留的问题：对status进行处理(http状态码)
 
         // 这边我是在不知道在去声明axios返回值的类型，只好将数据进行一层封装放到data中
-        // console.log('data', data)
-
         const newData = {
           data: data.data,
           status: data.code,

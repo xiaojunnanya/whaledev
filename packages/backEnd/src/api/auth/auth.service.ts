@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { createResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
 import { PrismaService } from '@/db/mysql/prisma.service'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
 
   constructor(
     private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
     @Inject('RedisService') private readonly redis: Redis,
   ) {
     this.transporter = createTransport({
@@ -166,13 +168,19 @@ export class AuthService {
     if (userRes.password !== password)
       return createResponse(0, '密码错误', 'error')
 
-    // 遗留的问题：双token，想使用单token，优化单token，在token还有一天过期的时候更新，不需要每次都携带
-    // access_token、 refresh_token
-    // https://juejin.cn/post/7271139265442021391?searchId=20241114091839E80756ABB8BB2500A876
+    // 遗留的问题：token无感刷新
 
     // 遗留的问题：图形验证码 code 的验证
 
-    return createResponse(0, '登录成功', 'success', userRes)
+    return createResponse(0, '登录成功', 'success', {
+      token: this.jwtService.sign({
+        user_id: userRes.user_id,
+      }),
+      avatar: userRes.avatar,
+      status: userRes.status,
+      user_id: userRes.user_id,
+      username: userRes.username,
+    })
   }
 
   // 返回图形验证码
