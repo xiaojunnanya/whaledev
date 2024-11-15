@@ -6,7 +6,8 @@ import {
 } from '@ant-design/icons'
 import { Button, Form, Input } from 'antd'
 import { useGlobal } from '@/stores/global'
-import { getCodeImg } from '@/service/request/login'
+import { forgetPassword, getCodeImg, sendEmail } from '@/service/request/login'
+import { gloablErrorMessage } from '@/utils/global'
 
 export default memo(() => {
   const [form] = Form.useForm()
@@ -19,15 +20,22 @@ export default memo(() => {
   }, [])
 
   const onFinish = async (values: any) => {
-    // const { data } = await resetPassword(values)
-    // if(data.statusCode === 1200){
-    //   setMessage({ type:'success', text: data?.data})
-    //   setMode('login')
-    // }else{
-    //   setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
-    //   updateCode()
-    //   form.resetFields(['checkCode'])
-    // }
+    const { data, status } = await forgetPassword(values)
+    const { messageType } = data
+    setMessage({ type: 'success', text: data.message })
+    updateCode()
+
+    if (status === 0 && messageType === 'success') {
+      setMessage({ type: 'success', text: data.message })
+      setMode('login')
+    } else {
+      setMessage({
+        type: messageType,
+        text: data.message || gloablErrorMessage,
+      })
+      updateCode()
+      form.resetFields(['checkCode'])
+    }
   }
 
   const updateCode = () => {
@@ -35,16 +43,19 @@ export default memo(() => {
   }
 
   const getEmailCode = () => {
-    // form.validateFields(['email']).then(async ({ email }: { email: string }) =>{
-    //   if( btnName !== '获取验证码') return
-    //   downTime()
-    //   const { data } = await sendEmail(email, 'register')
-    //   if(data.statusCode === 1200){
-    //     setMessage({ type:'success', text: data?.data})
-    //   }else{
-    //     setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
-    //   }
-    // })
+    form
+      .validateFields(['email'])
+      .then(async ({ email }: { email: string }) => {
+        const { data, status } = await sendEmail(email, 'forget')
+        if (status === 0) {
+          setMessage({ type: 'success', text: data.message })
+        } else {
+          setMessage({
+            type: 'error',
+            text: data.message || gloablErrorMessage,
+          })
+        }
+      })
   }
 
   const downTime = () => {
@@ -140,7 +151,7 @@ export default memo(() => {
           />
         </Form.Item>
         <Form.Item
-          name="passwordConfirm"
+          name="confirmPassword"
           rules={[
             { required: true, message: '请输入密码' },
             ({ getFieldValue }) => ({
@@ -161,7 +172,7 @@ export default memo(() => {
         </Form.Item>
         <div className="checkCode">
           <Form.Item
-            name="checkCode"
+            name="code"
             rules={[{ required: true, message: '请输入验证码' }]}
           >
             <Input

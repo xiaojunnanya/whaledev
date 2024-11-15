@@ -6,10 +6,11 @@ import {
   SafetyCertificateOutlined,
 } from '@ant-design/icons'
 import { Button, Form, Input } from 'antd'
-import { getCodeImg } from '@/service/request/login'
+import { getCodeImg, login } from '@/service/request/login'
 import { useNavigate } from 'react-router-dom'
 // import SparkMD5 from 'spark-md5';
 import { useGlobal } from '@/stores/global'
+import { gloablErrorMessage } from '@/utils/global'
 
 export default memo(() => {
   const { setMode, setMessage } = useGlobal()
@@ -22,20 +23,28 @@ export default memo(() => {
   }, [])
 
   const onFinish = async (values: any) => {
+    const { data, status } = await login(values)
+    const { messageType } = data
+
+    if (status === 0 && messageType === 'success') {
+      setMessage({ type: 'success', text: data.message })
+      // 遗留的问题：token存储
+      // 遗留的问题：登录成功应该跳转到界面设计页
+      naviage('/')
+    } else {
+      setMessage({
+        type: messageType,
+        text: data.message || gloablErrorMessage,
+      })
+      updateCode()
+      form.resetFields(['checkCode'])
+    }
+
+    console.log('data', data)
     // const spark = new SparkMD5()
     // spark.append(values.password)
     // const password = spark.end()
     // values.password = password
-    // const { data } = await login(values)
-    // if(data.statusCode === 1200){
-    //   setMessage({ type:'success', text: data?.data.msg})
-    //   localStorage.setItem('token', data?.data.token)
-    //   naviage('/')
-    // }else{
-    //   setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
-    //   updateCode()
-    //   form.resetFields(['checkCode'])
-    // }
   }
 
   const updateCode = () => {
@@ -59,11 +68,11 @@ export default memo(() => {
         className="login-form"
         onFinish={onFinish}
         form={form}
-        // initialValues={{
-        //   email: '2376974436@qq.com',
-        //   password: 'qwer1234',
-        //   checkCode: '',
-        // }}
+        initialValues={{
+          email: '2376974436@qq.com',
+          password: 'qwer1234',
+          code: '1234',
+        }}
       >
         <Form.Item
           name="email"
@@ -86,7 +95,7 @@ export default memo(() => {
         </Form.Item>
         <div className="checkCode">
           <Form.Item
-            name="checkCode"
+            name="code"
             rules={[{ required: true, message: '请输入验证码' }]}
           >
             <Input
