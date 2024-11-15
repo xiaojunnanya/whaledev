@@ -8,7 +8,7 @@ import {
 import { Button, Form, Input } from 'antd'
 import { getCodeImg, login } from '@/service/request/login'
 import { useNavigate } from 'react-router-dom'
-// import SparkMD5 from 'spark-md5';
+import SparkMD5 from 'spark-md5'
 import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
 
@@ -23,12 +23,16 @@ export default memo(() => {
   }, [])
 
   const onFinish = async (values: any) => {
-    const { data, status } = await login(values)
+    const valuesData = {
+      ...values,
+      password: SparkMD5.hash(values.password),
+    }
+    const { data, status } = await login(valuesData)
     const { messageType } = data
 
     if (status === 0 && messageType === 'success') {
       setMessage({ type: 'success', text: data.message })
-      // 遗留的问题：token存储
+      // 遗留的问题：token存储，但是如果使用单token刷新，token在请求头中，放在响应拦截器中处理
       // 遗留的问题：登录成功应该跳转到界面设计页
       naviage('/')
     } else {

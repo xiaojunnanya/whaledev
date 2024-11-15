@@ -8,6 +8,7 @@ import { Button, Form, Input } from 'antd'
 import { useGlobal } from '@/stores/global'
 import { forgetPassword, getCodeImg, sendEmail } from '@/service/request/login'
 import { gloablErrorMessage } from '@/utils/global'
+import SparkMD5 from 'spark-md5'
 
 export default memo(() => {
   const [form] = Form.useForm()
@@ -20,7 +21,12 @@ export default memo(() => {
   }, [])
 
   const onFinish = async (values: any) => {
-    const { data, status } = await forgetPassword(values)
+    const valuesData = {
+      ...values,
+      password: SparkMD5.hash(values.password),
+      confirmPassword: SparkMD5.hash(values.confirmPassword),
+    }
+    const { data, status } = await forgetPassword(valuesData)
     const { messageType } = data
     setMessage({ type: 'success', text: data.message })
     updateCode()
@@ -46,12 +52,13 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
-        const { data, status } = await sendEmail(email, 'forget')
-        if (status === 0) {
+        const { data, status } = await sendEmail(email, 'register')
+        const { messageType } = data
+        if (status === 0 && messageType === 'success') {
           setMessage({ type: 'success', text: data.message })
         } else {
           setMessage({
-            type: 'error',
+            type: messageType,
             text: data.message || gloablErrorMessage,
           })
         }

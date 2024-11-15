@@ -54,9 +54,11 @@ const App = memo(() => {
     <>
       {msgContextHolder}
 
-      <header style={{ height: '48px' }}>
-        <Header></Header>
-      </header>
+      {pathname !== '/login' && (
+        <header style={{ height: '48px' }}>
+          <Header></Header>
+        </header>
+      )}
 
       <ConfigProvider
         locale={zhCN}

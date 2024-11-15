@@ -5,7 +5,7 @@ import login_img from '@/assets/images/png/login_img.png'
 
 export const LoginStyled = styled.div`
   .login-body {
-    height: calc(100vh - 48px);
+    height: 100vh;
     background-size: cover;
     background-image: url(${login_bg});
     display: flex;
@@ -22,7 +22,7 @@ export const LoginStyled = styled.div`
     .login-panel {
       width: 430px;
       margin-right: 10%;
-      margin-top: 5%;
+      margin-top: 8%;
 
       .checkCode {
         display: flex;

@@ -91,11 +91,11 @@ export class AuthService {
       await this.sendEmailCodeFun(emailCode, code)
       await this.redis.setex(email, this.validity * 60, code)
     } else {
+      isSuccess = false
       returnMsg =
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
-      isSuccess = false
     }
 
     return createResponse(0, returnMsg, isSuccess ? 'success' : 'info')
@@ -166,7 +166,7 @@ export class AuthService {
     if (userRes.password !== password)
       return createResponse(0, '密码错误', 'error')
 
-    // 遗留的问题：双token
+    // 遗留的问题：双token，想使用单token，优化单token，在token还有一天过期的时候更新，不需要每次都携带
     // access_token、 refresh_token
     // https://juejin.cn/post/7271139265442021391?searchId=20241114091839E80756ABB8BB2500A876
 

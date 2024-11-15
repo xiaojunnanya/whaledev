@@ -23,7 +23,7 @@ class WhaleRequest {
           config.url = `${config.url}?time=${new Date().getTime()}`
 
         const token = localStorage.getItem('token')
-        if (token) config.headers['Authorization'] = token
+        if (token) config.headers['Authorization'] = 'Bearer ' + token
         return config
       },
       error => {
