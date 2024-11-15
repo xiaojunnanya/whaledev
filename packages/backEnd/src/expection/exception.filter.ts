@@ -31,6 +31,7 @@ export default class AllExceptionsFilter implements ExceptionFilter {
       data: {
         data: null,
         message,
+        messageType: 'error',
       },
       type: 'system',
     }

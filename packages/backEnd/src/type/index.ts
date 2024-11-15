@@ -1,13 +1,10 @@
 export const customCode = {
-  0: 'OK',
-  1: 'Created',
-  40: 'Bad Request',
-  41: 'Unauthorized',
-  43: 'Forbidden',
-  44: 'Not Found',
-  50: 'Internal Server Error',
-  99: 'Unknown Error',
-  98: 'System Error',
+  0: '执行成功',
+  1: '参数错误',
+  2: '参数校验错误',
+  99: '未知错误',
+  98: '系统错误',
+  97: '提示错误',
 }
 
 // 提取 customCode 对象的 key 值类型
@@ -17,8 +14,9 @@ export interface responseType {
   code: CustomCodeKeys
   timestamp: string
   data: {
-    data: any
-    message: string
+    message: string // 确保 message 字段是必需的
+    messageType: 'success' | 'error' | 'warning' | 'info'
+    [key: string]: any // 允许 data 中有任意其他字段
   }
   type: 'custom' | 'system'
 }

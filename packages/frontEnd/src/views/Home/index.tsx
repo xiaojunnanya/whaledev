@@ -7,15 +7,22 @@ import {
   MessageOutlined,
 } from '@ant-design/icons'
 import wechat from '@/assets/images/png/wechat.png'
+import { useNavigate } from 'react-router-dom'
 
 export default memo(() => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/login')
+  }
+
   return (
     <HeaderStyle>
       <div className="middle">
         <div className="container">
           <div className="m1">用 编排 创造页面</div>
           <div className="m2">让搭建更简单，让开发更高效</div>
-          <div className="m3">
+          <div className="m3" onClick={handleClick}>
             <span className="startBtn">快速开始</span>
             <ArrowRightOutlined />
           </div>

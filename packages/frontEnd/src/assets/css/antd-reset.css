@@ -1,24 +1,6 @@
 /* 全局antd样式重置 */
 
+/* 全局loading */
 .ant-spin-dot {
   color: #00bfff;
-}
-
-/* tree组件内容不换行 */
-.ant-tree-treenode > .ant-tree-node-content-wrapper {
-  white-space: nowrap;
-}
-
-.ant-modal {
-  top: 64px;
-}
-
-.ant-collapse-item {
-  margin-bottom: 10px;
-
-  .ant-collapse-header {
-    border-radius: 0px !important;
-    padding: 5px 10px !important;
-    background-color: #f4f8ff;
-  }
 }

@@ -1,0 +1,31 @@
+/* 样式中的关于antd的css代码 */
+
+.login-body {
+  .emailCode,
+  .checkCode {
+    .ant-form-item {
+      width: 260px;
+    }
+
+    .ant-btn {
+      flex: 1;
+      height: 44px;
+      margin-left: 10px;
+    }
+  }
+
+  .login-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .ant-input-affix-wrapper {
+    padding: 10px;
+  }
+
+  .login-form-button {
+    width: 100%;
+    height: 40px;
+  }
+}

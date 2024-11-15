@@ -15,9 +15,9 @@ export default defineConfig({
     open: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3173/',
         changeOrigin: true,
-        rewrite: path => path.replace('/api', ''),
+        rewrite: path => path.replace('/api', '/whaledev/v1'),
       },
     },
   },

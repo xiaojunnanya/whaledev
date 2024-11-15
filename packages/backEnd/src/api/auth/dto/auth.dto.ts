@@ -29,10 +29,10 @@ export class RegisterOrForgetDto {
   emailCode: string
 
   @IsNotEmpty({ message: '密码不能为空' })
-  @MinLength(6, { message: '密码长度不能小于6位' })
+  @MinLength(8, { message: '密码长度不能小于8位' })
   @MaxLength(18, { message: '密码长度不能大于18位' })
   @Validate(PasswordStrengthValidator, {
-    message: '密码强度不够，请使用字母、数字、符号的组合',
+    message: '密码强度不够，密码必须由数字和字母组成',
   })
   password: string
 

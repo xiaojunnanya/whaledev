@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router-dom'
 import { lazy } from 'react'
 
 const Home = lazy(() => import('@/views/Home/index'))
-// const Login = lazy(() => import('@/views/Login/index.tsx'))
+const Login = lazy(() => import('@/views/Login/index.tsx'))
 // const ProjectCollection = lazy(() => import('@/views/Project'))
 // const CountPages = lazy(() => import('@/views/Pages/index'))
 // const EditPages = lazy(() => import('@/views/Pages/Rapid/Edit/index'))
@@ -14,10 +14,10 @@ const routes: RouteObject[] = [
     path: '/',
     element: <Home />,
   },
-  // {
-  //     path:'/login',
-  //     element: <Login />
-  // },
+  {
+    path: '/login',
+    element: <Login />,
+  },
   // {
   //     path:'/project',
   //     element: <ProjectCollection />

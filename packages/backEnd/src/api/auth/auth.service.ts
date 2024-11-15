@@ -60,7 +60,7 @@ export class AuthService {
         html: emailHtml,
       })
     } catch (error) {
-      return createResponse(0, '发送邮件失败，请稍后再试')
+      return createResponse(0, '发送邮件失败，请稍后再试', 'error')
     }
   }
 
@@ -81,8 +81,7 @@ export class AuthService {
      */
 
     let returnMsg = '发送成功，请注意查收您的邮箱'
-
-    let isSend = true
+    let isSuccess = true
 
     const { type, email } = emailCode
 
@@ -96,14 +95,10 @@ export class AuthService {
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
-      isSend = false
+      isSuccess = false
     }
 
-    return {
-      code: 0,
-      message: returnMsg,
-      data: isSend ? { code } : null,
-    }
+    return createResponse(0, returnMsg, isSuccess ? 'success' : 'info')
   }
 
   // 注册和忘记密码
@@ -117,17 +112,18 @@ export class AuthService {
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
-      return createResponse(0, message)
+      return createResponse(0, message, 'info')
     }
 
     if (password !== confirmPassword)
-      return createResponse(0, '两次密码不一致，请确认密码后重试')
+      return createResponse(0, '两次密码不一致，请确认密码后重试', 'error')
 
     const redisCode = await this.redis.get(email)
-    if (!redisCode) return createResponse(0, '验证码不存在或已过期，请重新发送')
+    if (!redisCode)
+      return createResponse(0, '验证码不存在或已过期，请重新发送', 'error')
 
     if (redisCode !== emailCode)
-      return createResponse(0, '验证码错误，请重新输入')
+      return createResponse(0, '验证码错误，请重新输入', 'error')
 
     // 遗留的问题：图形验证码 code 的验证
 
@@ -156,7 +152,7 @@ export class AuthService {
     // 删除图形验证码
     await this.redis.del(email)
 
-    return createResponse(0, returnMsg)
+    return createResponse(0, returnMsg, 'success')
   }
 
   // 登录
@@ -165,9 +161,10 @@ export class AuthService {
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
-    if (!userRes) return createResponse(0, '当前邮箱未注册，请先注册')
+    if (!userRes) return createResponse(0, '当前邮箱未注册，请先注册', 'error')
 
-    if (userRes.password !== password) return createResponse(0, '密码错误')
+    if (userRes.password !== password)
+      return createResponse(0, '密码错误', 'error')
 
     // 遗留的问题：双token
     // access_token、 refresh_token
@@ -175,7 +172,7 @@ export class AuthService {
 
     // 遗留的问题：图形验证码 code 的验证
 
-    return createResponse(0, '登录成功', userRes)
+    return createResponse(0, '登录成功', 'success', userRes)
   }
 
   // 返回图形验证码
