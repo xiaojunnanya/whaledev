@@ -24,6 +24,7 @@ class WhaleRequest {
 
         const token = localStorage.getItem('token')
         if (token) config.headers['authorization'] = 'Bearer ' + token
+        config.headers['Accept-Language'] = navigator.language
         return config
       },
       error => {

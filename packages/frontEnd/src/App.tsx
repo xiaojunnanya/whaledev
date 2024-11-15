@@ -19,8 +19,6 @@ const App = memo(() => {
   }, [pathname])
 
   useEffect(() => {
-    console.log('请求头设置Accept-Language', navigator.language)
-
     window.addEventListener('error', catchErr)
     window.addEventListener('unhandledrejection', catchErr)
 

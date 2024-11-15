@@ -14,7 +14,8 @@ export default memo(() => {
 
   const handleClick = () => {
     // 遗留的问题：登录后跳转页面，未登录跳转登录页面
-    navigate('/login')
+    const token = localStorage.getItem('token')
+    navigate(token ? 'project' : '/login')
   }
 
   return (
