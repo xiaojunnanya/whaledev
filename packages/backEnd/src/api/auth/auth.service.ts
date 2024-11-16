@@ -7,7 +7,7 @@ import * as svgCaptcha from 'svg-captcha'
 import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config'
 import Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
-import { createResponse } from '@/interceptor/response.interceptor'
+import { customResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
 import { PrismaService } from '@/db/mysql/prisma.service'
 import { JwtService } from '@nestjs/jwt'
@@ -62,7 +62,7 @@ export class AuthService {
         html: emailHtml,
       })
     } catch (error) {
-      return createResponse(0, '发送邮件失败，请稍后再试', 'error')
+      return customResponse(0, '发送邮件失败，请稍后再试', 'error')
     }
   }
 
@@ -100,7 +100,7 @@ export class AuthService {
           : '当前邮箱未注册，请先注册'
     }
 
-    return createResponse(0, returnMsg, isSuccess ? 'success' : 'info')
+    return customResponse(0, returnMsg, isSuccess ? 'success' : 'info')
   }
 
   // 注册和忘记密码
@@ -114,18 +114,18 @@ export class AuthService {
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
-      return createResponse(0, message, 'info')
+      return customResponse(0, message, 'info')
     }
 
     if (password !== confirmPassword)
-      return createResponse(0, '两次密码不一致，请确认密码后重试', 'error')
+      return customResponse(0, '两次密码不一致，请确认密码后重试', 'error')
 
     const redisCode = await this.redis.get(email)
     if (!redisCode)
-      return createResponse(0, '验证码不存在或已过期，请重新发送', 'error')
+      return customResponse(0, '验证码不存在或已过期，请重新发送', 'error')
 
     if (redisCode !== emailCode)
-      return createResponse(0, '验证码错误，请重新输入', 'error')
+      return customResponse(0, '验证码错误，请重新输入', 'error')
 
     // 遗留的问题：图形验证码 code 的验证
 
@@ -154,7 +154,7 @@ export class AuthService {
     // 删除图形验证码
     await this.redis.del(email)
 
-    return createResponse(0, returnMsg, 'success')
+    return customResponse(0, returnMsg, 'success')
   }
 
   // 登录
@@ -163,16 +163,16 @@ export class AuthService {
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
-    if (!userRes) return createResponse(0, '当前邮箱未注册，请先注册', 'error')
+    if (!userRes) return customResponse(0, '当前邮箱未注册，请先注册', 'error')
 
     if (userRes.password !== password)
-      return createResponse(0, '密码错误', 'error')
+      return customResponse(0, '密码错误', 'error')
 
     // 遗留的问题：token无感刷新
 
     // 遗留的问题：图形验证码 code 的验证
 
-    return createResponse(0, '登录成功', 'success', {
+    return customResponse(0, '登录成功', 'success', {
       token: this.jwtService.sign({
         user_id: userRes.user_id,
       }),

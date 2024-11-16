@@ -52,7 +52,7 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
-        const { data, status } = await sendEmail(email, 'register')
+        const { data, status } = await sendEmail(email, 'forget')
         const { messageType } = data
         if (status === 0 && messageType === 'success') {
           setMessage({ type: 'success', text: data.message })

@@ -8,9 +8,9 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { ResponseInterceptor } from './interceptor/response.interceptor'
 import { RequestInterceptor } from './interceptor/request.interceptor'
 import { RouterMiddleware } from './middleware/router.middleware'
-
+import { StaticonfigModule } from './api/staticonfig/staticonfig.module';
 @Module({
-  imports: [AuthModule, PrismaModule, RedisModule],
+  imports: [AuthModule, PrismaModule, RedisModule, StaticonfigModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -60,8 +60,12 @@ class WhaleRequest {
     return this.instance.request<T>(config)
   }
 
-  get<T = any>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'GET' })
+  get<T = any>(configOrUrl: string | AxiosRequestConfig) {
+    if (typeof configOrUrl === 'string') {
+      return this.request<T>({ url: configOrUrl, method: 'GET' })
+    } else {
+      return this.request<T>({ ...configOrUrl, method: 'GET' })
+    }
   }
 
   post<T = any>(config: AxiosRequestConfig) {

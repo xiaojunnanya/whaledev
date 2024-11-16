@@ -17,7 +17,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "mysql:init": "npx prisma db push",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "create": "npx nest g resource"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -55,7 +55,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
   }
 }
 
-export const createResponse = (
+export const customResponse = (
   code: returnType['code'],
   message: returnType['message'],
   messageType: returnType['messageType'],

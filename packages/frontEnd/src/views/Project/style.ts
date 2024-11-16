@@ -4,7 +4,7 @@ export const ProjectStyled = styled.div`
   .top {
     display: flex;
     justify-content: space-between;
-    margin: 15px 30px;
+    margin: 10px 30px;
 
     .ant-input-outlined {
       width: 200px;
