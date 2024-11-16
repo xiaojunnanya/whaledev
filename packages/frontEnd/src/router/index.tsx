@@ -16,8 +16,14 @@ const routes: RouteObject[] = [
     element: <Login />,
   },
   {
-    path: '/engineering/:name',
+    path: '/engineering',
     element: <Engineering />,
+    children: [
+      {
+        path: ':name?', // 可选参数
+        element: <Engineering />,
+      },
+    ],
   },
   {
     path: '*',

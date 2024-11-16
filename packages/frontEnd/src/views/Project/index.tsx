@@ -1,12 +1,7 @@
-import { Button, Form, Input, Modal, Radio, Row, Select, Tabs } from 'antd'
+import { Button, Form, Input, Modal, Radio, Row, Select } from 'antd'
 import { memo, useState } from 'react'
 import { ProjectStyled } from './style'
-import {
-  CodepenOutlined,
-  ProjectOutlined,
-  SearchOutlined,
-} from '@ant-design/icons'
-import Header from '@/components/Header'
+import { SearchOutlined } from '@ant-design/icons'
 
 interface FieldType {
   projectName: string

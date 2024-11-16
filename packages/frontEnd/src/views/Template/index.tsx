@@ -1,5 +1,5 @@
 import { memo } from 'react'
 
 export default memo(() => {
-  return <div>组件市场</div>
+  return <div>模版市场</div>
 })

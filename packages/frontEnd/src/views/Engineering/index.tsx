@@ -1,5 +1,5 @@
 import Header from '@/components/Header'
-import { CodepenOutlined, ProjectOutlined } from '@ant-design/icons'
+import { ProductOutlined, ProjectOutlined } from '@ant-design/icons'
 import { Tabs } from 'antd'
 import { lazy, memo, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -7,6 +7,25 @@ import { useNavigate, useParams } from 'react-router-dom'
 const NotFound = lazy(() => import('@/components/NotFound/index'))
 const Project = lazy(() => import('@/views/Project/index'))
 const Componentlibrary = lazy(() => import('@/views/Componentlibrary/index'))
+const Template = lazy(() => import('@/views/Template/index'))
+
+const tabsItems = [
+  {
+    label: '项目列表',
+    key: 'project',
+    icon: <ProjectOutlined />,
+  },
+  {
+    label: '组件市场',
+    key: 'componentlibrary',
+    icon: <ProductOutlined />,
+  },
+  {
+    label: '模版市场',
+    key: 'template',
+    icon: <ProductOutlined />,
+  },
+]
 
 export default memo(() => {
   const params = useParams()
@@ -16,18 +35,19 @@ export default memo(() => {
   const [showContent, setShowContent] = useState(<Project />)
 
   useEffect(() => {
-    setActiveKey(name)
+    name ? setActiveKey(name) : navigate('/engineering/project')
   }, [name])
 
   useEffect(() => {
     switch (avtiveKey) {
       case 'project':
         setShowContent(<Project />)
-        // 项目列表
         break
       case 'componentlibrary':
         setShowContent(<Componentlibrary />)
-        // 组件库
+        break
+      case 'template':
+        setShowContent(<Template />)
         break
       default:
         setShowContent(<NotFound />)
@@ -46,18 +66,7 @@ export default memo(() => {
         <Tabs
           activeKey={avtiveKey}
           centered
-          items={[
-            {
-              label: '项目列表',
-              key: 'project',
-              icon: <ProjectOutlined />,
-            },
-            {
-              label: '组件库',
-              key: 'componentlibrary',
-              icon: <CodepenOutlined />,
-            },
-          ]}
+          items={tabsItems}
           onChange={handleChange}
         />
       </Header>
