@@ -25,6 +25,8 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         )
           return response
 
+        console.log('response', response)
+
         // 默认错误处理
         const {
           code = 98,
@@ -44,7 +46,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
           data: {
             message,
             messageType,
-            ...data,
+            data,
           },
           type: 'custom',
         }

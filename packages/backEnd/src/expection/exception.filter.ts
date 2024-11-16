@@ -14,18 +14,22 @@ export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
-    const code = exception.getStatus() as responseType['code']
-    console.log('exception', exception)
-    // 对class-validator的异常做兼容
-    const { message: validatorErr } = exception.getResponse() as {
-      message: string[]
-    }
+
+    // 处理 class-validator 的异常兼容
+    const validatorErr =
+      exception instanceof HttpException &&
+      typeof exception.getResponse === 'function'
+        ? (exception.getResponse() as { message: string[] }).message
+        : null
 
     const message = validatorErr?.join
       ? validatorErr.join(',')
       : exception.message || customCode[98]
 
-    const errorResponse: responseType = {
+    const code =
+      exception instanceof HttpException ? exception.getStatus() : 500 // 非 HttpException，默认为 500
+
+    const errorResponse = {
       code: code,
       timestamp: formatDate(),
       data: {

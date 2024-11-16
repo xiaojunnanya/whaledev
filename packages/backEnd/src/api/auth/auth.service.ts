@@ -87,7 +87,7 @@ export class AuthService {
 
     const { type, email } = emailCode
 
-    const msg = await this.prisma.findUserByEmail(email)
+    const msg = await this.prisma.user.findUnique({ where: { email } })
 
     if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
       await this.sendEmailCodeFun(emailCode, code)

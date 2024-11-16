@@ -1,11 +1,4 @@
-import {
-  IsEmail,
-  IsIn,
-  IsNotEmpty,
-  MaxLength,
-  MinLength,
-  Validate,
-} from 'class-validator'
+import { IsEmail, IsIn, IsNotEmpty, MinLength, Validate } from 'class-validator'
 import { codeType } from '../type/index.type'
 import { PasswordStrengthValidator } from '@/validator/index.validator'
 

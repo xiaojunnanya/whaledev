@@ -32,8 +32,7 @@ export default memo(() => {
 
     if (status === 0 && messageType === 'success') {
       setMessage({ type: 'success', text: data.message })
-      // 遗留的问题：登录成功应该跳转到界面设计页
-      naviage('/')
+      naviage('/engineering/project')
     } else {
       setMessage({
         type: messageType,
@@ -42,12 +41,6 @@ export default memo(() => {
       updateCode()
       form.resetFields(['checkCode'])
     }
-
-    console.log('data', data)
-    // const spark = new SparkMD5()
-    // spark.append(values.password)
-    // const password = spark.end()
-    // values.password = password
   }
 
   const updateCode = () => {

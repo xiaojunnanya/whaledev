@@ -19,6 +19,18 @@ enum EmailCodeType {
   forget
 }
 
+enum ProjectType {
+  reception
+   backstage
+}
+
+enum ProjectState {
+  inProgress
+   completed
+   paused
+   obsolete
+}
+
 // 所有的名称都要用下划线
 // @unique：唯一
 // @default(dbgenerated("NOW()")) 创建时间
@@ -37,4 +49,18 @@ model user{
   created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   status Int @default(0) // 0:正常 1:封禁
+}
+
+// 项目表
+model project{
+  id Int @id @default(autoincrement())
+  user_id String
+  project_id String @unique
+  project_name String
+  project_desc String?
+  project_type ProjectType
+  project_state ProjectState
+  created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+  status Int @default(0) // 0:正常 1:删除
 }

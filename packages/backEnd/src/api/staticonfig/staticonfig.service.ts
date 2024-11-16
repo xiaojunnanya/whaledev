@@ -15,6 +15,6 @@ export class StaticonfigService {
       },
     ]
 
-    return customResponse(0, 'ok', 'success', { data })
+    return customResponse(0, 'ok', 'success', data)
   }
 }

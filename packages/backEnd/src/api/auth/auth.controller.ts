@@ -1,7 +1,9 @@
 import { Controller, Post, Body, Res, Get } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
+import { WhaleSkipAuth } from '@/decorator/router.decorator'
 
+@WhaleSkipAuth()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

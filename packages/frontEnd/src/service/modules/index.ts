@@ -39,7 +39,7 @@ class WhaleRequest {
         const token = headers['authorization']
         if (token) localStorage.setItem('token', token)
         // 遗留的问题：对status进行处理(http状态码)
-
+        console.log('data', data)
         // 这边我是在不知道在去声明axios返回值的类型，只好将数据进行一层封装放到data中
         const newData = {
           data: data.data,
