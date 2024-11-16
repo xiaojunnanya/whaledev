@@ -52,22 +52,18 @@ const App = memo(() => {
     <>
       {msgContextHolder}
 
-      {pathname !== '/login' && (
-        <header style={{ height: '48px' }}>
-          <Header></Header>
-        </header>
-      )}
-
-      <ConfigProvider
-        locale={zhCN}
-        theme={{
-          token: {
-            colorPrimary: theme.color.primaryColor,
-          },
-        }}
-      >
-        {useRoutes(routes)}
-      </ConfigProvider>
+      <article>
+        <ConfigProvider
+          locale={zhCN}
+          theme={{
+            token: {
+              colorPrimary: theme.color.primaryColor,
+            },
+          }}
+        >
+          {useRoutes(routes)}
+        </ConfigProvider>
+      </article>
 
       {pathname === '/' && (
         <footer>

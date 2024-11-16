@@ -29,3 +29,17 @@
     height: 40px;
   }
 }
+
+.head-center {
+  .ant-tabs-nav {
+    margin: 0;
+
+    &&::before {
+      border: none;
+    }
+  }
+
+  .ant-tabs-tab {
+    height: 48px;
+  }
+}
