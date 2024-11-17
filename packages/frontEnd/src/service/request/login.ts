@@ -1,11 +1,10 @@
 import { whaleRequset as req } from '..'
-
 /**
  * 获取邮箱验证码
  * @param email 邮箱
  * @returns
  */
-export const sendEmail = (email: string, type: 'register' | 'forget') => {
+export const sendEmail = (email: string, type: 'register' | 'forget'): any => {
   return req.request({
     method: 'post',
     url: '/auth/email_code',
@@ -21,7 +20,7 @@ export const getCodeImg = () => {
 }
 
 // 注册
-export const register = (data: any) => {
+export const register = (data: any): any => {
   return req.request({
     method: 'post',
     url: '/auth/register',
@@ -30,7 +29,7 @@ export const register = (data: any) => {
 }
 
 // 登录
-export const login = (data: any) => {
+export const login = (data: any): any => {
   return req.request({
     method: 'post',
     url: '/auth/login',
@@ -39,7 +38,7 @@ export const login = (data: any) => {
 }
 
 // 忘记密码
-export const forgetPassword = (data: any) => {
+export const forgetPassword = (data: any): any => {
   return req.request({
     method: 'post',
     url: '/auth/forget',

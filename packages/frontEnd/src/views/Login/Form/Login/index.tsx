@@ -28,7 +28,6 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
     }
 
-    // @ts-ignore
     const { code, messageType, message } = await login(valuesData)
 
     if (code === 0 && messageType === 'success') {

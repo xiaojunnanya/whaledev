@@ -1,9 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-
-export interface otherResp extends AxiosResponse {
-  message: string
-}
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 // http状态码
 export const httpStatusCode = [200, 201, 400, 401, 403, 404, 500, 502]
@@ -39,7 +35,7 @@ class WhaleRequest {
         const token = headers['authorization']
         if (token) localStorage.setItem('token', token)
         // 遗留的问题：对status进行处理(http状态码)
-        console.log('data', data)
+        console.log('status', status)
         return data
       },
       error => {

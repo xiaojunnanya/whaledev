@@ -26,18 +26,15 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
       confirmPassword: SparkMD5.hash(values.confirmPassword),
     }
-    const { data, status } = await forgetPassword(valuesData)
-    const { messageType } = data
-    setMessage({ type: 'success', text: data.message })
-    updateCode()
+    const { code, messageType, message } = await forgetPassword(valuesData)
 
-    if (status === 0 && messageType === 'success') {
-      setMessage({ type: 'success', text: data.message })
+    if (code === 0 && messageType === 'success') {
+      setMessage({ type: 'success', text: message })
       setMode('login')
     } else {
       setMessage({
         type: messageType,
-        text: data.message || gloablErrorMessage,
+        text: message || gloablErrorMessage,
       })
       updateCode()
       form.resetFields(['checkCode'])
@@ -52,9 +49,7 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
-        // @ts-ignore
         const { code, messageType, message } = await sendEmail(email, 'forget')
-
         if (code === 0 && messageType === 'success') {
           setMessage({ type: 'success', text: message })
         } else {

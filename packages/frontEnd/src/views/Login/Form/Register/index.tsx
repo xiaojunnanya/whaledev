@@ -28,7 +28,6 @@ export default memo(() => {
       confirmPassword: SparkMD5.hash(values.confirmPassword),
     }
 
-    // @ts-ignore
     const { code, messageType, message } = await register(valuesData)
 
     if (code === 0 && messageType === 'success') {
@@ -52,14 +51,16 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
-        const { data, status } = await sendEmail(email, 'register')
-        const { messageType } = data
-        if (status === 0 && messageType === 'success') {
-          setMessage({ type: 'success', text: data.message })
+        const { code, messageType, message } = await sendEmail(
+          email,
+          'register',
+        )
+        if (code === 0 && messageType === 'success') {
+          setMessage({ type: 'success', text: message })
         } else {
           setMessage({
             type: messageType,
-            text: data.message || gloablErrorMessage,
+            text: message || gloablErrorMessage,
           })
         }
       })
