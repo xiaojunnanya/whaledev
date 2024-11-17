@@ -28,16 +28,16 @@ export default memo(() => {
       confirmPassword: SparkMD5.hash(values.confirmPassword),
     }
 
-    const { data, status } = await register(valuesData)
-    const { messageType } = data
+    // @ts-ignore
+    const { code, messageType, message } = await register(valuesData)
 
-    if (status === 0 && messageType === 'success') {
-      setMessage({ type: 'success', text: data.message })
+    if (code === 0 && messageType === 'success') {
+      setMessage({ type: 'success', text: message })
       setMode('login')
     } else {
       setMessage({
         type: messageType,
-        text: data.message || gloablErrorMessage,
+        text: message || gloablErrorMessage,
       })
       updateCode()
       form.resetFields(['checkCode'])

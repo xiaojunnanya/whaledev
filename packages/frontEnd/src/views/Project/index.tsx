@@ -33,7 +33,7 @@ export default memo(() => {
   const getProjectTypeData = async () => {
     // 获取项目类型数据
     const { data } = await getProjectType()
-    setProjectTypeData(data.data)
+    setProjectTypeData(data)
   }
 
   const onOk = () => {

@@ -13,12 +13,13 @@ export type CustomCodeKeys = keyof typeof customCode
 export interface responseType {
   code: CustomCodeKeys
   timestamp: string
-  data: {
-    message: string // 确保 message 字段是必需的
-    messageType: 'success' | 'error' | 'warning' | 'info'
-    [key: string]: any // 允许 data 中有任意其他字段
-  }
+  message: string // 确保 message 字段是必需的
+  messageType: 'success' | 'error' | 'warning' | 'info'
+  data?: any
   type: 'custom' | 'system'
 }
 
-export type returnType = Pick<responseType, 'code'> & responseType['data']
+export type returnType = Pick<
+  responseType,
+  'code' | 'message' | 'messageType' | 'data'
+>

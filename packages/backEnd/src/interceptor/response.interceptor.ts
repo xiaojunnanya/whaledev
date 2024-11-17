@@ -41,11 +41,9 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         const returnMsg: responseType = {
           code,
           timestamp: formatDate(),
-          data: {
-            message,
-            messageType,
-            data,
-          },
+          message,
+          messageType,
+          data,
           type: 'custom',
         }
 
