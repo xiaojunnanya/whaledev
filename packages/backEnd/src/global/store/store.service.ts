@@ -1,17 +1,24 @@
 import { Injectable, Scope } from '@nestjs/common'
+import { AsyncLocalStorage } from 'async_hooks'
 
-@Injectable({ scope: Scope.REQUEST }) // 设置为 Request-scoped
+@Injectable()
 export class StoreService {
-  private userId: any
+  private readonly storage = new AsyncLocalStorage<Map<string, any>>()
 
-  setUserId(userId: string) {
-    console.log(userId, '222')
-    this.userId = userId
-    console.log(this.userId, '333')
+  run(callback: () => void) {
+    const store = new Map<string, any>()
+    this.storage.run(store, callback)
   }
 
-  getUserId() {
-    console.log(this.userId, '123')
-    return this.userId
+  set(key: string, value: any) {
+    const store = this.storage.getStore()
+    if (store) {
+      store.set(key, value)
+    }
+  }
+
+  get(key: string): any {
+    const store = this.storage.getStore()
+    return store ? store.get(key) : undefined
   }
 }

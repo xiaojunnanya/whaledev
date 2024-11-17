@@ -40,8 +40,6 @@ import { StoreModule } from './global/store/store.module'
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(RouterMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL }) // 对所有路由生效
+    consumer.apply(RouterMiddleware).forRoutes('*') // 对所有路由生效
   }
 }

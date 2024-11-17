@@ -13,18 +13,16 @@ export class ProjectService {
   ) {}
 
   async createProject(data: createProjectDto) {
-    // const user_id = this.store.getUserId()
-    // console.log(user_id, 'user_id')
-    // await this.prisma.project.create({
-    //   data: {
-    //     user_id: this.asyncStore.get('user_id'),
-    //     project_id: uuidv4(),
-    //     project_name: data.project_name,
-    //     project_desc: data.project_desc,
-    //     project_type: data.project_type,
-    //     project_state: data.project_state,
-    //   },
-    // })
+    await this.prisma.project.create({
+      data: {
+        user_id: this.store.get('user_id'),
+        project_id: uuidv4(),
+        project_name: data.project_name,
+        project_desc: data.project_desc,
+        project_type: data.project_type,
+        project_state: data.project_state,
+      },
+    })
 
     return customResponse(0, '创建成功', 'success')
   }
@@ -32,7 +30,14 @@ export class ProjectService {
   async getProjectList() {
     const projectList = await this.prisma.project.findMany({
       where: {
-        user_id: '1',
+        user_id: this.store.get('user_id'),
+      },
+      select: {
+        project_id: true,
+        project_name: true,
+        project_desc: true,
+        project_type: true,
+        project_state: true,
       },
     })
     console.log('projectList', projectList)
