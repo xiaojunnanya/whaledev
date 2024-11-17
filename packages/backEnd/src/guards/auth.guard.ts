@@ -10,6 +10,7 @@ import { Request } from 'express'
 import { Observable } from 'rxjs'
 import { WHAKE_Skip_AUTH } from '@/decorator/router.decorator'
 import { Reflector } from '@nestjs/core'
+import { StoreService } from '@/global/store/store.service'
 
 // 遗留的问题：待验证
 @Injectable()
@@ -19,6 +20,9 @@ export class LoginGuard implements CanActivate {
 
   @Inject(Reflector)
   private readonly reflector: Reflector
+
+  @Inject(StoreService)
+  private readonly store: StoreService
 
   canActivate(
     context: ExecutionContext,
@@ -50,9 +54,11 @@ export class LoginGuard implements CanActivate {
 
     const token = bearer[1]
 
+    // 遗留的问题，对token内容的验证
     try {
       const info = this.jwtService.verify(token)
-      ;(request as any).user = info.user
+      // this.store.setUserId(info.user_id)
+
       return true
     } catch (e) {
       throw new UnauthorizedException('登录失效，请重新登录')

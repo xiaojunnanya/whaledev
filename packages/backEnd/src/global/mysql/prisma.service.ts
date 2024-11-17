@@ -13,19 +13,4 @@ export class PrismaService
   async onModuleDestroy() {
     await this.$disconnect()
   }
-
-  // 查
-  async findUserByEmail(email: string) {
-    return await this.user.findUnique({
-      where: {
-        email,
-      },
-    })
-  }
-
-  // 增
-
-  // 删
-
-  // 改
 }

@@ -3,6 +3,7 @@ import { memo, useEffect, useState } from 'react'
 import { ProjectStyled } from './style'
 import { SearchOutlined } from '@ant-design/icons'
 import { getProjectType } from '@/service/request/config'
+import { createProject } from '@/service/request/project'
 
 const { Option } = Select
 
@@ -40,6 +41,11 @@ export default memo(() => {
       // 创建
       if (modalType === 'create') {
         console.log(res)
+        const obj = {
+          ...res,
+          project_state: 'inProgress',
+        }
+        createProject(obj)
       }
     })
   }

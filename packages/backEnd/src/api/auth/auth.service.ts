@@ -9,8 +9,8 @@ import Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
 import { customResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
-import { PrismaService } from '@/db/mysql/prisma.service'
 import { JwtService } from '@nestjs/jwt'
+import { PrismaService } from '@/global/mysql/prisma.service'
 
 @Injectable()
 export class AuthService {

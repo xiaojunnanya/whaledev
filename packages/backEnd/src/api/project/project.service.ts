@@ -1,24 +1,30 @@
 import { Injectable } from '@nestjs/common'
 import { createProjectDto } from './dto/project.dto'
-import { PrismaService } from '@/db/mysql/prisma.service'
 import { v4 as uuidv4 } from 'uuid'
 import { customResponse } from '@/interceptor/response.interceptor'
+import { PrismaService } from '@/global/mysql/prisma.service'
+import { StoreService } from '@/global/store/store.service'
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly store: StoreService,
+  ) {}
 
   async createProject(data: createProjectDto) {
-    await this.prisma.project.create({
-      data: {
-        user_id: '1',
-        project_id: uuidv4(),
-        project_name: data.project_name,
-        project_desc: data.project_desc,
-        project_type: data.project_type,
-        project_state: data.project_state,
-      },
-    })
+    // const user_id = this.store.getUserId()
+    // console.log(user_id, 'user_id')
+    // await this.prisma.project.create({
+    //   data: {
+    //     user_id: this.asyncStore.get('user_id'),
+    //     project_id: uuidv4(),
+    //     project_name: data.project_name,
+    //     project_desc: data.project_desc,
+    //     project_type: data.project_type,
+    //     project_state: data.project_state,
+    //   },
+    // })
 
     return customResponse(0, '创建成功', 'success')
   }
