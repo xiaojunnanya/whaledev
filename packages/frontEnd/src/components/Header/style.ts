@@ -42,7 +42,7 @@ export const HeaderStyle = styled.header`
       display: flex;
       align-items: center;
       user-select: none;
-      width: 221px;
+      /* width: 221px; */
       justify-content: flex-end;
       & > div {
         margin: 0 5px;

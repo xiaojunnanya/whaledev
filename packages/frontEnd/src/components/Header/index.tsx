@@ -29,6 +29,7 @@ export default memo((props: IProps) => {
         <div className="head-center">{children && children}</div>
 
         <div className="head-right">
+          <div className="userInfo">123</div>
           <div
             onClick={() => {
               window.open('http://localhost:4173/')

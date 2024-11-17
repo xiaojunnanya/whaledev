@@ -12,6 +12,7 @@ import { LoginGuard } from './guards/auth.guard'
 import { PrismaModule } from './global/mysql/prisma.module'
 import { RedisModule } from './global/redis/redis.module'
 import { StoreModule } from './global/store/store.module'
+import { UserModule } from './api/user/user.module';
 @Module({
   imports: [
     AuthModule,
@@ -20,6 +21,7 @@ import { StoreModule } from './global/store/store.module'
     StoreModule,
     StaticonfigModule,
     ProjectModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

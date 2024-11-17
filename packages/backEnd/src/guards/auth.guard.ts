@@ -11,6 +11,7 @@ import { Observable } from 'rxjs'
 import { WHAKE_Skip_AUTH } from '@/decorator/router.decorator'
 import { Reflector } from '@nestjs/core'
 import { StoreService } from '@/global/store/store.service'
+import { PrismaService } from '@/global/mysql/prisma.service'
 
 // 遗留的问题：待验证
 @Injectable()
@@ -24,9 +25,10 @@ export class LoginGuard implements CanActivate {
   @Inject(StoreService)
   private readonly store: StoreService
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  @Inject(PrismaService)
+  private readonly prisma: PrismaService
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     // 检查路由或控制器是否有 `@WhaleSkipAuth()` 标记，有就不需要权限验证
     const isSkipAuth = this.reflector.getAllAndOverride<boolean>(
       WHAKE_Skip_AUTH,
@@ -49,18 +51,43 @@ export class LoginGuard implements CanActivate {
     const bearer = authorization.split(' ')
 
     if (!bearer || bearer.length !== 2) {
-      throw new UnauthorizedException('登录 token 错误')
+      throw new UnauthorizedException('用户身份信息错误，请重新登录')
     }
 
     const token = bearer[1]
 
     // 遗留的问题，对token内容的验证
     try {
-      const info = this.jwtService.verify(token)
-      this.store.set('user_id', info.user_id)
+      const { user_id = undefined } = this.jwtService.verify(token)
+      const res = await this.prisma.user.findUnique({
+        where: {
+          user_id,
+        },
+      })
+
+      if (!res) {
+        throw new UnauthorizedException('用户身份信息错误，请重新登录')
+      }
+
+      this.store.set('user_id', user_id)
+
       return true
     } catch (e) {
-      throw new UnauthorizedException('登录失效，请重新登录')
+      throw new UnauthorizedException('用户身份信息错误，请重新登录')
+    }
+  }
+
+  async userInfoAuth(user_id: string) {
+    const res = await this.prisma.user.findUnique({
+      where: {
+        user_id,
+      },
+    })
+
+    if (!res) {
+      throw new UnauthorizedException('用户身份信息错误，请重新登录')
+    } else {
+      return res
     }
   }
 }
