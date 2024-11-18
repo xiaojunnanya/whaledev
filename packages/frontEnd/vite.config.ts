@@ -14,6 +14,11 @@ export default defineConfig({
     port: 5173,
     open: false,
     proxy: {
+      '/img': {
+        target: 'http://localhost:3173/',
+        changeOrigin: true,
+        rewrite: path => path.replace('/img', '/img'),
+      },
       '/api': {
         target: 'http://localhost:3173/',
         changeOrigin: true,

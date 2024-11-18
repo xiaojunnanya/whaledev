@@ -29,7 +29,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         const {
           code = 98,
           message = 'Internal Server Error',
-          messageType,
+          msgType,
           data = null,
         } = response as returnType
 
@@ -42,7 +42,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
           code,
           timestamp: formatDate(),
           message,
-          messageType,
+          msgType,
           data,
           type: 'custom',
         }
@@ -56,11 +56,11 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
 export const customResponse = (
   code: returnType['code'],
   message: returnType['message'],
-  messageType: returnType['messageType'],
+  msgType: returnType['msgType'],
   data: returnType['data'] = null,
 ): returnType => ({
   code,
   message,
   data,
-  messageType,
+  msgType,
 })

@@ -44,12 +44,14 @@ export const HeaderStyle = styled.header`
       user-select: none;
       /* width: 221px; */
       justify-content: flex-end;
+
       & > div {
         margin: 0 5px;
       }
 
-      & > div:nth-child(1),
-      & > div:nth-child(3) {
+      .userInfo,
+      .docs,
+      .github {
         cursor: pointer;
       }
     }

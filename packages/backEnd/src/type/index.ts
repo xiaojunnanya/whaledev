@@ -14,12 +14,12 @@ export interface responseType {
   code: CustomCodeKeys
   timestamp: string
   message: string // 确保 message 字段是必需的
-  messageType: 'success' | 'error' | 'warning' | 'info'
+  msgType: 'success' | 'error' | 'warning' | 'info'
   data?: any
   type: 'custom' | 'system'
 }
 
 export type returnType = Pick<
   responseType,
-  'code' | 'message' | 'messageType' | 'data'
+  'code' | 'message' | 'msgType' | 'data'
 >

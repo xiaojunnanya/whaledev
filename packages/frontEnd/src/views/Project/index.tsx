@@ -3,7 +3,9 @@ import { memo, useEffect, useState } from 'react'
 import { ProjectStyled } from './style'
 import { SearchOutlined } from '@ant-design/icons'
 import { getProjectType } from '@/service/request/config'
-import { createProject } from '@/service/request/project'
+import { createProject, getProjectList } from '@/service/request/project'
+import { useGlobal } from '@/stores/global'
+import { gloablErrorMessage } from '@/utils/global'
 
 const { Option } = Select
 
@@ -21,13 +23,14 @@ interface PropjectType {
 
 export default memo(() => {
   const [form] = Form.useForm()
-
+  const { setMessage } = useGlobal()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projectTypeData, setProjectTypeData] = useState<PropjectType[]>([])
+  const [projectData, setProjectData] = useState([])
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
 
   useEffect(() => {
-    getProjectTypeData()
+    Promise.all([getProjectTypeData(), getProjectData()])
   }, [])
 
   const getProjectTypeData = async () => {
@@ -36,16 +39,31 @@ export default memo(() => {
     setProjectTypeData(data)
   }
 
+  const getProjectData = async () => {
+    // 获取项目数据
+    const { data } = await getProjectList()
+    setProjectData(data)
+  }
+
   const onOk = () => {
     form.validateFields().then(async res => {
       // 创建
       if (modalType === 'create') {
-        console.log(res)
         const obj = {
           ...res,
           project_state: 'inProgress',
         }
-        createProject(obj)
+        const { code, msgType, message } = await createProject(obj)
+        if (code === 0 && msgType === 'success') {
+          setMessage({ type: 'success', text: message })
+          setIsModalOpen(false)
+          form.resetFields()
+        } else {
+          setMessage({
+            type: msgType,
+            text: message || gloablErrorMessage,
+          })
+        }
       }
     })
   }
@@ -54,7 +72,7 @@ export default memo(() => {
     setIsModalOpen(false)
     form.resetFields()
   }
-
+  console.log(projectData, 'projectData')
   return (
     <ProjectStyled>
       <div className="top">

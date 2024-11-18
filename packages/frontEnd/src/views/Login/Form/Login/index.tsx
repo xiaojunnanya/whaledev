@@ -28,14 +28,14 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
     }
 
-    const { code, messageType, message } = await login(valuesData)
+    const { code, msgType, message } = await login(valuesData)
 
-    if (code === 0 && messageType === 'success') {
+    if (code === 0 && msgType === 'success') {
       setMessage({ type: 'success', text: message })
       naviage('/engineering/project')
     } else {
       setMessage({
-        type: messageType,
+        type: msgType,
         text: message || gloablErrorMessage,
       })
       updateCode()
