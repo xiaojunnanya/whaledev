@@ -17,4 +17,27 @@ export class StaticonfigService {
 
     return customResponse(0, 'ok', 'success', data)
   }
+
+  getProjectStatus() {
+    const data: any = [
+      {
+        lable: '进行中',
+        value: 'inProgress',
+      },
+      {
+        lable: '已完成',
+        value: 'completed',
+      },
+      {
+        lable: '已暂停',
+        value: 'paused',
+      },
+      {
+        lable: '已废弃',
+        value: 'obsolete',
+      },
+    ]
+
+    return customResponse(0, 'ok', 'success', data)
+  }
 }

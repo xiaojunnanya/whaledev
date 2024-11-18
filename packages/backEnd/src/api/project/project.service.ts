@@ -16,7 +16,7 @@ export class ProjectService {
     await this.prisma.project.create({
       data: {
         user_id: this.store.get('user_id'),
-        project_id: uuidv4(),
+        project_id: `project-${uuidv4()}`,
         project_name: data.project_name,
         project_desc: data.project_desc,
         project_type: data.project_type,
@@ -31,8 +31,10 @@ export class ProjectService {
     const projectList = await this.prisma.project.findMany({
       where: {
         user_id: this.store.get('user_id'),
+        status: 0,
       },
       select: {
+        id: true,
         project_id: true,
         project_name: true,
         project_desc: true,
@@ -40,7 +42,21 @@ export class ProjectService {
         project_state: true,
       },
     })
-    console.log('projectList', projectList)
+
     return customResponse(0, '获取成功', 'success', projectList)
+  }
+
+  async deleteProject(id: number) {
+    console.log(id, 'id')
+    await this.prisma.project.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        status: 1,
+      },
+    })
+
+    return customResponse(0, '删除成功', 'success')
   }
 }

@@ -134,7 +134,7 @@ export class AuthService {
       // 注册
       await this.prisma.user.create({
         data: {
-          user_id: uuidv4(),
+          user_id: `user-${uuidv4()}`,
           email,
           password,
         },

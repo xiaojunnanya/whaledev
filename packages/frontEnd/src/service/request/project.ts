@@ -11,3 +11,11 @@ export const createProject = (data: any): any => {
     data,
   })
 }
+
+// 删除项目
+export const deleteProject = (id: number): any => {
+  return req.request({
+    url: `/project/delete/${id}`,
+    method: 'delete',
+  })
+}

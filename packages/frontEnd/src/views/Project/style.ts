@@ -24,7 +24,9 @@ export const ProjectStyled = styled.div`
         margin-top: 10px;
 
         .type {
-          border: 1px solid #ccc;
+          border: 1px solid;
+          border-color: ${props => props.theme.color.primaryColor};
+          color: ${props => props.theme.color.primaryColor};
           font-size: 12px;
           padding: 2px 5px;
           border-radius: 5px;

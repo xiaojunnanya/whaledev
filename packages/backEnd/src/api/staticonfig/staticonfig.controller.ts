@@ -11,4 +11,10 @@ export class StaticonfigController {
   getProjectType() {
     return this.staticonfigService.getProjectType()
   }
+
+  @WhaleSkipAuth()
+  @Get('project_status')
+  getProjectStatus() {
+    return this.staticonfigService.getProjectStatus()
+  }
 }
