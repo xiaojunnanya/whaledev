@@ -33,6 +33,7 @@ export class ProjectService {
         user_id: this.store.get('user_id'),
         status: 0,
       },
+      orderBy: { created_time: 'desc' },
       select: {
         id: true,
         project_id: true,
@@ -47,10 +48,9 @@ export class ProjectService {
   }
 
   async deleteProject(id: number) {
-    console.log(id, 'id')
     await this.prisma.project.update({
       where: {
-        id: Number(id),
+        id: id,
       },
       data: {
         status: 1,
@@ -58,5 +58,21 @@ export class ProjectService {
     })
 
     return customResponse(0, '删除成功', 'success')
+  }
+
+  async updateProject(id: number, data: createProjectDto) {
+    await this.prisma.project.update({
+      where: {
+        id: id,
+      },
+      data: {
+        project_name: data.project_name,
+        project_desc: data.project_desc,
+        project_type: data.project_type,
+        project_state: data.project_state,
+      },
+    })
+
+    return customResponse(0, '更新成功', 'success')
   }
 }

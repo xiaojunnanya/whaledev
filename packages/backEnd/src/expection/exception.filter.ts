@@ -14,7 +14,7 @@ export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
-
+    console.log(exception, 'exception')
     // 处理 class-validator 的异常兼容
     const validatorErr =
       exception instanceof HttpException &&

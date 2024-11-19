@@ -19,3 +19,12 @@ export const deleteProject = (id: number): any => {
     method: 'delete',
   })
 }
+
+// 更新项目
+export const updateProject = (id: number, data: any): any => {
+  return req.request({
+    url: `/project/update/${id}`,
+    method: 'put',
+    data,
+  })
+}

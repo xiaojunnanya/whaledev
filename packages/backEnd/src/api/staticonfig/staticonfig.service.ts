@@ -23,18 +23,22 @@ export class StaticonfigService {
       {
         lable: '进行中',
         value: 'inProgress',
+        color: '#0099FF',
       },
       {
         lable: '已完成',
         value: 'completed',
+        color: '#52C41A',
       },
       {
         lable: '已暂停',
         value: 'paused',
+        color: '#FAAD14',
       },
       {
         lable: '已废弃',
         value: 'obsolete',
+        color: '#FF4D4F',
       },
     ]
 

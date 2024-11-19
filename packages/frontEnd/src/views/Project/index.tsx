@@ -25,6 +25,7 @@ import {
   createProject,
   deleteProject,
   getProjectList,
+  updateProject,
 } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
@@ -41,6 +42,7 @@ interface FieldType {
 interface PropjectTypeType {
   lable: string
   value: string
+  color?: string
 }
 
 interface ProjectType {
@@ -62,6 +64,7 @@ export default memo(() => {
   )
   const [projectData, setProjectData] = useState<ProjectType[]>([])
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
+  const [editId, setEditId] = useState<number>(-1)
 
   useEffect(() => {
     Promise.all([getProjectTypeData(), getProjectData(), getProjectState()])
@@ -87,7 +90,6 @@ export default memo(() => {
 
   const onOk = () => {
     form.validateFields().then(async res => {
-      console.log(res, 'res')
       // 创建
       if (modalType === 'create') {
         const obj = {
@@ -106,13 +108,27 @@ export default memo(() => {
             text: message || gloablErrorMessage,
           })
         }
+      } else {
+        console.log(res, 'res')
+        const { code, msgType, message } = await updateProject(editId, res)
+        if (code === 0 && msgType === 'success') {
+          getProjectData()
+          setMessage({ type: 'success', text: message })
+          setIsModalOpen(false)
+          form.resetFields()
+        } else {
+          setMessage({
+            type: msgType,
+            text: message || gloablErrorMessage,
+          })
+        }
       }
     })
   }
 
   const editModal = (e: any, item: any) => {
     e.stopPropagation()
-
+    setEditId(item.id)
     setModalType('edit')
     form.setFieldsValue(item)
     setIsModalOpen(true)
@@ -211,13 +227,11 @@ export default memo(() => {
                         <div>{item.project_desc}</div>
                         <div className="typestate">
                           <span className="type">前台页面</span>
-                          <Tag color="red">
-                            {
-                              projectStateData.filter(
-                                i => i.value === item.project_state,
-                              )[0]?.lable
+                          {projectStateData.map(i => {
+                            if (i.value === item.project_state) {
+                              return <Tag color={i.color}>{i.lable}</Tag>
                             }
-                          </Tag>
+                          })}
                         </div>
                       </div>
                     }
