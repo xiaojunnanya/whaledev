@@ -210,11 +210,7 @@ export default memo(() => {
         </div>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <Button type="primary" htmlType="submit" block>
             注册
           </Button>
         </Form.Item>

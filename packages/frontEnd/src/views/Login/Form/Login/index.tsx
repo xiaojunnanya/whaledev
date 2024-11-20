@@ -132,15 +132,11 @@ export default memo(() => {
         </div>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <Button type="primary" htmlType="submit" block>
             登录
           </Button>
           <Button
-            className="login-form-button"
+            block
             style={{ marginTop: '20px' }}
             onClick={() => {
               naviage('/')

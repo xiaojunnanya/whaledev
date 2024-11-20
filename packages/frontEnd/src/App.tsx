@@ -1,4 +1,4 @@
-import { ConfigProvider, message } from 'antd'
+import { ConfigProvider, FloatButton, message, Popover } from 'antd'
 import { memo, useEffect } from 'react'
 import { useGlobal } from './stores/global'
 import zhCN from 'antd/es/locale/zh_CN'
@@ -6,7 +6,8 @@ import { useLocation, useRoutes } from 'react-router-dom'
 import theme from './assets/theme'
 import routes from './router'
 import Footer from './components/Footer'
-import Header from './components/Header'
+import wechat from '@/assets/images/png/wechat.png'
+import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
 
 const App = memo(() => {
   const [messageApi, msgContextHolder] = message.useMessage()
@@ -64,6 +65,23 @@ const App = memo(() => {
           {useRoutes(routes)}
         </ConfigProvider>
       </article>
+
+      {/* <>
+        <FloatButton.Group
+          trigger="hover"
+          type="primary"
+          style={{ insetInlineEnd: 25 }}
+          icon={<MessageOutlined />}
+        >
+          <Popover
+            content={<img src={wechat} alt="wechat" style={{ width: 200 }} />}
+            title="加我微信"
+            placement="left"
+          >
+            <FloatButton icon={<CommentOutlined />} />
+          </Popover>
+        </FloatButton.Group>
+      </> */}
 
       {pathname === '/' && (
         <footer>

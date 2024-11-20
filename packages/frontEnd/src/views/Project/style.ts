@@ -13,9 +13,6 @@ export const ProjectStyled = styled.div`
 
   .content {
     padding: 10px 30px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 48px - 62px - 20px - 72px);
 
     .otherinfo {
       .typestate {
@@ -33,17 +30,5 @@ export const ProjectStyled = styled.div`
         }
       }
     }
-
-    .ant-pagination {
-      display: flex;
-      justify-content: flex-end;
-      margin: 20px;
-    }
-  }
-
-  .bottom {
-    display: flex;
-    justify-content: flex-end;
-    margin: 20px;
   }
 `

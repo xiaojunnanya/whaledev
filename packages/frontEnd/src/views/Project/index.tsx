@@ -29,6 +29,7 @@ import {
 } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
+import Container from '@/components/Container'
 const { Meta } = Card
 const { Option } = Select
 
@@ -54,6 +55,11 @@ interface ProjectType {
   project_state: string
 }
 
+const optionsWithScene = [
+  { label: '个人', value: 'slef' },
+  { label: '分享', value: 'share' },
+]
+// 遗留的问题：分享功能、复制功能、搜索功能、分页功能、页面加载
 export default memo(() => {
   const [form] = Form.useForm()
   const { setMessage } = useGlobal()
@@ -62,11 +68,14 @@ export default memo(() => {
   const [projectStateData, setProjectStateData] = useState<PropjectTypeType[]>(
     [],
   )
+  const [radioValue, setRadioValue] = useState('slef')
   const [projectData, setProjectData] = useState<ProjectType[]>([])
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   const [editId, setEditId] = useState<number>(-1)
+  const [cardLoading, setCardLoading] = useState<boolean>(false)
 
   useEffect(() => {
+    setCardLoading(true)
     Promise.all([getProjectTypeData(), getProjectData(), getProjectState()])
   }, [])
 
@@ -78,7 +87,6 @@ export default memo(() => {
 
   const getProjectState = async () => {
     const { data } = await getProjectStatus()
-    console.log(data, 'data')
     setProjectStateData(data)
   }
 
@@ -86,42 +94,29 @@ export default memo(() => {
     // 获取项目数据
     const { data } = await getProjectList()
     setProjectData(data)
+    setCardLoading(false)
   }
 
   const onOk = () => {
     form.validateFields().then(async res => {
-      // 创建
-      if (modalType === 'create') {
-        const obj = {
-          ...res,
-          project_state: 'inProgress',
-        }
-        const { code, msgType, message } = await createProject(obj)
-        if (code === 0 && msgType === 'success') {
-          getProjectData()
-          setMessage({ type: 'success', text: message })
-          setIsModalOpen(false)
-          form.resetFields()
-        } else {
-          setMessage({
-            type: msgType,
-            text: message || gloablErrorMessage,
-          })
-        }
+      const obj = {
+        ...res,
+        project_state: 'inProgress',
+      }
+      const { code, msgType, message } =
+        modalType === 'create'
+          ? await createProject(obj)
+          : await updateProject(editId, res)
+      if (code === 0 && msgType === 'success') {
+        getProjectData()
+        setMessage({ type: 'success', text: message })
+        setIsModalOpen(false)
+        form.resetFields()
       } else {
-        console.log(res, 'res')
-        const { code, msgType, message } = await updateProject(editId, res)
-        if (code === 0 && msgType === 'success') {
-          getProjectData()
-          setMessage({ type: 'success', text: message })
-          setIsModalOpen(false)
-          form.resetFields()
-        } else {
-          setMessage({
-            type: msgType,
-            text: message || gloablErrorMessage,
-          })
-        }
+        setMessage({
+          type: msgType,
+          text: message || gloablErrorMessage,
+        })
       }
     })
   }
@@ -153,6 +148,10 @@ export default memo(() => {
     }
   }
 
+  const onChangeRadio = (e: any) => {
+    setRadioValue(e.target.value)
+  }
+
   return (
     <ProjectStyled>
       <div className="top">
@@ -162,6 +161,13 @@ export default memo(() => {
           allowClear
           // value={searchValue}
           // onChange={e => searchChange(e)}
+        />
+        <Radio.Group
+          options={optionsWithScene}
+          onChange={onChangeRadio}
+          value={radioValue}
+          optionType="button"
+          buttonStyle="solid"
         />
         <Button
           type="primary"
@@ -174,74 +180,86 @@ export default memo(() => {
         </Button>
       </div>
 
-      <div className="content">
-        <Row gutter={[16, 16]}>
-          {projectData.map(item => {
-            return (
-              <Col span={6} key={item.project_id}>
-                <Card
-                  actions={[
-                    <CopyOutlined
-                      key="copy"
-                      onClick={e => {
-                        e.stopPropagation()
-                      }}
-                    />,
-                    <EditOutlined
-                      key="edit"
-                      onClick={e => {
-                        editModal(e, item)
-                      }}
-                    />,
-                    <Popconfirm
-                      title="提示"
-                      description="确定要删除该项目吗"
-                      onConfirm={e => {
-                        deleteOneProject(e, item.id)
-                      }}
-                      onCancel={e => {
-                        e?.stopPropagation()
-                      }}
-                      okText="确定"
-                      cancelText="取消"
-                    >
-                      <DeleteOutlined
-                        key="delete"
+      <Container>
+        <div className="content">
+          <Row gutter={[16, 16]}>
+            {projectData.map(item => {
+              return (
+                <Col span={6} key={item.project_id}>
+                  <Card
+                    actions={[
+                      <CopyOutlined
+                        key="copy"
                         onClick={e => {
                           e.stopPropagation()
                         }}
-                      />
-                    </Popconfirm>,
-                  ]}
-                  hoverable
-                  // onClick={() =>{ goProjectDetail(item.projectId)}}
-                  // loading={cardLoading}
-                >
-                  <Meta
-                    avatar={
-                      <Avatar src={'http://www.xiaojunnan.cn/img/logo.webp'} />
-                    }
-                    title={item.project_name}
-                    description={
-                      <div className="otherinfo">
-                        <div>{item.project_desc}</div>
-                        <div className="typestate">
-                          <span className="type">前台页面</span>
-                          {projectStateData.map(i => {
-                            if (i.value === item.project_state) {
-                              return <Tag color={i.color}>{i.lable}</Tag>
-                            }
-                          })}
+                      />,
+                      <EditOutlined
+                        key="edit"
+                        onClick={e => {
+                          editModal(e, item)
+                        }}
+                      />,
+                      <Popconfirm
+                        title="提示"
+                        description="确定要删除该项目吗"
+                        onConfirm={e => {
+                          deleteOneProject(e, item.id)
+                        }}
+                        onCancel={e => {
+                          e?.stopPropagation()
+                        }}
+                        okText="确定"
+                        cancelText="取消"
+                      >
+                        <DeleteOutlined
+                          key="delete"
+                          onClick={e => {
+                            e.stopPropagation()
+                          }}
+                        />
+                      </Popconfirm>,
+                    ]}
+                    hoverable
+                    // onClick={() =>{ goProjectDetail(item.projectId)}}
+                    loading={cardLoading}
+                  >
+                    <Meta
+                      avatar={
+                        <Avatar
+                          src={'http://www.xiaojunnan.cn/img/logo.webp'}
+                        />
+                      }
+                      title={item.project_name}
+                      description={
+                        <div className="otherinfo">
+                          <div>{item.project_desc}</div>
+                          <div className="typestate">
+                            <span className="type">
+                              {projectTypeData.map(i => {
+                                if (i.value === item.project_type) {
+                                  return i.lable
+                                }
+                              })}
+                            </span>
+                            <>
+                              {projectStateData.map(i => {
+                                if (i.value === item.project_state) {
+                                  return <Tag color={i.color}>{i.lable}</Tag>
+                                }
+                              })}
+                            </>
+                          </div>
                         </div>
-                      </div>
-                    }
-                  />
-                </Card>
-              </Col>
-            )
-          })}
-        </Row>
-      </div>
+                      }
+                    />
+                  </Card>
+                </Col>
+              )
+            })}
+          </Row>
+        </div>
+      </Container>
 
       <Modal
         title={modalType === 'create' ? '创建应用' : '编辑应用'}

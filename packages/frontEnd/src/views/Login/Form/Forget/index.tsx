@@ -208,13 +208,8 @@ export default memo(() => {
         </div>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            {' '}
-            重置密码{' '}
+          <Button type="primary" htmlType="submit" block>
+            重置密码
           </Button>
         </Form.Item>
       </Form>
