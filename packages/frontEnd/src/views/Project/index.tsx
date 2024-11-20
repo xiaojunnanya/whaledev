@@ -72,7 +72,9 @@ export default memo(() => {
   )
   const [radioValue, setRadioValue] = useState('slef')
   // 项目数目
-  const [projectData, setProjectData] = useState<ProjectType[]>([])
+  const [projectData, setProjectData] = useState<ProjectType[]>([
+    {} as ProjectType,
+  ])
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   // 当前编辑的卡片id
   const [editId, setEditId] = useState<number>(-1)
@@ -94,12 +96,13 @@ export default memo(() => {
     ])
   }, [])
 
+  // 获取项目类型数据
   const getProjectTypeData = async () => {
-    // 获取项目类型数据
     const { data } = await getProjectType()
     setProjectTypeData(data)
   }
 
+  // 获取项目类型状态
   const getProjectState = async () => {
     const { data } = await getProjectStatus()
     setProjectStateData(data)
@@ -111,12 +114,12 @@ export default memo(() => {
     setTotalPage(data.total)
   }
 
+  // 获取项目数据
   const getProjectData = async (page: number) => {
-    setCardLoading(false)
-    // 获取项目数据
     const { data } = await getProjectList(page)
     setProjectData(data.data)
     setTotalPage(data.total)
+    setCardLoading(false)
   }
 
   const onOk = () => {
@@ -175,6 +178,7 @@ export default memo(() => {
   }
 
   const onchangePage = (page: number) => {
+    setCardLoading(true)
     setCurrentPage(page)
     getProjectData(page)
   }
@@ -219,7 +223,7 @@ export default memo(() => {
         </Button>
       </div>
 
-      <Container isLoading={cardLoading}>
+      <Container isLoading={cardLoading} height={150}>
         <div className="content">
           <Row gutter={[16, 16]}>
             {projectData.map(item => {

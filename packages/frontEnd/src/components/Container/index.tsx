@@ -13,8 +13,8 @@ export default memo((props: IProps) => {
   const { children, height = 48, isLoading = false } = props
   return (
     <Flex gap="middle" vertical>
-      <Spin tip="Loading..." spinning={isLoading}>
-        <ContainerStyled height={150}>{children}</ContainerStyled>
+      <Spin tip="加载中..." spinning={isLoading}>
+        <ContainerStyled height={height}>{children}</ContainerStyled>
       </Spin>
     </Flex>
   )

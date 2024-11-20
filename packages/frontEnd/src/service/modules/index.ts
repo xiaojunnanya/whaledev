@@ -15,8 +15,7 @@ class WhaleRequest {
     // 请求拦截器
     this.instance.interceptors.request.use(
       config => {
-        if (config.url)
-          config.url = `${config.url}?time=${new Date().getTime()}`
+        if (config.url) config.url = `${config.url}?_=${new Date().getTime()}`
 
         const token = localStorage.getItem('token')
         if (token) config.headers['authorization'] = 'Bearer ' + token
