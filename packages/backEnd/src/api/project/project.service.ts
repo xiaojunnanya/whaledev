@@ -27,24 +27,79 @@ export class ProjectService {
     return customResponse(0, '创建成功', 'success')
   }
 
-  async getProjectList() {
-    const projectList = await this.prisma.project.findMany({
-      where: {
-        user_id: this.store.get('user_id'),
-        status: 0,
-      },
-      orderBy: { created_time: 'desc' },
-      select: {
-        id: true,
-        project_id: true,
-        project_name: true,
-        project_desc: true,
-        project_type: true,
-        project_state: true,
-      },
-    })
+  async getProjectList(page: number) {
+    // 优化查询，避免查询两次:使用聚合查询
+    const userId = this.store.get('user_id')
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where: {
+          user_id: userId,
+          status: 0,
+        },
+        orderBy: { created_time: 'desc' },
+        select: {
+          id: true,
+          project_id: true,
+          project_name: true,
+          project_desc: true,
+          project_type: true,
+          project_state: true,
+        },
+        skip: (page - 1) * 8,
+        take: 8,
+      }),
+      this.prisma.project.count({
+        where: {
+          user_id: userId,
+          status: 0,
+        },
+      }),
+    ])
 
-    return customResponse(0, '获取成功', 'success', projectList)
+    return customResponse(0, '获取成功', 'success', {
+      data,
+      total,
+    })
+  }
+
+  async searchProject(keyword: string, page: number) {
+    const userId = this.store.get('user_id')
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where: {
+          user_id: userId,
+          status: 0,
+          project_name: {
+            contains: keyword, // 包含
+          },
+        },
+        orderBy: { created_time: 'desc' },
+        select: {
+          id: true,
+          project_id: true,
+          project_name: true,
+          project_desc: true,
+          project_type: true,
+          project_state: true,
+        },
+        skip: (page - 1) * 8,
+        take: 8,
+      }),
+      this.prisma.project.count({
+        where: {
+          user_id: userId,
+          status: 0,
+          project_name: {
+            contains: keyword, // 包含
+          },
+        },
+      }),
+    ])
+
+    return customResponse(0, '获取成功', 'success', {
+      data,
+      total,
+    })
   }
 
   async deleteProject(id: number) {

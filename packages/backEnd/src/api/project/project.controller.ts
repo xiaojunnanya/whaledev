@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common'
 import { ProjectService } from './project.service'
 import { createProjectDto } from './dto/project.dto'
@@ -21,8 +22,8 @@ export class ProjectController {
   }
 
   @Get('list')
-  getProjectList() {
-    return this.projectService.getProjectList()
+  getProjectList(@Query('page', ParseIntPipe) page: number = 1) {
+    return this.projectService.getProjectList(page)
   }
 
   @Delete('/delete/:id')
@@ -36,5 +37,13 @@ export class ProjectController {
     @Body() data: createProjectDto,
   ) {
     return this.projectService.updateProject(id, data)
+  }
+
+  @Get('/search')
+  searchProject(
+    @Query('page', ParseIntPipe) page: number = 1,
+    @Query('keyword') keyword: string = '',
+  ) {
+    return this.projectService.searchProject(keyword, page)
   }
 }

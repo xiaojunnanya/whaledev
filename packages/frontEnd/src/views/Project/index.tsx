@@ -6,6 +6,7 @@ import {
   Form,
   Input,
   Modal,
+  Pagination,
   Popconfirm,
   Radio,
   Row,
@@ -25,6 +26,7 @@ import {
   createProject,
   deleteProject,
   getProjectList,
+  searchProject,
   updateProject,
 } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
@@ -59,7 +61,7 @@ const optionsWithScene = [
   { label: '个人', value: 'slef' },
   { label: '分享', value: 'share' },
 ]
-// 遗留的问题：分享功能、复制功能、搜索功能、分页功能、页面加载
+// 遗留的问题：分享功能、复制功能、类型部分
 export default memo(() => {
   const [form] = Form.useForm()
   const { setMessage } = useGlobal()
@@ -69,14 +71,27 @@ export default memo(() => {
     [],
   )
   const [radioValue, setRadioValue] = useState('slef')
+  // 项目数目
   const [projectData, setProjectData] = useState<ProjectType[]>([])
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
+  // 当前编辑的卡片id
   const [editId, setEditId] = useState<number>(-1)
+  // 页面加载
   const [cardLoading, setCardLoading] = useState<boolean>(false)
+  // 总页码
+  const [totalPage, setTotalPage] = useState<number>(1)
+  // 当前分页
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  // 搜索
+  const [searchValue, setSearchValue] = useState<string>('')
 
   useEffect(() => {
     setCardLoading(true)
-    Promise.all([getProjectTypeData(), getProjectData(), getProjectState()])
+    Promise.all([
+      getProjectTypeData(),
+      getProjectData(currentPage),
+      getProjectState(),
+    ])
   }, [])
 
   const getProjectTypeData = async () => {
@@ -90,11 +105,18 @@ export default memo(() => {
     setProjectStateData(data)
   }
 
-  const getProjectData = async () => {
-    // 获取项目数据
-    const { data } = await getProjectList()
-    setProjectData(data)
+  const searchHandleProject = async (keyword: string, page: number) => {
+    const { data } = await searchProject(keyword, page)
+    setProjectData(data.data)
+    setTotalPage(data.total)
+  }
+
+  const getProjectData = async (page: number) => {
     setCardLoading(false)
+    // 获取项目数据
+    const { data } = await getProjectList(page)
+    setProjectData(data.data)
+    setTotalPage(data.total)
   }
 
   const onOk = () => {
@@ -108,7 +130,7 @@ export default memo(() => {
           ? await createProject(obj)
           : await updateProject(editId, res)
       if (code === 0 && msgType === 'success') {
-        getProjectData()
+        getProjectData(currentPage)
         setMessage({ type: 'success', text: message })
         setIsModalOpen(false)
         form.resetFields()
@@ -138,7 +160,7 @@ export default memo(() => {
     e.stopPropagation()
     const { code, msgType, message } = await deleteProject(id)
     if (code === 0 && msgType === 'success') {
-      getProjectData()
+      getProjectData(currentPage)
       setMessage({ type: 'success', text: message })
     } else {
       setMessage({
@@ -152,6 +174,23 @@ export default memo(() => {
     setRadioValue(e.target.value)
   }
 
+  const onchangePage = (page: number) => {
+    setCurrentPage(page)
+    getProjectData(page)
+  }
+
+  // 遗留的问题：防抖
+  const searchChange = (e: any) => {
+    const keyname = e.target.value
+    setCurrentPage(1)
+    setSearchValue(keyname)
+    if (!keyname) {
+      getProjectData(currentPage)
+    } else {
+      searchHandleProject(e.target.value, 1)
+    }
+  }
+
   return (
     <ProjectStyled>
       <div className="top">
@@ -159,8 +198,8 @@ export default memo(() => {
           prefix={<SearchOutlined />}
           placeholder="请输入应用名称"
           allowClear
-          // value={searchValue}
-          // onChange={e => searchChange(e)}
+          value={searchValue}
+          onChange={e => searchChange(e)}
         />
         <Radio.Group
           options={optionsWithScene}
@@ -180,7 +219,7 @@ export default memo(() => {
         </Button>
       </div>
 
-      <Container>
+      <Container isLoading={cardLoading}>
         <div className="content">
           <Row gutter={[16, 16]}>
             {projectData.map(item => {
@@ -260,6 +299,17 @@ export default memo(() => {
           </Row>
         </div>
       </Container>
+
+      <Pagination
+        total={totalPage}
+        showQuickJumper
+        showSizeChanger={false}
+        showTotal={total => `共 ${total} 条`}
+        defaultPageSize={8}
+        current={currentPage}
+        align="end"
+        onChange={onchangePage}
+      />
 
       <Modal
         title={modalType === 'create' ? '创建应用' : '编辑应用'}

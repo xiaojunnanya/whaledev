@@ -1,7 +1,13 @@
 import { whaleRequset as req } from '..'
 
-export const getProjectList = () => {
-  return req.get('/project/list')
+export const getProjectList = (page: number): any => {
+  return req.request({
+    url: '/project/list',
+    method: 'get',
+    params: {
+      page,
+    },
+  })
 }
 
 export const createProject = (data: any): any => {
@@ -26,5 +32,17 @@ export const updateProject = (id: number, data: any): any => {
     url: `/project/update/${id}`,
     method: 'put',
     data,
+  })
+}
+
+// 查询
+export const searchProject = (keyword: string, page: number): any => {
+  return req.request({
+    url: '/project/search',
+    method: 'get',
+    params: {
+      keyword,
+      page,
+    },
   })
 }

@@ -4,3 +4,7 @@
 .ant-spin-dot {
   color: #00bfff;
 }
+
+.ant-pagination.ant-pagination-end {
+  margin-right: 40px;
+}
