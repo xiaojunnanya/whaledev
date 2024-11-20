@@ -1,11 +1,13 @@
 import { RouteObject } from 'react-router-dom'
 import { lazy } from 'react'
 
-const Home = lazy(() => import('@/views/Home/index'))
-const Login = lazy(() => import('@/views/Login/index.tsx'))
+const Home = lazy(() => import('@/views/Home'))
+const Login = lazy(() => import('@/views/Login'))
 const Engineering = lazy(() => import('@/views/Engineering'))
-const NotFound = lazy(() => import('@/components/NotFound/index'))
+const NotFound = lazy(() => import('@/components/NotFound'))
+const ReactPlay = lazy(() => import('@/views/ReactPlay'))
 
+// 遗留的问题，URL权限问题
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -24,6 +26,10 @@ const routes: RouteObject[] = [
         element: <Engineering />,
       },
     ],
+  },
+  {
+    path: '/reactplay',
+    element: <ReactPlay />,
   },
   {
     path: '*',

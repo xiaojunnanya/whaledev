@@ -57,6 +57,8 @@ interface ProjectType {
   project_state: string
 }
 
+const defaultProjectData = [{}, {}, {}, {}, {}, {}, {}, {}] as ProjectType[]
+
 const optionsWithScene = [
   { label: '个人', value: 'slef' },
   { label: '分享', value: 'share' },
@@ -72,9 +74,8 @@ export default memo(() => {
   )
   const [radioValue, setRadioValue] = useState('slef')
   // 项目数目
-  const [projectData, setProjectData] = useState<ProjectType[]>([
-    {} as ProjectType,
-  ])
+  const [projectData, setProjectData] =
+    useState<ProjectType[]>(defaultProjectData)
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   // 当前编辑的卡片id
   const [editId, setEditId] = useState<number>(-1)
@@ -183,7 +184,7 @@ export default memo(() => {
     getProjectData(page)
   }
 
-  // 遗留的问题：防抖
+  // 遗留的问题：防抖、中文打字的问题
   const searchChange = (e: any) => {
     const keyname = e.target.value
     setCurrentPage(1)
@@ -226,9 +227,9 @@ export default memo(() => {
       <Container isLoading={cardLoading} height={150}>
         <div className="content">
           <Row gutter={[16, 16]}>
-            {projectData.map(item => {
+            {projectData.map((item, index) => {
               return (
-                <Col span={6} key={item.project_id}>
+                <Col span={6} key={item.project_id || index}>
                   <Card
                     actions={[
                       <CopyOutlined
@@ -278,17 +279,25 @@ export default memo(() => {
                         <div className="otherinfo">
                           <div>{item.project_desc}</div>
                           <div className="typestate">
-                            <span className="type">
+                            <>
                               {projectTypeData.map(i => {
                                 if (i.value === item.project_type) {
-                                  return i.lable
+                                  return (
+                                    <span className="type" key={i.value}>
+                                      {i.lable}
+                                    </span>
+                                  )
                                 }
                               })}
-                            </span>
+                            </>
                             <>
                               {projectStateData.map(i => {
                                 if (i.value === item.project_state) {
-                                  return <Tag color={i.color}>{i.lable}</Tag>
+                                  return (
+                                    <Tag color={i.color} key={i.value}>
+                                      {i.lable}
+                                    </Tag>
+                                  )
                                 }
                               })}
                             </>
