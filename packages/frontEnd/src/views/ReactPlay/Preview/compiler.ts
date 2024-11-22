@@ -14,6 +14,8 @@ export const beforeTransformCode = (filename: string, code: string) => {
   return _code
 }
 
+// 遗留的问题：可以作为难点纪录 web worker 优化
+// https://vitejs.cn/vite3-cn/guide/features.html#web-workers
 export const babelTransform = (
   filename: string,
   code: string,
@@ -107,3 +109,14 @@ export const compile = (files: Files) => {
   const main = files[ENTRY_FILE_NAME]
   return babelTransform(ENTRY_FILE_NAME, main.value, files)
 }
+
+self.addEventListener('message', async ({ data }) => {
+  try {
+    self.postMessage({
+      type: 'COMPILED_CODE',
+      data: compile(data),
+    })
+  } catch (e) {
+    self.postMessage({ type: 'ERROR', error: e })
+  }
+})

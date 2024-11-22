@@ -7,6 +7,8 @@ import {
 import { memo, useEffect, useState } from 'react'
 import { FileNameListStyled } from './style'
 import FileNameItem from './FileNameItem'
+import { DownloadOutlined } from '@ant-design/icons'
+import { downloadFiles } from '@/utils'
 
 export default memo(() => {
   const {
@@ -65,6 +67,12 @@ export default memo(() => {
       <div className="add" onClick={addTab}>
         +
       </div>
+      <DownloadOutlined
+        style={{ marginLeft: '10px' }}
+        onClick={async () => {
+          await downloadFiles(files)
+        }}
+      />
     </FileNameListStyled>
   )
 })

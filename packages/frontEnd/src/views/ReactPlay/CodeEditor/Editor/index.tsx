@@ -55,6 +55,7 @@ export default memo((props: IProps) => {
       onMount={handleEditorMount}
       onChange={onChange}
       value={file.value}
+      loading={'编译中...'}
       options={{
         fontSize: 14,
         scrollBeyondLastLine: false,

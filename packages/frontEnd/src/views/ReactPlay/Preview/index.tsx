@@ -1,8 +1,11 @@
 import { IMPORT_MAP_FILE_NAME, useReactPlay } from '@/stores/reactplay'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { compile } from './compiler'
 import iframeRaw from '../Template/iframe.html?raw'
 import MessageContainer from '@/components/MessageContainer'
+
+import CompilerWorker from './compiler?worker'
+import { debounce } from 'lodash-es'
 
 interface MessageData {
   data: {
@@ -15,16 +18,38 @@ export default memo(() => {
   const { files } = useReactPlay()
   const [compiledCode, setCompiledCode] = useState('')
   const [iframeUrl, setIframeUrl] = useState(getIframeUrl())
+  const compilerWorkerRef = useRef<Worker>()
 
   useEffect(() => {
     setIframeUrl(getIframeUrl())
   }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode])
 
-  // 遗留的问题：监听变化有问题(可以记为难点)
   useEffect(() => {
-    const res = compile(files)
-    setCompiledCode(res)
-  }, [JSON.stringify(files)])
+    if (!compilerWorkerRef.current) {
+      compilerWorkerRef.current = new CompilerWorker()
+      compilerWorkerRef.current.addEventListener('message', ({ data }) => {
+        console.log('worker', data)
+        if (data.type === 'COMPILED_CODE') {
+          setCompiledCode(data.data)
+        } else {
+          //console.log('error', data);
+        }
+      })
+    }
+  }, [])
+
+  useEffect(
+    debounce(() => {
+      compilerWorkerRef.current?.postMessage(files)
+    }, 500),
+    [JSON.stringify(files)],
+  )
+
+  // 遗留的问题：监听变化有问题(可以记为难点)
+  // useEffect(() => {
+  //   const res = compile(files)
+  //   setCompiledCode(res)
+  // }, [JSON.stringify(files)])
 
   function getIframeUrl() {
     const res = iframeRaw
@@ -55,6 +80,8 @@ export default memo(() => {
       window.removeEventListener('message', handleMessage)
     }
   }, [])
+
+  // 遗留的问题：loading加载
 
   return (
     <div style={{ height: '100%' }}>
