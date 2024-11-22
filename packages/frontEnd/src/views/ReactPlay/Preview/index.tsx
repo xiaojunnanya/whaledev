@@ -1,17 +1,30 @@
 import { IMPORT_MAP_FILE_NAME, useReactPlay } from '@/stores/reactplay'
 import { memo, useEffect, useState } from 'react'
 import { compile } from './compiler'
-import iframeRaw from '../CodeEditor/Template/iframe.html?raw'
+import iframeRaw from '../Template/iframe.html?raw'
+import MessageContainer from '@/components/MessageContainer'
+
+interface MessageData {
+  data: {
+    type: string
+    message: string
+  }
+}
 
 export default memo(() => {
-  const { files, selectedFileName } = useReactPlay()
+  const { files } = useReactPlay()
   const [compiledCode, setCompiledCode] = useState('')
   const [iframeUrl, setIframeUrl] = useState(getIframeUrl())
 
   useEffect(() => {
+    setIframeUrl(getIframeUrl())
+  }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode])
+
+  // 遗留的问题：监听变化有问题(可以记为难点)
+  useEffect(() => {
     const res = compile(files)
     setCompiledCode(res)
-  }, [files[selectedFileName].value])
+  }, [JSON.stringify(files)])
 
   function getIframeUrl() {
     const res = iframeRaw
@@ -26,9 +39,22 @@ export default memo(() => {
     return URL.createObjectURL(new Blob([res], { type: 'text/html' }))
   }
 
+  const [error, setError] = useState('')
+
+  // 遗留的问题：没有问题的内容设为空
+  const handleMessage = (msg: MessageData) => {
+    const { type, message } = msg.data
+    if (type === 'ERROR') {
+      setError(message)
+    }
+  }
+
   useEffect(() => {
-    setIframeUrl(getIframeUrl())
-  }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode])
+    window.addEventListener('message', handleMessage)
+    return () => {
+      window.removeEventListener('message', handleMessage)
+    }
+  }, [])
 
   return (
     <div style={{ height: '100%' }}>
@@ -41,6 +67,7 @@ export default memo(() => {
           border: 'none',
         }}
       />
+      <MessageContainer type="error" content={error} />
     </div>
   )
 })

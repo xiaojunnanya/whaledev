@@ -34,10 +34,10 @@ interface IAction {
   updateFileName: (oldFieldName: string, newFieldName: string) => void
 }
 
-import importMap from '../views/ReactPlay/CodeEditor/Template/import-map.json?raw'
-import AppCss from '../views/ReactPlay/CodeEditor/Template/App.css?raw'
-import App from '../views/ReactPlay/CodeEditor/Template/App.tsx?raw'
-import main from '../views/ReactPlay/CodeEditor/Template/main.tsx?raw'
+import importMap from '../views/ReactPlay/Template/import-map.json?raw'
+import AppCss from '../views/ReactPlay/Template/App.css?raw'
+import App from '../views/ReactPlay/Template/App.tsx?raw'
+import main from '../views/ReactPlay/Template/main.tsx?raw'
 
 // app 文件名
 export const APP_COMPONENT_FILE_NAME = 'App.tsx'
@@ -69,56 +69,6 @@ export const initFiles: Files = {
     language: fileName2Language(IMPORT_MAP_FILE_NAME),
     value: importMap,
   },
-  // css1: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css2: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css3: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css4: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css5: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css6: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css7: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css8: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css9: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
-  // css10: {
-  //   name: IMPORT_MAP_FILE_NAME,
-  //   language: fileName2Language(IMPORT_MAP_FILE_NAME),
-  //   value: importMap,
-  // },
 }
 
 export const useReactPlay = create<ISate & IAction>(set => ({

@@ -6,6 +6,7 @@ import CodeEditor from './CodeEditor'
 import Preview from './Preview'
 
 export default memo(() => {
+  console.log('渲染了')
   return (
     <>
       <Header></Header>

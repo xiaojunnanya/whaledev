@@ -44,6 +44,8 @@ export default memo(() => {
     IMPORT_MAP_FILE_NAME,
     APP_COMPONENT_FILE_NAME,
   ]
+
+  // 遗留的问题：固定一些名字的位置
   return (
     <FileNameListStyled>
       {tabs.map((item, index) => (
