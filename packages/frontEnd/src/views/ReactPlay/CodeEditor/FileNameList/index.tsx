@@ -1,14 +1,11 @@
 import {
-  APP_COMPONENT_FILE_NAME,
   ENTRY_FILE_NAME,
-  IMPORT_MAP_FILE_NAME,
+  readonlyFileNames,
   useReactPlay,
 } from '@/stores/reactplay'
-import { memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import { FileNameListStyled } from './style'
 import FileNameItem from './FileNameItem'
-import { DownloadOutlined } from '@ant-design/icons'
-import { downloadFiles } from '@/utils'
 
 export default memo(() => {
   const {
@@ -20,11 +17,7 @@ export default memo(() => {
     removeFile,
   } = useReactPlay()
   const [creating, setCreating] = useState(false)
-  const [tabs, setTabs] = useState([''])
-
-  useEffect(() => {
-    setTabs(Object.keys(files))
-  }, [files])
+  const tabs = Object.keys(files)
 
   const handleEditComplete = (name: string, prevName: string) => {
     updateFileName(prevName, name)
@@ -41,13 +34,7 @@ export default memo(() => {
     removeFile(name)
     setSelectedFileName(ENTRY_FILE_NAME)
   }
-  const readonlyFileNames = [
-    ENTRY_FILE_NAME,
-    IMPORT_MAP_FILE_NAME,
-    APP_COMPONENT_FILE_NAME,
-  ]
 
-  // 遗留的问题：固定一些名字的位置
   return (
     <FileNameListStyled>
       {tabs.map((item, index) => (
@@ -67,12 +54,6 @@ export default memo(() => {
       <div className="add" onClick={addTab}>
         +
       </div>
-      <DownloadOutlined
-        style={{ marginLeft: '10px' }}
-        onClick={async () => {
-          await downloadFiles(files)
-        }}
-      />
     </FileNameListStyled>
   )
 })

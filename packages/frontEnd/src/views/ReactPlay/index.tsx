@@ -4,13 +4,14 @@ import { memo } from 'react'
 import 'allotment/dist/style.css'
 import CodeEditor from './CodeEditor'
 import Preview from './Preview'
+import Handle from './Handle'
 
 export default memo(() => {
-  console.log('渲染了')
   return (
     <>
       <Header></Header>
-      <div style={{ height: 'calc(100vh - 48px)' }}>
+      <Handle></Handle>
+      <div style={{ height: 'calc(100vh - 48px - 48px)' }}>
         <Allotment defaultSizes={[100, 100]}>
           <Allotment.Pane minSize={400}>
             <CodeEditor />

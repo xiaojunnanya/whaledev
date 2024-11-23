@@ -38,4 +38,8 @@ export const FileNameListStyled = styled.div`
       border-bottom: 3px solid ${props => props.theme.color.primaryColor};
     }
   }
+
+  .add {
+    cursor: pointer;
+  }
 `

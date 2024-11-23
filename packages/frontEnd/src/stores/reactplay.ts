@@ -49,6 +49,11 @@ export const ENTRY_FILE_NAME = 'main.tsx'
 export const APP_CSS_FILE_NAME = 'App.css'
 
 export const initFiles: Files = {
+  [IMPORT_MAP_FILE_NAME]: {
+    name: IMPORT_MAP_FILE_NAME,
+    language: fileName2Language(IMPORT_MAP_FILE_NAME),
+    value: importMap,
+  },
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
     language: fileName2Language(ENTRY_FILE_NAME),
@@ -64,16 +69,17 @@ export const initFiles: Files = {
     language: fileName2Language(APP_CSS_FILE_NAME),
     value: AppCss,
   },
-  [IMPORT_MAP_FILE_NAME]: {
-    name: IMPORT_MAP_FILE_NAME,
-    language: fileName2Language(IMPORT_MAP_FILE_NAME),
-    value: importMap,
-  },
 }
+
+export const readonlyFileNames = [
+  ENTRY_FILE_NAME,
+  IMPORT_MAP_FILE_NAME,
+  APP_COMPONENT_FILE_NAME,
+]
 
 export const useReactPlay = create<ISate & IAction>(set => ({
   files: initFiles,
-  selectedFileName: 'main.tsx',
+  selectedFileName: APP_COMPONENT_FILE_NAME,
   addFile: (name: string) =>
     set(state => {
       return {

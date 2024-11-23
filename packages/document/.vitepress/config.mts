@@ -21,6 +21,7 @@ export default defineConfig({
         text: 'WhaleDev',
         items: [
           { text: '介绍', link: '/docs/whale' },
+          { text: 'React Playground 使用指南', link: '/docs/reactplay' },
           { text: '鸣谢', link: '/docs/acknowledgement' },
         ],
       },

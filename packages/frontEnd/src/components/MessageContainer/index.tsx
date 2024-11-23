@@ -11,7 +11,6 @@ export default memo((props: IProps) => {
   const { type, content } = props
   const [visible, setVisible] = useState(false)
 
-  // 遗留的问题：没有问题的关闭
   useEffect(() => {
     setVisible(!!content)
   }, [content])
