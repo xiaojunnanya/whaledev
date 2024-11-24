@@ -56,6 +56,7 @@ model project{
   id Int @id @default(autoincrement())
   user_id String
   project_id String @unique
+  project_router_id String @unique
   project_name String
   project_desc String?
   project_type ProjectType

@@ -5,7 +5,7 @@ import { lazy, memo, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const NotFound = lazy(() => import('@/components/NotFound/index'))
-const Project = lazy(() => import('@/views/Project/index'))
+const Project = lazy(() => import('@/views/ProjectList/index'))
 const Componentlibrary = lazy(() => import('@/views/Componentlibrary/index'))
 const Template = lazy(() => import('@/views/Template/index'))
 

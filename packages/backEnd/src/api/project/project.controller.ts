@@ -46,4 +46,9 @@ export class ProjectController {
   ) {
     return this.projectService.searchProject(keyword, page)
   }
+
+  @Get('/detail/:id')
+  getProjectDetail(@Param('id') id: string) {
+    return this.projectService.getProjectDetail(id)
+  }
 }

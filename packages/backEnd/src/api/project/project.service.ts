@@ -12,11 +12,25 @@ export class ProjectService {
     private readonly store: StoreService,
   ) {}
 
+  private readonly selectData = {
+    id: true,
+    project_id: true,
+    project_name: true,
+    project_desc: true,
+    project_type: true,
+    project_state: true,
+    project_router_id: true,
+  }
+
   async createProject(data: createProjectDto) {
+    const u = uuidv4()
+    const project_id = `project-${u}`
+    const project_router_id = `pj${u.split('-')[0]}`
     await this.prisma.project.create({
       data: {
         user_id: this.store.get('user_id'),
-        project_id: `project-${uuidv4()}`,
+        project_id,
+        project_router_id,
         project_name: data.project_name,
         project_desc: data.project_desc,
         project_type: data.project_type,
@@ -30,6 +44,7 @@ export class ProjectService {
   async getProjectList(page: number) {
     // 优化查询，避免查询两次:使用聚合查询
     const userId = this.store.get('user_id')
+    console.log(this.selectData, 'this.selectData')
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
         where: {
@@ -37,14 +52,7 @@ export class ProjectService {
           status: 0,
         },
         orderBy: { created_time: 'desc' },
-        select: {
-          id: true,
-          project_id: true,
-          project_name: true,
-          project_desc: true,
-          project_type: true,
-          project_state: true,
-        },
+        select: this.selectData,
         skip: (page - 1) * 8,
         take: 8,
       }),
@@ -74,14 +82,7 @@ export class ProjectService {
           },
         },
         orderBy: { created_time: 'desc' },
-        select: {
-          id: true,
-          project_id: true,
-          project_name: true,
-          project_desc: true,
-          project_type: true,
-          project_state: true,
-        },
+        select: this.selectData,
         skip: (page - 1) * 8,
         take: 8,
       }),
@@ -129,5 +130,16 @@ export class ProjectService {
     })
 
     return customResponse(0, '更新成功', 'success')
+  }
+
+  async getProjectDetail(id: string) {
+    const data = await this.prisma.project.findUnique({
+      where: {
+        project_router_id: id,
+      },
+      select: this.selectData,
+    })
+
+    return customResponse(0, '查询成功', 'success', data)
   }
 }

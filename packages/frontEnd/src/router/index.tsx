@@ -6,6 +6,7 @@ const Login = lazy(() => import('@/views/Login'))
 const Engineering = lazy(() => import('@/views/Engineering'))
 const NotFound = lazy(() => import('@/components/NotFound'))
 const ReactPlay = lazy(() => import('@/views/ReactPlay'))
+const Project = lazy(() => import('@/views/Project'))
 
 // 遗留的问题，URL权限问题
 const routes: RouteObject[] = [
@@ -25,6 +26,32 @@ const routes: RouteObject[] = [
         path: ':name?', // 可选参数
         element: <Engineering />,
       },
+    ],
+  },
+  {
+    path: '/project/:projectRouterId',
+    element: <Project />,
+    children: [
+      // 使用 `index` 路由来处理根路径
+      {
+        index: true,
+        element: <Project />,
+        // 如果不指定 `element`，则继承父级的 `element`
+        // 但是不指定页面会报警告，还是指定为了消除警告
+        // 下面的都是重定向
+      },
+      // {
+      //   path: ':config',
+      //   element: <CountPages />,
+      // },
+      // {
+      //   path: ':config/page',
+      //   element: <CountPages />,
+      // },
+      // {
+      //   path: ':config/page/:pageId',
+      //   element: <CountPages />,
+      // },
     ],
   },
   {

@@ -46,3 +46,10 @@ export const searchProject = (keyword: string, page: number): any => {
     },
   })
 }
+
+export const getProjectDetail = (id: string): any => {
+  return req.request({
+    url: `/project/detail/${id}`,
+    method: 'get',
+  })
+}

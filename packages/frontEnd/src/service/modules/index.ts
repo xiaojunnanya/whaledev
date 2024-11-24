@@ -34,6 +34,7 @@ class WhaleRequest {
         const token = headers['authorization']
         if (token) localStorage.setItem('token', token)
         // 遗留的问题：对status进行处理(http状态码)
+        // 遗留的问题：不存在token的前端路由拦截
         console.log('status', status)
         return data
       },
