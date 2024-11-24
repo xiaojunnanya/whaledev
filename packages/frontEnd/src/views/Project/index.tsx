@@ -1,18 +1,33 @@
 import Header from '@/components/Header'
 import { getProjectDetail } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
-import { memo, useEffect, useState } from 'react'
+import { lazy, memo, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ProjectType } from '../ProjectList'
 import { ProjectStyled } from './style'
 import { LeftOutlined } from '@ant-design/icons'
 import { Tabs, TabsProps } from 'antd'
 
+const Rapid = lazy(() => import('./Rapid'))
+const Setting = lazy(() => import('./Setting'))
+const NotFound = lazy(() => import('@/components/NotFound'))
+
+const showContainer = (key: string) => {
+  switch (key) {
+    case 'rapid':
+      return <Rapid />
+    case 'settings':
+      return <Setting />
+    default:
+      return <NotFound></NotFound>
+  }
+}
+
 export default memo(() => {
   const params = useParams()
   const navigate = useNavigate()
   const { setMessage } = useGlobal()
-  const { projectRouterId, config } = params
+  const { project_id = '', config } = params
   const [projectDetail, setProjectDetail] = useState<ProjectType>(
     {} as ProjectType,
   )
@@ -22,23 +37,21 @@ export default memo(() => {
     {
       key: 'rapid',
       label: '应用组装',
-      // children: <RapidPages />,
     },
     {
       key: 'settings',
       label: '应用设置',
-      // children: <SettingPages />,
     },
   ]
 
   useEffect(() => {
     getProjectDetailById()
-  }, [projectRouterId])
+  }, [project_id])
 
   const getProjectDetailById = async () => {
-    if (projectRouterId) {
-      const { data, code, msgType } = await getProjectDetail(projectRouterId)
-      if (code === 0 && msgType === 'success') {
+    if (project_id) {
+      const { data } = await getProjectDetail(project_id)
+      if (data) {
         setProjectDetail(data)
       } else {
         setMessage({
@@ -51,34 +64,35 @@ export default memo(() => {
 
   const onChange = (key: string) => {
     setTabsActiveKey(key)
-    // navigate(`/project/${projectId}/${key}`)
+    navigate(`/project/${project_id}/${key}`)
   }
 
   return (
     <ProjectStyled>
-      <Header>
-        <div className="headers">
-          <div
-            className="project-name"
-            onClick={() => {
-              navigate('/engineering/project')
-            }}
-          >
-            <LeftOutlined />
-            <span className="project-name-text">
-              &nbsp;{projectDetail.project_name}
-            </span>
-          </div>
-          <Tabs
-            activeKey={tabsActiveKey}
-            items={items}
-            centered
-            onChange={onChange}
-            style={{ marginBottom: 0 }}
-          />
-          <div style={{ visibility: 'hidden' }}>1</div>
+      <Header></Header>
+      <div className="projectHeaders">
+        <div
+          className="project-name"
+          onClick={() => {
+            navigate('/engineering/project')
+          }}
+        >
+          <LeftOutlined />
+          <span className="project-name-text">
+            &nbsp;{projectDetail?.project_name}
+            {/* 待思考：项目版本问题 */}
+            &nbsp;&nbsp;版本：V1.0.0
+          </span>
         </div>
-      </Header>
+        <Tabs
+          activeKey={tabsActiveKey}
+          items={items}
+          centered
+          onChange={onChange}
+          style={{ marginBottom: 0 }}
+        />
+      </div>
+      <>{showContainer(tabsActiveKey)}</>
     </ProjectStyled>
   )
 })

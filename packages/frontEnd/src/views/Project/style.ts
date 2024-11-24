@@ -1,10 +1,16 @@
 import styled from 'styled-components'
 
 export const ProjectStyled = styled.div`
-  .headers {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .projectHeaders {
     width: 100%;
+    position: relative;
+
+    .project-name {
+      position: absolute;
+      line-height: 42px;
+      margin-left: 16px;
+      z-index: 999;
+      cursor: pointer;
+    }
   }
 `

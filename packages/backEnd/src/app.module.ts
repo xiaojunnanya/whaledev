@@ -13,6 +13,7 @@ import { PrismaModule } from './global/mysql/prisma.module'
 import { RedisModule } from './global/redis/redis.module'
 import { StoreModule } from './global/store/store.module'
 import { UserModule } from './api/user/user.module';
+import { PagesModule } from './api/pages/pages.module';
 @Module({
   imports: [
     AuthModule,
@@ -22,6 +23,7 @@ import { UserModule } from './api/user/user.module';
     StaticonfigModule,
     ProjectModule,
     UserModule,
+    PagesModule,
   ],
   controllers: [AppController],
   providers: [

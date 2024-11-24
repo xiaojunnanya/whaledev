@@ -7,6 +7,7 @@ const Engineering = lazy(() => import('@/views/Engineering'))
 const NotFound = lazy(() => import('@/components/NotFound'))
 const ReactPlay = lazy(() => import('@/views/ReactPlay'))
 const Project = lazy(() => import('@/views/Project'))
+const Pages = lazy(() => import('@/views/Pages'))
 
 // 遗留的问题，URL权限问题
 const routes: RouteObject[] = [
@@ -29,7 +30,7 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: '/project/:projectRouterId',
+    path: '/project/:project_id',
     element: <Project />,
     children: [
       // 使用 `index` 路由来处理根路径
@@ -40,23 +41,31 @@ const routes: RouteObject[] = [
         // 但是不指定页面会报警告，还是指定为了消除警告
         // 下面的都是重定向
       },
-      // {
-      //   path: ':config',
-      //   element: <CountPages />,
-      // },
-      // {
-      //   path: ':config/page',
-      //   element: <CountPages />,
-      // },
-      // {
-      //   path: ':config/page/:pageId',
-      //   element: <CountPages />,
-      // },
+      {
+        path: ':config',
+        element: <Project />,
+      },
+      {
+        path: ':config/page',
+        element: <Project />,
+      },
+      {
+        path: ':config/page/:pageId',
+        element: <Project />,
+      },
     ],
+  },
+  {
+    path: '/project/:project_id/page/:pageId/edit',
+    element: <Pages />,
   },
   {
     path: '/reactplay',
     element: <ReactPlay />,
+  },
+  {
+    path: '/404',
+    element: <NotFound></NotFound>,
   },
   {
     path: '*',

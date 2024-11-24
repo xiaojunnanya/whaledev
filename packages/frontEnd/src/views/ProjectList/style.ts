@@ -1,14 +1,10 @@
 import styled from 'styled-components'
 
 export const ProjectListStyled = styled.div`
-  .top {
+  .projectListTop {
     display: flex;
     justify-content: space-between;
     margin: 10px 30px;
-
-    .ant-input-outlined {
-      width: 200px;
-    }
   }
 
   .content {

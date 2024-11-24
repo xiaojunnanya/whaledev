@@ -18,7 +18,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "mysql:init": "npx prisma db push",
     "postinstall": "npx prisma generate",
-    "create": "npx nest g resource"
+    "create": "npx nest g resource",
+    "add:db": "npx prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

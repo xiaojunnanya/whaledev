@@ -24,6 +24,12 @@ enum ProjectType {
    backstage
 }
 
+enum PageType {
+  custom
+   template
+   flow
+}
+
 enum ProjectState {
   inProgress
    completed
@@ -56,11 +62,21 @@ model project{
   id Int @id @default(autoincrement())
   user_id String
   project_id String @unique
-  project_router_id String @unique
   project_name String
   project_desc String?
   project_type ProjectType
   project_state ProjectState
+  created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+  status Int @default(0) // 0:正常 1:删除
+}
+
+model pages{
+  id Int @id @default(autoincrement())
+  project_id String
+  page_id String @unique
+  page_name String
+  page_type PageType
   created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   status Int @default(0) // 0:正常 1:删除

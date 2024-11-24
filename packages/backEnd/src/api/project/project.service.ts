@@ -19,18 +19,15 @@ export class ProjectService {
     project_desc: true,
     project_type: true,
     project_state: true,
-    project_router_id: true,
   }
 
   async createProject(data: createProjectDto) {
     const u = uuidv4()
-    const project_id = `project-${u}`
-    const project_router_id = `pj${u.split('-')[0]}`
+    const project_id = `pj${u.split('-')[0]}`
     await this.prisma.project.create({
       data: {
         user_id: this.store.get('user_id'),
         project_id,
-        project_router_id,
         project_name: data.project_name,
         project_desc: data.project_desc,
         project_type: data.project_type,
@@ -135,7 +132,7 @@ export class ProjectService {
   async getProjectDetail(id: string) {
     const data = await this.prisma.project.findUnique({
       where: {
-        project_router_id: id,
+        project_id: id,
       },
       select: this.selectData,
     })

@@ -57,7 +57,6 @@ export interface ProjectType {
   project_desc?: string
   project_type: string
   project_state: string
-  project_router_id: string
 }
 
 const defaultProjectData = [{}, {}, {}, {}, {}, {}, {}, {}] as ProjectType[]
@@ -200,13 +199,13 @@ export default memo(() => {
     }
   }
 
-  const handleClickCard = (router_id: string) => {
-    navigate(`/project/${router_id}`)
+  const handleClickCard = (id: string) => {
+    navigate(`/project/${id}/rapid`)
   }
 
   return (
     <ProjectListStyled>
-      <div className="top">
+      <div className="projectListTop">
         <Input
           prefix={<SearchOutlined />}
           placeholder="请输入应用名称"
@@ -282,7 +281,7 @@ export default memo(() => {
                     // onClick={() =>{ goProjectDetail(item.projectId)}}
                     loading={cardLoading}
                     onClick={() => {
-                      handleClickCard(item.project_router_id)
+                      handleClickCard(item.project_id)
                     }}
                   >
                     <Meta
