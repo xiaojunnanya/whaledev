@@ -8,6 +8,7 @@ const NotFound = lazy(() => import('@/components/NotFound'))
 const ReactPlay = lazy(() => import('@/views/ReactPlay'))
 const Project = lazy(() => import('@/views/Project'))
 const Pages = lazy(() => import('@/views/Pages'))
+const PreviewPages = lazy(() => import('@/views/Pages/Preview'))
 
 // 遗留的问题，URL权限问题
 const routes: RouteObject[] = [
@@ -50,14 +51,18 @@ const routes: RouteObject[] = [
         element: <Project />,
       },
       {
-        path: ':config/page/:pageId',
+        path: ':config/page/:page_id',
         element: <Project />,
       },
     ],
   },
   {
-    path: '/project/:project_id/page/:pageId/edit',
+    path: '/project/:project_id/page/:page_id/edit',
     element: <Pages />,
+  },
+  {
+    path: '/project/:project_id/page/:page_id/preview',
+    element: <PreviewPages />,
   },
   {
     path: '/reactplay',

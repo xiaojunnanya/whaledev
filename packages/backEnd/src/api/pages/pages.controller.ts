@@ -34,4 +34,9 @@ export class PagesController {
     console.log(id, 'id')
     return this.pagesService.deletePage(id)
   }
+
+  @Get('/detail/:id')
+  getPageDetail(@Param('id') id: string) {
+    return this.pagesService.getPageDetail(id)
+  }
 }

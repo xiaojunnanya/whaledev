@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { customResponse } from '@/interceptor/response.interceptor'
 import { PrismaService } from '@/global/mysql/prisma.service'
 import { StoreService } from '@/global/store/store.service'
-
+// 遗留的问题：权限控制，其他用户不能获取用删除处理，这里目前用的user_id做的判断，需要优化，只是返回了报错
 @Injectable()
 export class ProjectService {
   constructor(
@@ -40,12 +40,12 @@ export class ProjectService {
 
   async getProjectList(page: number) {
     // 优化查询，避免查询两次:使用聚合查询
-    const userId = this.store.get('user_id')
+    const user_id = this.store.get('user_id')
     console.log(this.selectData, 'this.selectData')
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
         where: {
-          user_id: userId,
+          user_id,
           status: 0,
         },
         orderBy: { created_time: 'desc' },
@@ -55,7 +55,7 @@ export class ProjectService {
       }),
       this.prisma.project.count({
         where: {
-          user_id: userId,
+          user_id,
           status: 0,
         },
       }),
@@ -68,11 +68,11 @@ export class ProjectService {
   }
 
   async searchProject(keyword: string, page: number) {
-    const userId = this.store.get('user_id')
+    const user_id = this.store.get('user_id')
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
         where: {
-          user_id: userId,
+          user_id,
           status: 0,
           project_name: {
             contains: keyword, // 包含
@@ -85,7 +85,7 @@ export class ProjectService {
       }),
       this.prisma.project.count({
         where: {
-          user_id: userId,
+          user_id,
           status: 0,
           project_name: {
             contains: keyword, // 包含
@@ -101,9 +101,12 @@ export class ProjectService {
   }
 
   async deleteProject(id: number) {
+    const user_id = this.store.get('user_id')
     await this.prisma.project.update({
       where: {
+        user_id,
         id: id,
+        status: 0,
       },
       data: {
         status: 1,
@@ -114,9 +117,12 @@ export class ProjectService {
   }
 
   async updateProject(id: number, data: createProjectDto) {
+    const user_id = this.store.get('user_id')
     await this.prisma.project.update({
       where: {
         id: id,
+        user_id,
+        status: 0,
       },
       data: {
         project_name: data.project_name,
@@ -130,9 +136,12 @@ export class ProjectService {
   }
 
   async getProjectDetail(id: string) {
+    const user_id = this.store.get('user_id')
     const data = await this.prisma.project.findUnique({
       where: {
         project_id: id,
+        user_id,
+        status: 0,
       },
       select: this.selectData,
     })

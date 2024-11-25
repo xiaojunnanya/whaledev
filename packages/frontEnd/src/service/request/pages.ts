@@ -32,3 +32,10 @@ export const deletePage = (id: string): any => {
     method: 'delete',
   })
 }
+
+export const getPageDetail = (id: string): any => {
+  return req.request({
+    url: `/pages/detail/${id}`,
+    method: 'get',
+  })
+}

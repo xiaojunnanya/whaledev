@@ -38,10 +38,12 @@ export class PagesService {
   async getPageList(project_id: string) {
     const list = await this.prisma.pages.findMany({
       where: {
+        project: {
+          user_id: this.store.get('user_id'),
+        },
         project_id,
         status: 0,
       },
-      orderBy: { created_time: 'desc' },
       select: this.selectData,
     })
 
@@ -52,6 +54,10 @@ export class PagesService {
     const { page_id, page_name } = data
     await this.prisma.pages.update({
       where: {
+        project: {
+          user_id: this.store.get('user_id'),
+        },
+        status: 0,
         page_id,
       },
       data: {
@@ -65,7 +71,11 @@ export class PagesService {
   async deletePage(page_id: string) {
     await this.prisma.pages.update({
       where: {
+        project: {
+          user_id: this.store.get('user_id'),
+        },
         page_id,
+        status: 0,
       },
       data: {
         status: 1,
@@ -73,5 +83,20 @@ export class PagesService {
     })
 
     return customResponse(0, '删除成功', 'success')
+  }
+
+  async getPageDetail(page_id: string) {
+    const detail = await this.prisma.pages.findUnique({
+      where: {
+        project: {
+          user_id: this.store.get('user_id'),
+        },
+        page_id,
+        status: 0,
+      },
+      select: this.selectData,
+    })
+
+    return customResponse(0, '获取成功', 'success', detail)
   }
 }

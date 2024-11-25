@@ -1,11 +1,93 @@
 import Header from '@/components/Header'
-import { memo } from 'react'
+import { LeftOutlined } from '@ant-design/icons'
+import { Button, InputNumber, Modal } from 'antd'
+import { memo, useEffect, useState } from 'react'
+
+import computerImg from '@/assets/images/png/computer.png'
+import flatImg from '@/assets/images/png/flat.png'
+import phoneImg from '@/assets/images/png/phone.png'
+import { useGlobal } from '@/stores/global'
+import { PagesStyled } from './style'
+import { useParams, useNavigate } from 'react-router-dom'
+import Content from './Content'
+import { getPageDetail } from '@/service/request/pages'
+
+interface pageType {
+  id: number
+  page_id: string
+  page_name: string
+  page_type: string
+}
 
 export default memo(() => {
+  const params = useParams()
+  const navigate = useNavigate()
+  const { project_id = '', page_id = '' } = params
+  const [showResetModal, setShowResetModal] = useState(false)
+  const [pageInfo, setPageInfo] = useState<pageType>({} as pageType)
+  const { width: viewWidth } = useGlobal()
+
+  useEffect(() => {
+    getPageInfo()
+  }, [])
+
+  const getPageInfo = async () => {
+    const { data } = await getPageDetail(page_id)
+    setPageInfo(data)
+  }
+
+  const preview = () => {
+    window.open(`/project/${project_id}/page/${page_id}/preview`)
+  }
+
+  const save = async () => {}
+
+  const reset = () => {}
+
   return (
     <>
       <Header></Header>
-      <div>index</div>
+
+      <PagesStyled>
+        <Modal
+          title="提示"
+          open={showResetModal}
+          onOk={reset}
+          onCancel={() => setShowResetModal(false)}
+        >
+          你确定要重置该页面吗
+        </Modal>
+
+        <div className="edit-top">
+          <div className="edit-top-left">
+            <LeftOutlined
+              onClick={() => {
+                navigate(`/project/${project_id}/rapid/page/${page_id}`)
+              }}
+            />
+            <span className="page-name">{pageInfo?.page_name}</span>
+          </div>
+          <div className="edit-top-middle">
+            <img src={computerImg} alt="电脑" />
+            <img src={flatImg} alt="平板" />
+            <img src={phoneImg} alt="手机" />
+            <InputNumber addonAfter="px" value={viewWidth} />
+          </div>
+          <div className="edit-top-right">
+            <Button size="small" onClick={() => setShowResetModal(true)}>
+              重置
+            </Button>
+            <Button type="primary" size="small" onClick={save}>
+              保存
+            </Button>
+            <Button size="small" onClick={preview}>
+              预览
+            </Button>
+          </div>
+        </div>
+
+        <Content />
+      </PagesStyled>
     </>
   )
 })
