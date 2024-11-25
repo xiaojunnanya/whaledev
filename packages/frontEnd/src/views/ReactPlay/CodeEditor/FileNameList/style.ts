@@ -7,22 +7,13 @@ export const FileNameListStyled = styled.div`
   height: 38px;
   overflow-x: auto;
   overflow-y: hidden;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid ${props => props.theme.defaultColor.grey};
   box-sizing: border-box;
-  color: #444;
-  background-color: #fff;
+  background-color: ${props => props.theme.defaultColor.white};
   white-space: nowrap;
 
   &::-webkit-scrollbar {
     height: 3px;
-  }
-
-  /* &::-webkit-scrollbar-track {
-    background-color: #ddd;
-  } */
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #ddd;
   }
 
   .tab-item {
@@ -35,7 +26,7 @@ export const FileNameListStyled = styled.div`
     border-bottom: 3px solid transparent;
 
     &.actived {
-      border-bottom: 3px solid ${props => props.theme.color.primaryColor};
+      border-bottom: 3px solid ${props => props.theme.primaryColor[700]};
     }
   }
 

@@ -58,7 +58,7 @@ const App = memo(() => {
           locale={zhCN}
           theme={{
             token: {
-              colorPrimary: theme.color.primaryColor,
+              colorPrimary: theme.primaryColor[700],
             },
           }}
         >

@@ -46,7 +46,7 @@ export const RapidStyled = styled.div`
         }
 
         &:hover {
-          background-color: #f2f2f2;
+          background-color: ${props => props.theme.defaultColor.grey};
           cursor: pointer;
 
           .settingOutlined {
@@ -57,7 +57,7 @@ export const RapidStyled = styled.div`
 
       .page-active,
       .page-active:hover {
-        background-color: #edf4fe;
+        background-color: ${props => props.theme.primaryColor[100]};
       }
     }
   }
@@ -65,6 +65,6 @@ export const RapidStyled = styled.div`
   .page-preview {
     margin: 16px;
     width: 100%;
-    background-color: #fff;
+    background-color: ${props => props.theme.defaultColor.white};
   }
 `

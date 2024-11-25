@@ -4,7 +4,7 @@ export const EditStyled = styled.div`
   .edit-top {
     height: 41px;
     padding: 0 20px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid ${props => props.theme.defaultColor.grey};
 
     display: flex;
     align-items: center;
@@ -27,7 +27,7 @@ export const EditStyled = styled.div`
         border-radius: 5px;
 
         &:hover {
-          background-color: #f2f2f2;
+          background-color: ${props => props.theme.defaultColor.grey};
         }
       }
 

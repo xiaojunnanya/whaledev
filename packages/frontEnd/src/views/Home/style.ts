@@ -64,10 +64,10 @@ export const HeaderStyle = styled.div`
 
       .m3 {
         margin-top: 38px;
-        background-color: ${props => props.theme.color.primaryColor};
+        background-color: ${props => props.theme.primaryColor[700]};
         display: inline-block;
         padding: 8px 8px 8px 20px;
-        color: #fff;
+        color: ${props => props.theme.defaultColor.white};
         cursor: pointer;
         border-radius: 9999px;
 
@@ -77,7 +77,7 @@ export const HeaderStyle = styled.div`
         }
 
         .anticon-arrow-right {
-          background-color: #000;
+          background-color: ${props => props.theme.defaultColor.black};
           border-radius: 50%;
           padding: 10px;
           margin-left: 10px;
@@ -85,7 +85,7 @@ export const HeaderStyle = styled.div`
         }
 
         &:hover {
-          background-color: #33b8ff;
+          background-color: ${props => props.theme.primaryColor[600]};
 
           .anticon-arrow-right {
             transform: rotate(-45deg);

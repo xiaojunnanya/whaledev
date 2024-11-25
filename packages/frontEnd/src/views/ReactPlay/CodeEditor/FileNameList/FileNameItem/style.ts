@@ -6,9 +6,8 @@ export const FileNameItemStyled = styled.div`
     padding: 4px 0 4px 10px;
     font-size: 13px;
 
-    color: #444;
-    background-color: #ddd;
-    border: 1px solid #ddd;
+    background-color: ${props => props.theme.defaultColor.grey};
+    border: 1px solid ${props => props.theme.defaultColor.grey};
     border-radius: 4px;
     outline: none;
   }

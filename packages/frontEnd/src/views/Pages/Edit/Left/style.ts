@@ -25,14 +25,14 @@ export const LeftStyled = styled.div`
   }
 
   .edit-left-active {
-    background-color: #edeff3;
-    color: #1e72f5;
+    background-color: ${props => props.theme.defaultColor.grey};
+    color: ${props => props.theme.primaryColor[700]};
   }
 
   .edit-left-top {
     &-item {
       &:hover {
-        background-color: #edeff3;
+        background-color: ${props => props.theme.defaultColor.grey};
       }
     }
   }

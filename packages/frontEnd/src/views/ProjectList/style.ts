@@ -18,8 +18,8 @@ export const ProjectListStyled = styled.div`
 
         .type {
           border: 1px solid;
-          border-color: ${props => props.theme.color.primaryColor};
-          color: ${props => props.theme.color.primaryColor};
+          border-color: ${props => props.theme.primaryColor[700]};
+          color: ${props => props.theme.primaryColor[700]};
           font-size: 12px;
           padding: 2px 5px;
           border-radius: 5px;
