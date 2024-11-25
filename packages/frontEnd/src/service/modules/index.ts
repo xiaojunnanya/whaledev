@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 
@@ -30,15 +31,26 @@ class WhaleRequest {
     // 响应拦截器
     this.instance.interceptors.response.use(
       res => {
-        const { data, status, headers } = res
+        const { data, headers } = res
         const token = headers['authorization']
         if (token) localStorage.setItem('token', token)
-        // 遗留的问题：对status进行处理(http状态码)
-        // 遗留的问题：不存在token的前端路由拦截
-        console.log('status', status)
+
         return data
       },
       error => {
+        // 遗留的问题：对status进行处理(http状态码)
+        const { status } = error
+        console.log(status, 'errstatus')
+
+        if (status === 401) {
+          // 跳转到登录页面
+          window.location.href = '/login'
+          localStorage.removeItem('token')
+          message.destroy()
+          message.error('登录过期，请重新登录')
+          return
+        }
+
         Promise.reject(error)
       },
     )

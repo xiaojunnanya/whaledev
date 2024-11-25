@@ -6,14 +6,17 @@ import Loading from './components/Loading/index.tsx'
 import { ThemeProvider } from 'styled-components'
 import theme from './assets/theme'
 import './assets/css/index.css'
+import AuthRouter from './components/AuthRouter/index.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <Suspense fallback={<Loading />}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </Suspense>
+    <AuthRouter>
+      <Suspense fallback={<Loading />}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </Suspense>
+    </AuthRouter>
   </BrowserRouter>,
 )
 

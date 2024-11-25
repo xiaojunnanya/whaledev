@@ -11,6 +11,7 @@ export const EditStyled = styled.div`
     justify-content: space-between;
 
     &-left {
+      cursor: pointer;
       .page-name {
         margin-left: 10px;
         font-size: 13px;

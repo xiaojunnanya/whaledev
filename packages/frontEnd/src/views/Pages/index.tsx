@@ -25,7 +25,7 @@ export default memo(() => {
   const { project_id = '', page_id = '' } = params
   const [showResetModal, setShowResetModal] = useState(false)
   const [pageInfo, setPageInfo] = useState<pageType>({} as pageType)
-  const { width: viewWidth } = useGlobal()
+  const { width: viewWidth, setMessage } = useGlobal()
 
   useEffect(() => {
     getPageInfo()
@@ -33,7 +33,15 @@ export default memo(() => {
 
   const getPageInfo = async () => {
     const { data } = await getPageDetail(page_id)
-    setPageInfo(data)
+
+    if (data) {
+      setPageInfo(data)
+    } else {
+      setMessage({
+        type: 'error',
+        text: '查询页面详情失败，请稍后重试',
+      })
+    }
   }
 
   const preview = () => {
@@ -59,12 +67,13 @@ export default memo(() => {
         </Modal>
 
         <div className="edit-top">
-          <div className="edit-top-left">
-            <LeftOutlined
-              onClick={() => {
-                navigate(`/project/${project_id}/rapid/page/${page_id}`)
-              }}
-            />
+          <div
+            className="edit-top-left"
+            onClick={() => {
+              navigate(`/project/${project_id}/rapid/page/${page_id}`)
+            }}
+          >
+            <LeftOutlined />
             <span className="page-name">{pageInfo?.page_name}</span>
           </div>
           <div className="edit-top-middle">
