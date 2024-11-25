@@ -7,9 +7,9 @@ import computerImg from '@/assets/images/png/computer.png'
 import flatImg from '@/assets/images/png/flat.png'
 import phoneImg from '@/assets/images/png/phone.png'
 import { useGlobal } from '@/stores/global'
-import { PagesStyled } from './style'
+import { EditStyled } from './style'
 import { useParams, useNavigate } from 'react-router-dom'
-import Content from './Content'
+import Edit from './Edit'
 import { getPageDetail } from '@/service/request/pages'
 
 interface pageType {
@@ -48,7 +48,7 @@ export default memo(() => {
     <>
       <Header></Header>
 
-      <PagesStyled>
+      <EditStyled>
         <Modal
           title="提示"
           open={showResetModal}
@@ -86,8 +86,8 @@ export default memo(() => {
           </div>
         </div>
 
-        <Content />
-      </PagesStyled>
+        <Edit />
+      </EditStyled>
     </>
   )
 })

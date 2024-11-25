@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const PagesStyled = styled.div`
+export const EditStyled = styled.div`
   .edit-top {
     height: 41px;
     padding: 0 20px;
