@@ -21,29 +21,20 @@ export const EditStyled = styled.div`
     &-middle {
       display: flex;
 
-      img {
+      .anticon {
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        display: inline-block;
+        line-height: 32px;
+        font-size: 18px;
         margin: 0 5px;
-        cursor: pointer;
         border-radius: 5px;
+        cursor: pointer;
 
         &:hover {
           background-color: ${props => props.theme.defaultColor.grey};
         }
-      }
-
-      img:nth-child(1) {
-        height: 26px;
-        padding: 2px;
-      }
-
-      img:nth-child(2) {
-        height: 22px;
-        padding: 4px;
-      }
-
-      img:nth-child(3) {
-        height: 20px;
-        padding: 5px;
       }
 
       .ant-input-number-group-wrapper {

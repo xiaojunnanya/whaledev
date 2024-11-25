@@ -7,10 +7,8 @@ export const LeftStyled = styled.div`
   align-items: center;
   font-size: 10px;
 
-  img {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 6px;
+  .anticon {
+    font-size: 16px;
   }
 
   .edit-left-item {
@@ -35,9 +33,5 @@ export const LeftStyled = styled.div`
         background-color: ${props => props.theme.defaultColor.grey};
       }
     }
-  }
-
-  .edit-left-bottom {
-    /* margin-bottom: 12px; */
   }
 `

@@ -1,5 +1,9 @@
 import Header from '@/components/Header'
-import { ProductOutlined, ProjectOutlined } from '@ant-design/icons'
+import {
+  AppstoreAddOutlined,
+  ProductOutlined,
+  ProjectOutlined,
+} from '@ant-design/icons'
 import { Tabs } from 'antd'
 import { lazy, memo, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -23,7 +27,7 @@ const tabsItems = [
   {
     label: '模版市场',
     key: 'template',
-    icon: <ProductOutlined />,
+    icon: <AppstoreAddOutlined />,
   },
 ]
 

@@ -1,11 +1,13 @@
 import Header from '@/components/Header'
-import { LeftOutlined } from '@ant-design/icons'
+import {
+  DesktopOutlined,
+  LeftOutlined,
+  MobileOutlined,
+  TabletOutlined,
+} from '@ant-design/icons'
 import { Button, InputNumber, Modal } from 'antd'
 import { memo, useEffect, useState } from 'react'
 
-import computerImg from '@/assets/images/png/computer.png'
-import flatImg from '@/assets/images/png/flat.png'
-import phoneImg from '@/assets/images/png/phone.png'
 import { useGlobal } from '@/stores/global'
 import { EditStyled } from './style'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -77,9 +79,9 @@ export default memo(() => {
             <span className="page-name">{pageInfo?.page_name}</span>
           </div>
           <div className="edit-top-middle">
-            <img src={computerImg} alt="电脑" />
-            <img src={flatImg} alt="平板" />
-            <img src={phoneImg} alt="手机" />
+            <DesktopOutlined />
+            <TabletOutlined rotate={90} />
+            <MobileOutlined />
             <InputNumber addonAfter="px" value={viewWidth} />
           </div>
           <div className="edit-top-right">
