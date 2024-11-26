@@ -100,27 +100,38 @@ export class ProjectService {
     })
   }
 
-  async deleteProject(id: number) {
+  async deleteProject(project_id: string) {
     const user_id = this.store.get('user_id')
-    await this.prisma.project.update({
-      where: {
-        user_id,
-        id: id,
-        status: 0,
-      },
-      data: {
-        status: 1,
-      },
-    })
+    await this.prisma.$transaction([
+      this.prisma.project.update({
+        where: {
+          user_id,
+          project_id,
+          status: 0,
+        },
+        data: {
+          status: 1,
+        },
+      }),
+      this.prisma.pages.updateMany({
+        where: {
+          project_id,
+          status: 0,
+        },
+        data: {
+          status: 1,
+        },
+      }),
+    ])
 
     return customResponse(0, '删除成功', 'success')
   }
 
-  async updateProject(id: number, data: createProjectDto) {
+  async updateProject(project_id: string, data: createProjectDto) {
     const user_id = this.store.get('user_id')
     await this.prisma.project.update({
       where: {
-        id: id,
+        project_id,
         user_id,
         status: 0,
       },

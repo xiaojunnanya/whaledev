@@ -81,7 +81,7 @@ export default memo(() => {
     useState<ProjectType[]>(defaultProjectData)
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   // 当前编辑的卡片id
-  const [editId, setEditId] = useState<number>(-1)
+  const [editId, setEditId] = useState<string>('')
   // 页面加载
   const [cardLoading, setCardLoading] = useState<boolean>(false)
   // 总页码
@@ -152,7 +152,7 @@ export default memo(() => {
 
   const editModal = (e: any, item: any) => {
     e.stopPropagation()
-    setEditId(item.id)
+    setEditId(item.project_id)
     setModalType('edit')
     form.setFieldsValue(item)
     setIsModalOpen(true)
@@ -163,7 +163,7 @@ export default memo(() => {
     form.resetFields()
   }
 
-  const deleteOneProject = async (e: any, id: number) => {
+  const deleteOneProject = async (e: any, id: string) => {
     e.stopPropagation()
     const { code, msgType, message } = await deleteProject(id)
     if (code === 0 && msgType === 'success') {
@@ -261,7 +261,7 @@ export default memo(() => {
                         title="提示"
                         description="确定要删除该项目吗"
                         onConfirm={e => {
-                          deleteOneProject(e, item.id)
+                          deleteOneProject(e, item.project_id)
                         }}
                         onCancel={e => {
                           e?.stopPropagation()

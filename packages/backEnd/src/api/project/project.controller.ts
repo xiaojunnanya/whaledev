@@ -27,15 +27,12 @@ export class ProjectController {
   }
 
   @Delete('/delete/:id')
-  deleteProject(@Param('id', ParseIntPipe) id: number) {
+  deleteProject(@Param('id') id: string) {
     return this.projectService.deleteProject(id)
   }
 
   @Put('/update/:id')
-  updateProject(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: createProjectDto,
-  ) {
+  updateProject(@Param('id') id: string, @Body() data: createProjectDto) {
     return this.projectService.updateProject(id, data)
   }
 
