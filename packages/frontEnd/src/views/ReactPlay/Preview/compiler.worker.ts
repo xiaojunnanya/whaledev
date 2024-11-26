@@ -5,6 +5,8 @@ import { ENTRY_FILE_NAME, Files, File } from '@/stores/reactplay'
 export const beforeTransformCode = (filename: string, code: string) => {
   let _code = code
   const regexReact = /import\s+React/g
+
+  // 如果文件名以 .jsx 或 .tsx 结尾，并且代码中没有包含 import React，则导入
   if (
     (filename.endsWith('.jsx') || filename.endsWith('.tsx')) &&
     !regexReact.test(code)
@@ -14,7 +16,7 @@ export const beforeTransformCode = (filename: string, code: string) => {
   return _code
 }
 
-// 遗留的问题：可以作为难点纪录 web worker 优化
+// 文档纪录：可以作为难点纪录 web worker 优化
 // https://vitejs.cn/vite3-cn/guide/features.html#web-workers
 export const babelTransform = (
   filename: string,
@@ -24,11 +26,12 @@ export const babelTransform = (
   let _code = beforeTransformCode(filename, code)
   let result = ''
   try {
+    // 使用 Babel 转换代码
     result = transform(_code, {
       presets: ['react', 'typescript'],
       filename,
       plugins: [customResolver(files)],
-      retainLines: true,
+      retainLines: true, // 保留源代码的行号
     }).code!
   } catch (e) {
     console.error('编译出错', e)
@@ -79,6 +82,8 @@ const css2Js = (file: File) => {
   return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
 }
 
+// 用于解析文件依赖，特别是处理 CSS 和 JSON 文件，返回动态生成的 Blob URL
+// 会处理所有的 import 语句，特别是对于 .css 和 .json 文件，将它们转换为动态加载的 JavaScript 模块
 function customResolver(files: Files): PluginObj {
   return {
     visitor: {

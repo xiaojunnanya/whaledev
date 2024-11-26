@@ -1,12 +1,34 @@
-import MonacoEditor, {
-  EditorProps,
-  loader,
-  OnMount,
-} from '@monaco-editor/react'
-import { memo } from 'react'
+import Editor, { loader, OnMount } from '@monaco-editor/react'
+import type { EditorProps } from '@monaco-editor/react'
+import { memo, useEffect } from 'react'
 import { editor } from 'monaco-editor'
 import * as monaco from 'monaco-editor'
 import { createATA } from '../Ata'
+
+// 解决CDN问题
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === 'json') {
+      return new jsonWorker()
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker()
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker()
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker()
+    }
+    return new editorWorker()
+  },
+}
+loader.config({ monaco })
 
 export interface EditorFile {
   name: string
@@ -23,8 +45,21 @@ interface IProps {
 export default memo((props: IProps) => {
   const { file, onChange, options } = props
 
-  // 解决CDN问题
-  loader.config({ monaco })
+  // 初始化 Monaco 编辑器
+  useEffect(() => {
+    loader.init()
+
+    return () => {
+      // 在组件卸载时清理 Monaco 编辑器
+      if (typeof monaco !== 'undefined') {
+        editor.getModels().forEach(model => {
+          model.dispose() // 销毁编辑器模型
+        })
+      }
+      // 如果有额外的库加载（如在 TypeScript 中添加 extraLib），你也可以在这里清除它们
+      monaco.languages.typescript.typescriptDefaults.setExtraLibs([])
+    }
+  }, [])
 
   const handleEditorMount: OnMount = (editor, monaco) => {
     // 添加了一个快捷键命令，触发时自动格式化文档
@@ -56,7 +91,7 @@ export default memo((props: IProps) => {
   }
 
   return (
-    <MonacoEditor
+    <Editor
       height={'100%'}
       path={file.name}
       language={file.language}

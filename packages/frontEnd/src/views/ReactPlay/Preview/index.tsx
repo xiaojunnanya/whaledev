@@ -3,7 +3,7 @@ import { memo, useEffect, useRef, useState } from 'react'
 import iframeRaw from '../Template/iframe.html?raw'
 import MessageContainer from '@/components/MessageContainer'
 
-import CompilerWorker from './compiler?worker'
+import CompilerWorker from './compiler.worker?worker'
 import { debounce } from 'lodash-es'
 
 interface MessageData {

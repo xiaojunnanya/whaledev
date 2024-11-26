@@ -1,4 +1,4 @@
-import { lazy, memo, ReactNode, useEffect, useState } from 'react'
+import { lazy, memo, ReactNode, useState } from 'react'
 import { LeftStyled } from './style'
 import affixImg from '@/assets/images/svg/affix.svg'
 import noaffixImg from '@/assets/images/svg/notAffix.svg'

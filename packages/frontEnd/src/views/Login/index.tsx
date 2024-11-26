@@ -8,31 +8,21 @@ import ForgetModel from './Form/Forget'
 
 import { useGlobal } from '@/stores/global'
 
+const select: Record<string, JSX.Element> = {
+  login: <LoginModel />,
+  account: <AccountModel />,
+  forget: <ForgetModel />,
+}
+
 const Login = memo(() => {
   const { mode } = useGlobal()
 
-  let showContainer = <></>
-
-  switch (mode) {
-    case 'login':
-      showContainer = <LoginModel></LoginModel>
-      break
-    case 'account':
-      showContainer = <AccountModel></AccountModel>
-      break
-    case 'forget':
-      showContainer = <ForgetModel></ForgetModel>
-      break
-    default:
-      showContainer = <LoginModel></LoginModel>
-      break
-  }
   // 遗留的问题：验证码倒计时
   return (
     <LoginStyled>
       <div className="login-body">
         <div className="bg"></div>
-        <div className="login-panel">{showContainer}</div>
+        <div className="login-panel">{select[mode]}</div>
       </div>
     </LoginStyled>
   )
