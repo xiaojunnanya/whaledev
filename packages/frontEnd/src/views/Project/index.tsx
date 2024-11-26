@@ -12,6 +12,17 @@ const Rapid = lazy(() => import('./Rapid'))
 const Setting = lazy(() => import('./Setting'))
 const NotFound = lazy(() => import('@/components/NotFound'))
 
+const items: TabsProps['items'] = [
+  {
+    key: 'rapid',
+    label: '应用组装',
+  },
+  {
+    key: 'settings',
+    label: '应用设置',
+  },
+]
+
 const showContainer = (key: string) => {
   switch (key) {
     case 'rapid':
@@ -32,17 +43,6 @@ export default memo(() => {
     {} as ProjectType,
   )
   const [tabsActiveKey, setTabsActiveKey] = useState(config || 'rapid')
-
-  const items: TabsProps['items'] = [
-    {
-      key: 'rapid',
-      label: '应用组装',
-    },
-    {
-      key: 'settings',
-      label: '应用设置',
-    },
-  ]
 
   useEffect(() => {
     getProjectDetailById()

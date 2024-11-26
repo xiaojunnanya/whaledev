@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const HandleStyled = styled.div`
-  height: 48px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: space-between;

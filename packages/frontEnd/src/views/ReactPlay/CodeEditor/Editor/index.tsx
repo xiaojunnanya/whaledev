@@ -1,6 +1,11 @@
-import MonacoEditor, { EditorProps, OnMount } from '@monaco-editor/react'
+import MonacoEditor, {
+  EditorProps,
+  loader,
+  OnMount,
+} from '@monaco-editor/react'
 import { memo } from 'react'
 import { editor } from 'monaco-editor'
+import * as monaco from 'monaco-editor'
 import { createATA } from '../Ata'
 
 export interface EditorFile {
@@ -17,6 +22,9 @@ interface IProps {
 
 export default memo((props: IProps) => {
   const { file, onChange, options } = props
+
+  // 解决CDN问题
+  loader.config({ monaco })
 
   const handleEditorMount: OnMount = (editor, monaco) => {
     // 添加了一个快捷键命令，触发时自动格式化文档

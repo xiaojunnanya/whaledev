@@ -85,15 +85,12 @@ export default memo(() => {
             <InputNumber addonAfter="px" value={viewWidth} />
           </div>
           <div className="edit-top-right">
-            <Button size="small" onClick={() => setShowResetModal(true)}>
-              重置
-            </Button>
-            <Button type="primary" size="small" onClick={save}>
+            <Button onClick={() => setShowResetModal(true)}>重置</Button>
+            <Button type="primary" onClick={save}>
               保存
             </Button>
-            <Button size="small" onClick={preview}>
-              预览
-            </Button>
+            <Button onClick={preview}>预览</Button>
+            <Button>发布至模版（个人/市场/地址）</Button>
           </div>
         </div>
 

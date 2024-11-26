@@ -11,7 +11,7 @@ export default memo(() => {
     <>
       <Header></Header>
       <Handle></Handle>
-      <div style={{ height: 'calc(100vh - 48px - 48px)' }}>
+      <div style={{ height: 'calc(100vh - 90px)' }}>
         <Allotment defaultSizes={[100, 100]}>
           <Allotment.Pane minSize={400}>
             <CodeEditor />
