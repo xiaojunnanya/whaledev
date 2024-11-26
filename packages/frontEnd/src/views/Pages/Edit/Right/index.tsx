@@ -16,7 +16,7 @@ export default memo(() => {
   const [key, setKey] = useState<string>('属性')
 
   return (
-    <RightStyled className="edit-right">
+    <RightStyled>
       <Segmented
         value={key}
         onChange={setKey}

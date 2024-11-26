@@ -1,5 +1,24 @@
 import { memo } from 'react'
+import { OutlineTreeStyled } from './style'
+import { useComponetsStore } from '@/stores/components'
+import { Tree } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
 
 export default memo(() => {
-  return <div>index</div>
+  const { components, setCurComponentId } = useComponetsStore()
+  // 遗留的问题：滚动条
+  return (
+    <OutlineTreeStyled>
+      <Tree
+        fieldNames={{ title: 'desc', key: 'id' }}
+        treeData={components as any}
+        showLine
+        switcherIcon={<DownOutlined />}
+        defaultExpandAll
+        onSelect={([selectedKey]) => {
+          setCurComponentId(selectedKey as string)
+        }}
+      />
+    </OutlineTreeStyled>
+  )
 })

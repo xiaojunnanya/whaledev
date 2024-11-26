@@ -1,10 +1,7 @@
-import { lazy, memo, ReactNode, useState } from 'react'
-import { LeftStyled } from './style'
-import affixImg from '@/assets/images/svg/affix.svg'
-import noaffixImg from '@/assets/images/svg/notAffix.svg'
+import { lazy, memo, ReactNode } from 'react'
+import { EditLeftStyled } from './style'
 
 import {
-  CloseOutlined,
   CodeOutlined,
   DatabaseOutlined,
   PartitionOutlined,
@@ -66,65 +63,50 @@ const editLeftBottom = [
   },
 ]
 
-export default memo(() => {
-  const [active, setActive] = useState<itemProps>({} as itemProps)
-  // 是否固定
-  const [isAffix, setIsAffix] = useState(false)
+interface IProps {
+  activeObj: {
+    active: itemProps
+    setActive: (active: itemProps) => void
+  }
+}
+
+export default memo((props: IProps) => {
+  const { activeObj } = props
+  const { active, setActive } = activeObj
 
   return (
-    <>
-      <LeftStyled className="edit-left">
-        <div
-          className="edit-left-side"
-          style={{ display: active.key ? 'block' : 'none' }}
-        >
-          <div className="side-top">
-            <div className="side-top-title">{active.title}</div>
-            <div className="side-top-right">
-              <img
-                src={isAffix ? noaffixImg : affixImg}
-                onClick={() => setIsAffix(!isAffix)}
-              />
-              <CloseOutlined onClick={() => setActive({} as itemProps)} />
+    <EditLeftStyled>
+      <div className="edit-left-top">
+        {editLeftTop.map(item => {
+          return (
+            <div
+              key={item.key}
+              className={`edit-left-top-item edit-left-item ${
+                active.key === item.key ? 'edit-left-active' : ''
+              }`}
+              onClick={() =>
+                setActive(item.key === active.key ? ({} as itemProps) : item)
+              }
+            >
+              {item.icon}
+              <span>{item.title}</span>
             </div>
-          </div>
-          <>
-            {editLeftTop.filter(item => item.key === active.key)[0]?.children}
-          </>
-        </div>
-
-        <div className="edit-left-top">
-          {editLeftTop.map(item => {
-            return (
-              <div
-                key={item.key}
-                className={`edit-left-top-item edit-left-item ${
-                  active.key === item.key ? 'edit-left-active' : ''
-                }`}
-                onClick={() =>
-                  setActive(item.key === active.key ? ({} as itemProps) : item)
-                }
-              >
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-            )
-          })}
-        </div>
-        <div className="edit-left-bottom">
-          {editLeftBottom.map(item => {
-            return (
-              <div
-                key={item.key}
-                className="edit-left-bottom-item edit-left-item"
-              >
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-            )
-          })}
-        </div>
-      </LeftStyled>
-    </>
+          )
+        })}
+      </div>
+      <div className="edit-left-bottom">
+        {editLeftBottom.map(item => {
+          return (
+            <div
+              key={item.key}
+              className="edit-left-bottom-item edit-left-item"
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </div>
+          )
+        })}
+      </div>
+    </EditLeftStyled>
   )
 })
