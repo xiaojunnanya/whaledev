@@ -12,6 +12,8 @@ import {
   CloseOutlined,
 } from '@ant-design/icons'
 import { useGlobal } from '@/stores/global'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 export default memo(() => {
   const { setWidth } = useGlobal()
@@ -38,56 +40,58 @@ export default memo(() => {
 
   return (
     <ContentStyled>
-      <div className="edit-left">
-        <Left activeObj={{ active, setActive }}></Left>
-      </div>
-      <div
-        className="left-aside"
-        style={{
-          display: active.key ? 'block' : 'none',
-          position: isAffix ? 'static' : 'absolute',
-        }}
-      >
-        <div className="side-top">
-          <div className="side-top-title">{active.title}</div>
-          <div className="side-top-right">
-            <img
-              src={isAffix ? noaffixImg : affixImg}
-              onClick={() => setIsAffix(!isAffix)}
-            />
-            <CloseOutlined onClick={() => setActive({} as itemProps)} />
-          </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className="edit-left">
+          <Left activeObj={{ active, setActive }}></Left>
         </div>
-        <div style={{ height: 'calc(100% - 40px)' }}>
-          {editLeftTop.filter(item => item.key === active.key)[0]?.children}
-        </div>
-      </div>
-      <div className="edit-middle">
-        <div className="edit-middle-content" ref={editMiddleContent}>
-          <Middle />
-        </div>
-      </div>
-      <div className="right-dot">
         <div
-          className="dot"
-          onClick={() => {
-            setRightContentExpand(!rightContentExpand)
+          className="left-aside"
+          style={{
+            display: active.key ? 'block' : 'none',
+            position: isAffix ? 'static' : 'absolute',
           }}
         >
-          {rightContentExpand ? (
-            <CaretRightOutlined style={{ fontSize: '9px' }} />
-          ) : (
-            <CaretLeftOutlined style={{ fontSize: '9px' }} />
-          )}
+          <div className="side-top">
+            <div className="side-top-title">{active.title}</div>
+            <div className="side-top-right">
+              <img
+                src={isAffix ? noaffixImg : affixImg}
+                onClick={() => setIsAffix(!isAffix)}
+              />
+              <CloseOutlined onClick={() => setActive({} as itemProps)} />
+            </div>
+          </div>
+          <div style={{ height: 'calc(100% - 40px)' }}>
+            {editLeftTop.filter(item => item.key === active.key)[0]?.children}
+          </div>
         </div>
-      </div>
-      <div
-        className="edit-right"
-        style={{ display: rightContentExpand ? 'block' : 'none' }}
-        onTransitionEnd={handleWindowResize}
-      >
-        <Right></Right>
-      </div>
+        <div className="edit-middle">
+          <div className="edit-middle-content" ref={editMiddleContent}>
+            <Middle />
+          </div>
+        </div>
+        <div className="right-dot">
+          <div
+            className="dot"
+            onClick={() => {
+              setRightContentExpand(!rightContentExpand)
+            }}
+          >
+            {rightContentExpand ? (
+              <CaretRightOutlined style={{ fontSize: '9px' }} />
+            ) : (
+              <CaretLeftOutlined style={{ fontSize: '9px' }} />
+            )}
+          </div>
+        </div>
+        <div
+          className="edit-right"
+          style={{ display: rightContentExpand ? 'block' : 'none' }}
+          onTransitionEnd={handleWindowResize}
+        >
+          <Right></Right>
+        </div>
+      </DndProvider>
     </ContentStyled>
   )
 })
