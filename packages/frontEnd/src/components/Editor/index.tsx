@@ -3,7 +3,7 @@ import type { EditorProps } from '@monaco-editor/react'
 import { memo, useEffect } from 'react'
 import { editor } from 'monaco-editor'
 import * as monaco from 'monaco-editor'
-import { createATA } from '../Ata'
+import { createATA } from './Ata'
 
 // 解决CDN问题
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
@@ -40,10 +40,11 @@ interface IProps {
   file: EditorFile
   onChange?: EditorProps['onChange']
   options?: editor.IStandaloneEditorConstructionOptions
+  isMount?: boolean
 }
 
 export default memo((props: IProps) => {
-  const { file, onChange, options } = props
+  const { file, onChange, options, isMount = true } = props
 
   // 初始化 Monaco 编辑器
   useEffect(() => {
@@ -95,7 +96,7 @@ export default memo((props: IProps) => {
       height={'100%'}
       path={file.name}
       language={file.language}
-      onMount={handleEditorMount}
+      onMount={isMount ? handleEditorMount : undefined}
       onChange={onChange}
       value={file.value}
       loading={'依赖构建中...'}

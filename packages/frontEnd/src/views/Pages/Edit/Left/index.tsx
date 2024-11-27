@@ -28,7 +28,7 @@ export interface itemProps {
   children: ReactNode
 }
 
-const editLeftTop: itemProps[] = [
+export const editLeftTop: itemProps[] = [
   {
     key: 'outlineTree',
     title: '大纲树',

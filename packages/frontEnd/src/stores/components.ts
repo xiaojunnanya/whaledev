@@ -40,7 +40,7 @@ interface Action {
 export const useComponetsStore = create<State & Action>((set, get) => ({
   components: [
     {
-      id: '0',
+      id: 'Page-0',
       name: 'Page',
       props: {},
       desc: '页面',

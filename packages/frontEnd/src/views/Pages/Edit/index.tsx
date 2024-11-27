@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import { ContentStyled } from './style'
-import Left, { itemProps } from './Left'
+import Left, { editLeftTop, itemProps } from './Left'
 import Middle from './Middle'
 import Right from './Right'
 
@@ -57,6 +57,9 @@ export default memo(() => {
             />
             <CloseOutlined onClick={() => setActive({} as itemProps)} />
           </div>
+        </div>
+        <div style={{ height: 'calc(100% - 40px)' }}>
+          {editLeftTop.filter(item => item.key === active.key)[0]?.children}
         </div>
       </div>
       <div className="edit-middle">

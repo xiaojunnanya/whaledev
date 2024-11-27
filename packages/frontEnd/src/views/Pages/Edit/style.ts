@@ -39,7 +39,7 @@ export const ContentStyled = styled.div`
       justify-content: space-between;
       align-items: center;
       padding: 0 15px;
-      height: 48px;
+      height: 40px;
 
       &-title {
         font-weight: 700;

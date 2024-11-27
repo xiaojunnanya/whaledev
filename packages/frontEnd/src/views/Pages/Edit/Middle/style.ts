@@ -1,3 +1,6 @@
 import styled from 'styled-components'
 
-export const MiddleStyled = styled.div``
+export const MiddleStyled = styled.div`
+  /* height: 100%;
+  width: 100%; */
+`
