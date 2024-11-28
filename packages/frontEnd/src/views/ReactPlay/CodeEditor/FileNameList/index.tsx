@@ -6,6 +6,7 @@ import {
 import { memo, useState } from 'react'
 import { FileNameListStyled } from './style'
 import FileNameItem from './FileNameItem'
+import '@/assets/css/scrollbar.css'
 
 export default memo(() => {
   const {

@@ -12,10 +12,6 @@ export const FileNameListStyled = styled.div`
   background-color: ${props => props.theme.defaultColor.white};
   white-space: nowrap;
 
-  &::-webkit-scrollbar {
-    height: 3px;
-  }
-
   .tab-item {
     display: inline-flex;
     padding: 8px 10px 6px;

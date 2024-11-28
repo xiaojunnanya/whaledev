@@ -53,3 +53,21 @@
     height: 42px;
   }
 }
+
+.edit-top-middle {
+  .ant-input-number-group-wrapper {
+    margin-left: 20px;
+    width: 120px;
+  }
+}
+
+.edit-compoennt-library {
+  .search-input {
+    margin: 0 10px;
+  }
+  .ant-collapse-content-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 !important;
+  }
+}

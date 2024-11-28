@@ -5,6 +5,7 @@ import { Collapse, Input, Tabs } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import { debounce } from 'lodash-es'
 import { useComponentMapStore } from '@/stores/componentMap'
+import Container from '@/components/Container'
 const { Panel } = Collapse
 
 export default memo(() => {
@@ -58,7 +59,7 @@ export default memo(() => {
   }, 500)
 
   return (
-    <ComponentLibraryStyled>
+    <ComponentLibraryStyled className="edit-compoennt-library">
       <div className="search-input">
         <Input
           placeholder="搜索组件"
@@ -74,33 +75,35 @@ export default memo(() => {
           components.map((comItem, ComIndex) => {
             return (
               <Tabs.TabPane tab={comItem.label} key={ComIndex}>
-                <Collapse
-                  ghost
-                  defaultActiveKey={new Array(comItem.children.length)
-                    .fill(0)
-                    .map((_, i) => i)}
-                  expandIcon={({ isActive }) => (
-                    <CaretRightOutlined rotate={isActive ? 90 : 0} />
-                  )}
-                >
-                  {comItem.children.map((item: any, index: number) => {
-                    return (
-                      <Panel header={item.label} key={index}>
-                        {item.children.map(
-                          (childItem: any, childIndex: number) => {
-                            return (
-                              <MaterialItem
-                                key={childItem.name + childIndex}
-                                name={childItem.name}
-                                desc={childItem.desc}
-                              ></MaterialItem>
-                            )
-                          },
-                        )}
-                      </Panel>
-                    )
-                  })}
-                </Collapse>
+                <Container height={216}>
+                  <Collapse
+                    ghost
+                    defaultActiveKey={new Array(comItem.children.length)
+                      .fill(0)
+                      .map((_, i) => i)}
+                    expandIcon={({ isActive }) => (
+                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    )}
+                  >
+                    {comItem.children.map((item: any, index: number) => {
+                      return (
+                        <Panel header={item.label} key={index}>
+                          {item.children.map(
+                            (childItem: any, childIndex: number) => {
+                              return (
+                                <MaterialItem
+                                  key={childItem.name + childIndex}
+                                  name={childItem.name}
+                                  desc={childItem.desc}
+                                ></MaterialItem>
+                              )
+                            },
+                          )}
+                        </Panel>
+                      )
+                    })}
+                  </Collapse>
+                </Container>
               </Tabs.TabPane>
             )
           })

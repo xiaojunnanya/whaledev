@@ -12,7 +12,7 @@ import {
 import type { MenuProps, SelectProps } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGlobal } from '@/stores/global'
-import '@/assets/css/scrollbar.css'
+
 import {
   createPage,
   deletePage,

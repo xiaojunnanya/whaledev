@@ -36,11 +36,6 @@ export const EditStyled = styled.div`
           background-color: ${props => props.theme.defaultColor.grey};
         }
       }
-
-      .ant-input-number-group-wrapper {
-        margin-left: 20px;
-        width: 120px;
-      }
     }
 
     &-right {

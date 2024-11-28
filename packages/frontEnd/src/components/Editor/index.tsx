@@ -106,10 +106,6 @@ export default memo((props: IProps) => {
         minimap: {
           enabled: false,
         },
-        // scrollbar: {
-        //   verticalScrollbarSize: 6,
-        //   horizontalScrollbarSize: 6,
-        // },
         ...options,
       }}
     />
