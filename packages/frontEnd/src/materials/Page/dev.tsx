@@ -2,7 +2,8 @@ import { CommonComponentProps } from '../interface'
 import { useMaterailDrop } from '@/hooks/useMaterialDrop'
 import styles from './index.module.less'
 
-const Container = ({ children, id, style }: CommonComponentProps) => {
+const Page = (props: CommonComponentProps) => {
+  const { children, id, style } = props
   const { drop } = useMaterailDrop(['Button', 'Container'], id)
 
   return (
@@ -17,4 +18,4 @@ const Container = ({ children, id, style }: CommonComponentProps) => {
   )
 }
 
-export default Container
+export default Page

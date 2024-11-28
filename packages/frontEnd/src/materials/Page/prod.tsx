@@ -1,7 +1,7 @@
 import { CommonComponentProps } from '../interface'
 import styles from './index.module.less'
 
-const Container = ({ children, style, ...props }: CommonComponentProps) => {
+const Page = ({ children, style, ...props }: CommonComponentProps) => {
   return (
     <div className={styles['whale-page']} style={style} {...props}>
       {children}
@@ -9,4 +9,4 @@ const Container = ({ children, style, ...props }: CommonComponentProps) => {
   )
 }
 
-export default Container
+export default Page

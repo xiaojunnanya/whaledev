@@ -38,9 +38,10 @@ interface Action {
 }
 
 export const useComponetsStore = create<State & Action>((set, get) => ({
+  // State
   components: [
     {
-      id: 'Page-0',
+      id: 'Page_0',
       name: 'Page',
       props: {},
       desc: '页面',
@@ -50,6 +51,7 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
   curComponentId: null,
   curComponent: null,
   componentActionList: [],
+  // Action
   updeteComponent: (component: Component[]) =>
     set(() => ({
       components: component,

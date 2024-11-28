@@ -33,6 +33,7 @@ export const ContentStyled = styled.div`
     border-left: 1px solid ${props => props.theme.defaultColor.grey};
     border-right: 1px solid ${props => props.theme.defaultColor.grey};
     left: 48px;
+    z-index: 999;
 
     .side-top {
       display: flex;

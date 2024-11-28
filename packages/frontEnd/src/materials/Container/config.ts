@@ -3,8 +3,8 @@ import ContainerProd from './prod'
 import { ComponentConfig } from '../interface'
 
 export const ContainerConfig: ComponentConfig = {
-  headTitle: '基础组件',
-  smallTitle: '布局',
+  firstTitle: '基础组件',
+  secondaryTitle: '布局',
   name: 'Container',
   defaultProps: {},
   desc: '容器',

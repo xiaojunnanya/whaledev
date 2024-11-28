@@ -3,8 +3,8 @@ import ButtonProd from './prod'
 import { ComponentConfig } from '../interface'
 
 export const ButtonConfig: ComponentConfig = {
-  headTitle: '基础组件',
-  smallTitle: '通用',
+  firstTitle: '基础组件',
+  secondaryTitle: '通用',
   name: 'Button',
   defaultProps: {
     type: 'primary',

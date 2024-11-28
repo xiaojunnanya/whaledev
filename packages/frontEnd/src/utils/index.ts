@@ -13,7 +13,10 @@ export const fileName2Language = (name: string) => {
   return 'javascript'
 }
 
-// 下载文件
+/**
+ * 下载文件
+ * @param files
+ */
 export async function downloadFiles(files: Files) {
   const zip = new JSZip()
 
@@ -43,30 +46,6 @@ export function getComponentById(
     if (component.children && component.children.length > 0) {
       const result = getComponentById(id, component.children)
       if (result !== null) return result
-    }
-  }
-  return null
-}
-
-// 查找节点的索引及其父节点
-export function findNodeIndexAndParent(
-  children: any,
-  nodeId: string,
-  parentNode = null,
-): any {
-  for (let i = 0; i < children.length; i++) {
-    if (children[i].id === nodeId) {
-      return { index: i, parentNode, selfNode: children[i] }
-    }
-    if (children[i].children) {
-      const result = findNodeIndexAndParent(
-        children[i].children,
-        nodeId,
-        children[i],
-      )
-      if (result) {
-        return result
-      }
     }
   }
   return null
