@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const FooterStyle = styled.div`
   width: 100%;
-  background-color: #303846;
+  background-color: ${props => props.theme.defaultColor.black};
 
   .footer {
     margin: 0 auto;
@@ -13,7 +13,7 @@ export const FooterStyle = styled.div`
       font-weight: 700;
       font-size: 16px;
       margin-bottom: 16px;
-      color: #fff;
+      color: ${props => props.theme.defaultColor.white};
     }
 
     dd {

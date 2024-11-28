@@ -89,7 +89,7 @@ export default memo((props: IProps) => {
               }
             >
               {item.icon}
-              <span>{item.title}</span>
+              <span className="title">{item.title}</span>
             </div>
           )
         })}
@@ -102,7 +102,7 @@ export default memo((props: IProps) => {
               className="edit-left-bottom-item edit-left-item"
             >
               {item.icon}
-              <span>{item.title}</span>
+              <span className="title">{item.title}</span>
             </div>
           )
         })}

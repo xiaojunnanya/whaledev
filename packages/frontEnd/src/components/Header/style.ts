@@ -13,9 +13,9 @@ export const HeaderStyle = styled.header`
     align-items: center;
     z-index: 999;
     height: inherit;
-    color: #000;
+    color: ${props => props.theme.defaultColor.black};
 
-    background-color: #fff;
+    background-color: ${props => props.theme.defaultColor.white};
 
     padding: 0 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

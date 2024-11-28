@@ -63,7 +63,7 @@ export const ContentStyled = styled.div`
   }
 
   .right-dot {
-    background-color: #edeff3;
+    background-color: ${props => props.theme.defaultColor.grey};
     height: 100%;
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@ export const ContentStyled = styled.div`
     .dot {
       padding: 15px 0px;
       border-radius: 12px 0px 0px 12px;
-      background: #ffffff;
+      background: ${props => props.theme.defaultColor.white};
       cursor: pointer;
       display: flex;
       align-items: center;

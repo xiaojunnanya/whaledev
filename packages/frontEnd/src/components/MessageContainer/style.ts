@@ -1,16 +1,6 @@
 import styled from 'styled-components'
 
 export const MessageContainerStyled = styled.div`
-  .msg.error {
-    --color: #f56c6c;
-    --bg-color: #fef0f0;
-  }
-
-  .msg.warn {
-    --color: #e6a23c;
-    --bg-color: #fdf6ec;
-  }
-
   .msg {
     position: absolute;
     right: 8px;
@@ -23,13 +13,13 @@ export const MessageContainerStyled = styled.div`
     max-height: calc(100% - 300px);
     min-height: 40px;
     margin-bottom: 8px;
-    color: var(--color);
+    color: ${props => props.theme.defaultColor.red};
 
-    background-color: var(--bg-color);
-    border: 2px solid #fff;
+    background-color: ${props => props.theme.defaultColor.red2};
+    border: 2px solid ${props => props.theme.defaultColor.white};
     border-radius: 6px;
 
-    border-color: var(--color);
+    border-color: ${props => props.theme.defaultColor.red};
   }
 
   pre {

@@ -23,6 +23,10 @@ export const EditLeftStyled = styled.div`
     padding: 4px;
     border-radius: 4px;
     user-select: none;
+
+    .title {
+      margin-top: 4px;
+    }
   }
 
   .edit-left-active {

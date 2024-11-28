@@ -16,6 +16,9 @@ export default {
     black: '#000000',
     white: '#ffffff',
     grey: '#EEEEEE',
+    grey2: '#bdbdbd',
+    red: '#f56c6c',
+    red2: '#fef0f0',
   },
   // mixin: {
   //     boxShadow: `
