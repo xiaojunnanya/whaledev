@@ -31,7 +31,6 @@ export class PagesController {
 
   @Delete('delete/:id')
   async deletePage(@Param('id') id: string) {
-    console.log(id, 'id')
     return this.pagesService.deletePage(id)
   }
 

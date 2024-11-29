@@ -41,7 +41,6 @@ export class ProjectService {
   async getProjectList(page: number) {
     // 优化查询，避免查询两次:使用聚合查询
     const user_id = this.store.get('user_id')
-    console.log(this.selectData, 'this.selectData')
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
         where: {

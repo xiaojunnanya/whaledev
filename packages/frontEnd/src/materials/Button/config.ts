@@ -26,6 +26,9 @@ export const ButtonConfig: ComponentConfig = {
           options: [
             { label: '主按钮', value: 'primary' },
             { label: '次按钮', value: 'default' },
+            { label: '虚线按钮', value: 'dashed' },
+            { label: '文本按钮', value: 'text' },
+            { label: '链接按钮', value: 'link' },
           ],
         },
         {
