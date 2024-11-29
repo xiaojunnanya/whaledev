@@ -41,6 +41,9 @@ enum ProjectState {
 // @unique：唯一
 // @default(dbgenerated("NOW()")) 创建时间
 // @default(dbgenerated("NOW() ON UPDATE NOW()")) 更新时间
+// @relation("page_json_pages"):pages 表和 page_json 表通过 page_json_pages 这个关系名连接起来。
+// fields 指定了当前模型（在此是 pages）中外键的字段
+// references 指定了在目标模型（在此是 page_json）中的字段，这个字段是外键引用的目标
 
 // 所有的表都需要有: id, created_time, updated_time, status
 
@@ -87,4 +90,18 @@ model pages{
 
   // 添加的关系字段
   project project @relation("project_pages", fields: [project_id], references: [project_id])
+  page_json page_json? @relation("page_json_pages")
+}
+
+
+model page_json{
+  id Int @id @default(autoincrement())
+  page_id String @unique
+  page_json String @db.MediumText
+  created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+
+  status Int @default(0) // 0:正常 1:删除
+  // 反向关系，page_id 为外键，指向 pages 表的 page_id
+  pages pages @relation("page_json_pages", fields: [page_id], references: [page_id])
 }

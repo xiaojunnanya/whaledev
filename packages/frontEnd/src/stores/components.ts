@@ -37,17 +37,19 @@ interface Action {
   setComponentActionList: (actionList: any[]) => void // 设置组件操作列表
 }
 
+export const initComponents = [
+  {
+    id: 'Page_0',
+    name: 'Page',
+    props: {},
+    desc: '页面',
+    children: [],
+  },
+]
+
 export const useComponetsStore = create<State & Action>((set, get) => ({
   // State
-  components: [
-    {
-      id: 'Page_0',
-      name: 'Page',
-      props: {},
-      desc: '页面',
-      children: [],
-    },
-  ],
+  components: initComponents,
   curComponentId: null,
   curComponent: null,
   componentActionList: [],

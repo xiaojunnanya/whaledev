@@ -20,7 +20,7 @@ export class PagesController {
   }
 
   @Get('list')
-  async getPageList(@Query('project_id') project_id: any) {
+  async getPageList(@Query('project_id') project_id: string) {
     return this.pagesService.getPageList(project_id)
   }
 

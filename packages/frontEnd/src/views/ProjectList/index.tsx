@@ -34,6 +34,7 @@ import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
 import Container from '@/components/Container'
 import { useNavigate } from 'react-router-dom'
+import { debounce } from 'lodash-es'
 const { Meta } = Card
 const { Option } = Select
 
@@ -88,8 +89,6 @@ export default memo(() => {
   const [totalPage, setTotalPage] = useState<number>(1)
   // 当前分页
   const [currentPage, setCurrentPage] = useState<number>(1)
-  // 搜索
-  const [searchValue, setSearchValue] = useState<string>('')
 
   useEffect(() => {
     setCardLoading(true)
@@ -187,17 +186,14 @@ export default memo(() => {
     getProjectData(page)
   }
 
-  // 遗留的问题：防抖、中文打字的问题
-  const searchChange = (e: any) => {
-    const keyname = e.target.value
+  const searchChange = debounce((keyname: string) => {
     setCurrentPage(1)
-    setSearchValue(keyname)
     if (!keyname) {
       getProjectData(currentPage)
     } else {
-      searchHandleProject(e.target.value, 1)
+      searchHandleProject(keyname, 1)
     }
-  }
+  }, 500)
 
   const handleClickCard = (id: string) => {
     navigate(`/project/${id}/rapid`)
@@ -210,8 +206,10 @@ export default memo(() => {
           prefix={<SearchOutlined />}
           placeholder="请输入应用名称"
           allowClear
-          value={searchValue}
-          onChange={e => searchChange(e)}
+          // value={searchValue}
+          onChange={e => {
+            searchChange(e.target.value)
+          }}
         />
         <Radio.Group
           options={optionsWithScene}

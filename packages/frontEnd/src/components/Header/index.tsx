@@ -111,7 +111,6 @@ export default memo((props: IProps) => {
               onClick={() => {
                 naviage('/login')
               }}
-              size="small"
             >
               登录
             </Button>

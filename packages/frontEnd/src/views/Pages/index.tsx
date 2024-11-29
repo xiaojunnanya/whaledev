@@ -13,6 +13,8 @@ import { EditStyled } from './style'
 import { useParams, useNavigate } from 'react-router-dom'
 import Edit from './Edit'
 import { getPageDetail } from '@/service/request/pages'
+import { getPageJsonByPageId, savePageJson } from '@/service/request/page_json'
+import { initComponents, useComponetsStore } from '@/stores/components'
 
 interface pageType {
   id: number
@@ -28,9 +30,10 @@ export default memo(() => {
   const [showResetModal, setShowResetModal] = useState(false)
   const [pageInfo, setPageInfo] = useState<pageType>({} as pageType)
   const { width: viewWidth, setMessage } = useGlobal()
+  const { components, updeteComponent } = useComponetsStore()
 
   useEffect(() => {
-    getPageInfo()
+    Promise.all([getPageInfo(), getPageJson()])
   }, [])
 
   const getPageInfo = async () => {
@@ -41,18 +44,46 @@ export default memo(() => {
     } else {
       setMessage({
         type: 'error',
-        text: '查询页面详情失败，请稍后重试',
+        text: '查询页面信息失败，请稍后重试',
       })
     }
+  }
+
+  const getPageJson = async () => {
+    const { data } = await getPageJsonByPageId(page_id)
+    updeteComponent(
+      JSON.parse(data?.page_json || JSON.stringify(initComponents)),
+    )
   }
 
   const preview = () => {
     window.open(`/project/${project_id}/page/${page_id}/preview`)
   }
 
-  const save = async () => {}
+  const save = async () => {
+    const { data, message, msgType } = await savePageJson({
+      page_id,
+      page_json: JSON.stringify(components),
+    })
 
-  const reset = () => {}
+    if (!data) {
+      setMessage({
+        type: msgType,
+        text: message,
+      })
+    } else {
+      setMessage({
+        type: 'error',
+        text: '查询页面详情失败，请稍后重试',
+      })
+    }
+  }
+
+  const reset = () => {
+    // 重置页面
+    updeteComponent(initComponents)
+    setShowResetModal(false)
+  }
 
   return (
     <>

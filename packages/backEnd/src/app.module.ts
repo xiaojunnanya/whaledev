@@ -14,6 +14,7 @@ import { RedisModule } from './global/redis/redis.module'
 import { StoreModule } from './global/store/store.module'
 import { UserModule } from './api/user/user.module';
 import { PagesModule } from './api/pages/pages.module';
+import { PageJsonModule } from './api/page_json/page_json.module';
 @Module({
   imports: [
     AuthModule,
@@ -24,6 +25,7 @@ import { PagesModule } from './api/pages/pages.module';
     ProjectModule,
     UserModule,
     PagesModule,
+    PageJsonModule,
   ],
   controllers: [AppController],
   providers: [
