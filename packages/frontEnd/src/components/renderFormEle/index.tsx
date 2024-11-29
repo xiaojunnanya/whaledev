@@ -14,7 +14,7 @@ export default memo((props: IProps) => {
     <Form.Item key={name} name={name} label={label}>
       {type === 'select' && <Select options={options} />}
       {type === 'input' && <Input />}
-      {type === 'inputNumber' && <InputNumber />}
+      {type === 'inputNumber' && <InputNumber style={{ width: '100%' }} />}
     </Form.Item>
   )
 })

@@ -1,12 +1,11 @@
 import { memo, useMemo, useState } from 'react'
 import { ComponentLibraryStyled } from './style'
 import { MaterialItem } from '@/components/MaterialItem'
-import { Collapse, Input, Tabs } from 'antd'
+import { Collapse, CollapseProps, Input, Tabs, TabsProps } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import { debounce } from 'lodash-es'
 import { useComponentMapStore } from '@/stores/componentMap'
 import Container from '@/components/Container'
-const { Panel } = Collapse
 
 export default memo(() => {
   const [inputValue, setInputValue] = useState('')
@@ -58,6 +57,47 @@ export default memo(() => {
     setInputValue(value)
   }, 500)
 
+  const collapseItems = (data: any): CollapseProps['items'] => {
+    return data.map((item: any, index: number) => {
+      return {
+        key: index,
+        label: item.label,
+        children: item.children.map((childItem: any, childIndex: number) => {
+          return (
+            <MaterialItem
+              key={childItem.name + childIndex}
+              name={childItem.name}
+              desc={childItem.desc}
+            ></MaterialItem>
+          )
+        }),
+      }
+    })
+  }
+
+  const tabsItems: TabsProps['items'] = useMemo(() => {
+    return components.map((comItem, index) => {
+      return {
+        key: comItem.label,
+        label: comItem.label,
+        children: (
+          <Container height={216} key={index}>
+            <Collapse
+              ghost
+              defaultActiveKey={new Array(comItem.children.length)
+                .fill(0)
+                .map((_, i) => i)}
+              expandIcon={({ isActive }) => (
+                <CaretRightOutlined rotate={isActive ? 90 : 0} />
+              )}
+              items={collapseItems(comItem.children)}
+            ></Collapse>
+          </Container>
+        ),
+      }
+    })
+  }, [components])
+
   return (
     <ComponentLibraryStyled className="edit-compoennt-library">
       <div className="search-input">
@@ -70,47 +110,7 @@ export default memo(() => {
           }}
         />
       </div>
-      <Tabs centered>
-        {components.length !== 0 ? (
-          components.map((comItem, ComIndex) => {
-            return (
-              <Tabs.TabPane tab={comItem.label} key={ComIndex}>
-                <Container height={216}>
-                  <Collapse
-                    ghost
-                    defaultActiveKey={new Array(comItem.children.length)
-                      .fill(0)
-                      .map((_, i) => i)}
-                    expandIcon={({ isActive }) => (
-                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
-                    )}
-                  >
-                    {comItem.children.map((item: any, index: number) => {
-                      return (
-                        <Panel header={item.label} key={index}>
-                          {item.children.map(
-                            (childItem: any, childIndex: number) => {
-                              return (
-                                <MaterialItem
-                                  key={childItem.name + childIndex}
-                                  name={childItem.name}
-                                  desc={childItem.desc}
-                                ></MaterialItem>
-                              )
-                            },
-                          )}
-                        </Panel>
-                      )
-                    })}
-                  </Collapse>
-                </Container>
-              </Tabs.TabPane>
-            )
-          })
-        ) : (
-          <div className="noComponents">暂无相关组件</div>
-        )}
-      </Tabs>
+      <Tabs centered items={tabsItems}></Tabs>
     </ComponentLibraryStyled>
   )
 })
