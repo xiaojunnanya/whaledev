@@ -33,7 +33,11 @@ export default memo(() => {
   const { components, updeteComponent } = useComponetsStore()
 
   useEffect(() => {
-    Promise.all([getPageInfo(), getPageJson()])
+    Promise.allSettled([getPageInfo(), getPageJson()])
+
+    return () => {
+      updeteComponent(initComponents)
+    }
   }, [])
 
   const getPageInfo = async () => {

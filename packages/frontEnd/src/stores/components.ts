@@ -37,7 +37,7 @@ interface Action {
   setComponentActionList: (actionList: any[]) => void // 设置组件操作列表
 }
 
-export const initComponents = [
+export const initComponents: Component[] = [
   {
     id: 'Page_0',
     name: 'Page',

@@ -51,6 +51,7 @@ export default memo(() => {
     }
   }
 
+  // 遗留的问题：中间加载渲染需要时间，需不需要加一个loading
   return (
     <MiddleStyled className="whale-edit-area" onClick={handleClick}>
       {renderComponents(components)}

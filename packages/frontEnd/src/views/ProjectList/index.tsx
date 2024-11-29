@@ -92,7 +92,7 @@ export default memo(() => {
 
   useEffect(() => {
     setCardLoading(true)
-    Promise.all([
+    Promise.allSettled([
       getProjectTypeData(),
       getProjectData(currentPage),
       getProjectState(),
