@@ -131,59 +131,61 @@ const SelectedMask = memo(
       updeteComponentById(parent!.id, parent!)
     }
 
-    return createPortal(
-      <SelectedMaskStyled>
-        <div
-          className="whale-mask-container"
-          style={{
-            position: 'absolute',
-            left: position.left,
-            top: position.top,
-            width: position.width,
-            height: position.height,
-          }}
-        />
-        <div
-          className="whale-mask"
-          style={{
-            position: 'absolute',
-            left: position.labelLeft,
-            top: position.labelTop,
-          }}
-          ref={whaleMask}
-        >
-          <div className="whale-mask-desc">{curComponent?.desc}</div>
-          {/* 画布不能被选中 */}
-          {curComponentId !== 'Page_0' && (
-            <>
-              <div className="whale-mask-line">|</div>
-              <div className="whale-mask-icon">
-                <ArrowUpOutlined
-                  onClick={() => {
-                    move(curComponent!, 'up')
-                  }}
-                />
-                <ArrowDownOutlined
-                  onClick={() => {
-                    move(curComponent!, 'down')
-                  }}
-                />
-                <CopyOutlined />
-                <Popconfirm
-                  title="确认删除？"
-                  okText={'确认'}
-                  cancelText={'取消'}
-                  onConfirm={handleDelete}
-                >
-                  <DeleteOutlined />
-                </Popconfirm>
-              </div>
-            </>
-          )}
-        </div>
-      </SelectedMaskStyled>,
-      el,
-    )
+    return el
+      ? createPortal(
+          <SelectedMaskStyled>
+            <div
+              className="whale-mask-container"
+              style={{
+                position: 'absolute',
+                left: position.left,
+                top: position.top,
+                width: position.width,
+                height: position.height,
+              }}
+            />
+            <div
+              className="whale-mask"
+              style={{
+                position: 'absolute',
+                left: position.labelLeft,
+                top: position.labelTop,
+              }}
+              ref={whaleMask}
+            >
+              <div className="whale-mask-desc">{curComponent?.desc}</div>
+              {/* 画布不能被选中 */}
+              {curComponentId !== 'Page_0' && (
+                <>
+                  <div className="whale-mask-line">|</div>
+                  <div className="whale-mask-icon">
+                    <ArrowUpOutlined
+                      onClick={() => {
+                        move(curComponent!, 'up')
+                      }}
+                    />
+                    <ArrowDownOutlined
+                      onClick={() => {
+                        move(curComponent!, 'down')
+                      }}
+                    />
+                    <CopyOutlined />
+                    <Popconfirm
+                      title="确认删除？"
+                      okText={'确认'}
+                      cancelText={'取消'}
+                      onConfirm={handleDelete}
+                    >
+                      <DeleteOutlined />
+                    </Popconfirm>
+                  </div>
+                </>
+              )}
+            </div>
+          </SelectedMaskStyled>,
+          el,
+        )
+      : null
   },
 )
 
