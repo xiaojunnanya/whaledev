@@ -1,5 +1,5 @@
 import { ComponentSetter } from '@/materials/interface'
-import { Form, Input, Select } from 'antd'
+import { Form, Input, InputNumber, Select } from 'antd'
 import { memo } from 'react'
 
 interface IProps {
@@ -14,6 +14,7 @@ export default memo((props: IProps) => {
     <Form.Item key={name} name={name} label={label}>
       {type === 'select' && <Select options={options} />}
       {type === 'input' && <Input />}
+      {type === 'inputNumber' && <InputNumber />}
     </Form.Item>
   )
 })

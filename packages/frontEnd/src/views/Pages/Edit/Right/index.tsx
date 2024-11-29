@@ -22,6 +22,7 @@ export default memo(() => {
         onChange={setKey}
         block
         options={['属性', '样式', '事件']}
+        className="whale-segmented"
       />
       <>{ComponentMap[key]}</>
     </RightStyled>

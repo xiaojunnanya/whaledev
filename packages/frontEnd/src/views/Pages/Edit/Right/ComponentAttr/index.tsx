@@ -13,7 +13,8 @@ export default memo(() => {
   const { componentMap } = useComponentMapStore()
 
   useEffect(() => {
-    const data = form.getFieldsValue()
+    if (!curComponent) return
+    const data = form?.getFieldsValue()
     form.setFieldsValue({ ...data, ...curComponent?.props })
   }, [curComponent])
 
@@ -34,7 +35,7 @@ export default memo(() => {
         wrapperCol={{ span: 16 }}
       >
         <div className="whale-attr">
-          <div className="whale-attr-title">基础</div>
+          <div className="whale-right-title">基础</div>
           <Form.Item label="组件ID">
             <Input value={curComponent.id} disabled />
           </Form.Item>
@@ -49,9 +50,9 @@ export default memo(() => {
         {componentMap[curComponent.name]?.setter?.map((item, index) => {
           return (
             <div className="whale-attr" key={index}>
-              <div className="whale-attr-title">{item.title}</div>
+              <div className="whale-right-title">{item.title}</div>
               {item.propsList.map(setter => {
-                return <RenderFormEle setting={setter} />
+                return <RenderFormEle setting={setter} key={setter.name} />
               })}
             </div>
           )
