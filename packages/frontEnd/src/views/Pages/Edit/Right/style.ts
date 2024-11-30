@@ -13,4 +13,10 @@ export const RightStyled = styled.div`
     border-left: 1px solid ${props => props.theme.defaultColor.white};
     margin-bottom: 24px;
   }
+
+  .whale-props-noselect {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 50px;
+  }
 `

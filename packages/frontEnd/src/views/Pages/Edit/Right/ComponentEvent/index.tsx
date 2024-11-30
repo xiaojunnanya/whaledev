@@ -17,6 +17,9 @@ export default memo(() => {
 
   const arr = componentMap[curComponent.name].events || []
 
+  if (arr.length === 0)
+    return <div className="whale-props-noselect">当前组件暂无事件</div>
+
   const items: CollapseProps['items'] = arr.map((event, index) => {
     return {
       key: index,

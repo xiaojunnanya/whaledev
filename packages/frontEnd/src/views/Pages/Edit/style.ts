@@ -28,7 +28,7 @@ export const ContentStyled = styled.div`
 
   .left-aside {
     height: 100%;
-    width: 298px;
+    /* width: 298px; */
     background-color: ${props => props.theme.defaultColor.white};
     border-left: 1px solid ${props => props.theme.defaultColor.grey};
     border-right: 1px solid ${props => props.theme.defaultColor.grey};

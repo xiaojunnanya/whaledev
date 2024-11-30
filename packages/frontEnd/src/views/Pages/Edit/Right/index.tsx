@@ -1,6 +1,7 @@
 import { lazy, memo, useState } from 'react'
 import { RightStyled } from './style'
 import { Segmented } from 'antd'
+import { useComponetsStore } from '@/stores/components'
 
 const ComponentAttr = lazy(() => import('./ComponentAttr'))
 const ComponentStyle = lazy(() => import('./ComponentStyle'))
@@ -14,17 +15,24 @@ const ComponentMap: Record<string, JSX.Element> = {
 
 export default memo(() => {
   const [key, setKey] = useState<string>('属性')
+  const { curComponentId } = useComponetsStore()
 
   return (
     <RightStyled>
-      <Segmented
-        value={key}
-        onChange={setKey}
-        block
-        options={['属性', '样式', '事件']}
-        className="whale-segmented"
-      />
-      <>{ComponentMap[key]}</>
+      {curComponentId ? (
+        <>
+          <Segmented
+            value={key}
+            onChange={setKey}
+            block
+            options={['属性', '样式', '事件']}
+            className="whale-segmented"
+          />
+          <>{ComponentMap[key]}</>
+        </>
+      ) : (
+        <div className="whale-props-noselect">请在左侧画布选择节点</div>
+      )}
     </RightStyled>
   )
 })

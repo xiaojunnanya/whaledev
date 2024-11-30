@@ -10,6 +10,8 @@ import {
   CaretLeftOutlined,
   CaretRightOutlined,
   CloseOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from '@ant-design/icons'
 import { useGlobal } from '@/stores/global'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -21,6 +23,8 @@ export default memo(() => {
   const [active, setActive] = useState<itemProps>({} as itemProps) // 左侧激活的项
   // 左侧是否固定
   const [isAffix, setIsAffix] = useState(false)
+  // 左侧是否拉伸开
+  const [leftwiden, setLeftwiden] = useState(false)
 
   // 右侧是否打开
   const [rightContentExpand, setRightContentExpand] = useState(true)
@@ -49,7 +53,9 @@ export default memo(() => {
           style={{
             display: active.key ? 'block' : 'none',
             position: isAffix ? 'static' : 'absolute',
+            width: leftwiden ? '498px' : '298px',
           }}
+          onTransitionEnd={handleWindowResize}
         >
           <div className="side-top">
             <div className="side-top-title">{active.title}</div>
@@ -58,6 +64,13 @@ export default memo(() => {
                 src={isAffix ? noaffixImg : affixImg}
                 onClick={() => setIsAffix(!isAffix)}
               />
+              <span
+                onClick={() => {
+                  setLeftwiden(!leftwiden)
+                }}
+              >
+                {leftwiden ? <LeftOutlined /> : <RightOutlined />}
+              </span>
               <CloseOutlined onClick={() => setActive({} as itemProps)} />
             </div>
           </div>
