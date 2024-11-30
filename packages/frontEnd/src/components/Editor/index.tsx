@@ -45,21 +45,9 @@ interface IProps {
 
 export default memo((props: IProps) => {
   const { file, onChange, options, isMount = true } = props
-
   // 初始化 Monaco 编辑器
   useEffect(() => {
     loader.init()
-
-    return () => {
-      // 在组件卸载时清理 Monaco 编辑器
-      if (typeof monaco !== 'undefined') {
-        editor.getModels().forEach(model => {
-          model.dispose() // 销毁编辑器模型
-        })
-      }
-      // 如果有额外的库加载（如在 TypeScript 中添加 extraLib），你也可以在这里清除它们
-      monaco.languages.typescript.typescriptDefaults.setExtraLibs([])
-    }
   }, [])
 
   const handleEditorMount: OnMount = (editor, monaco) => {

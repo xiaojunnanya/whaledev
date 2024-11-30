@@ -1,4 +1,4 @@
-import { lazy, memo, ReactNode } from 'react'
+import { memo, ReactNode, useCallback } from 'react'
 import { EditLeftStyled } from './style'
 
 import {
@@ -9,10 +9,10 @@ import {
   QuestionCircleOutlined,
 } from '@ant-design/icons'
 
-const OutlineTree = lazy(() => import('./OutlineTree'))
-const ComponentLibrary = lazy(() => import('./ComponentLibrary'))
-const DataSource = lazy(() => import('./DataSource'))
-const SourceCode = lazy(() => import('./SourceCode'))
+import OutlineTree from './OutlineTree'
+import ComponentLibrary from './ComponentLibrary'
+import DataSource from './DataSource'
+import SourceCode from './SourceCode'
 
 type activeType =
   | 'outlineTree'
@@ -74,6 +74,14 @@ export default memo((props: IProps) => {
   const { activeObj } = props
   const { active, setActive } = activeObj
 
+  // 点击左侧导航栏,callback缓存优化
+  const handleItemClick = useCallback(
+    (item: itemProps) => {
+      setActive(item.key === active.key ? ({} as itemProps) : item)
+    },
+    [active],
+  )
+
   return (
     <EditLeftStyled>
       <div className="edit-left-top">
@@ -84,9 +92,7 @@ export default memo((props: IProps) => {
               className={`edit-left-top-item edit-left-item ${
                 active.key === item.key ? 'edit-left-active' : ''
               }`}
-              onClick={() =>
-                setActive(item.key === active.key ? ({} as itemProps) : item)
-              }
+              onClick={() => handleItemClick(item)}
             >
               {item.icon}
               <span className="title">{item.title}</span>

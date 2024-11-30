@@ -20,6 +20,7 @@ import {
   updatePage,
 } from '@/service/request/pages'
 import { gloablErrorMessage } from '@/utils/global'
+import Preview from '@/views/Pages/Preview'
 
 interface pageDataType {
   id: number
@@ -78,7 +79,6 @@ export default memo(() => {
   const { setMessage } = useGlobal()
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const [pageActive, setPageActive] = useState(page_id)
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -96,7 +96,6 @@ export default memo(() => {
   }
 
   const handlePageClick = (page_id: string) => {
-    setPageActive(page_id)
     navigate(`/project/${project_id}/rapid/page/${page_id}`)
   }
 
@@ -156,7 +155,7 @@ export default memo(() => {
           onOk: async () => {
             const { data, message } = await deletePage(item.page_id)
             if (!data) {
-              setPageActive('')
+              navigate(`/project/${project_id}/rapid`)
               getPagesData()
               setMessage({ type: 'success', text: message })
             } else {
@@ -191,7 +190,7 @@ export default memo(() => {
             return (
               <div
                 className={`page-item ${
-                  item.page_id === pageActive ? 'page-active' : ''
+                  item.page_id === page_id ? 'page-active' : ''
                 }`}
                 onClick={() => handlePageClick(item.page_id)}
                 key={item.id}
@@ -217,7 +216,7 @@ export default memo(() => {
       </div>
 
       <div className="page-preview">
-        {pageActive ? <div>{pageActive}</div> : <div>请选择页面</div>}
+        {page_id ? <Preview></Preview> : <div>请选择页面</div>}
       </div>
 
       <Modal

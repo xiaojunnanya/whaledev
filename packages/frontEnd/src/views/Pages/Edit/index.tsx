@@ -36,7 +36,7 @@ export default memo(() => {
     return () => {
       window.removeEventListener('resize', handleWindowResize)
     }
-  }, [isAffix, rightContentExpand])
+  }, [isAffix, rightContentExpand, leftwiden])
 
   const handleWindowResize = () => {
     setWidth(editMiddleContent.current?.offsetWidth || 0)

@@ -57,7 +57,6 @@ const SelectedMask = memo(
 
     function updatePosition() {
       if (!componentId) return
-
       const container = document.querySelector(`.${containerClassName}`)
       if (!container) return
 

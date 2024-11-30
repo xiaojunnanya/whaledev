@@ -1,11 +1,11 @@
-import { lazy, memo, useState } from 'react'
+import { memo, useState } from 'react'
 import { RightStyled } from './style'
 import { Segmented } from 'antd'
 import { useComponetsStore } from '@/stores/components'
 
-const ComponentAttr = lazy(() => import('./ComponentAttr'))
-const ComponentStyle = lazy(() => import('./ComponentStyle'))
-const ComponentEvent = lazy(() => import('./ComponentEvent'))
+import ComponentAttr from './ComponentAttr'
+import ComponentStyle from './ComponentStyle'
+import ComponentEvent from './ComponentEvent'
 
 const ComponentMap: Record<string, JSX.Element> = {
   属性: <ComponentAttr />,

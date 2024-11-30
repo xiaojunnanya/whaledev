@@ -12,7 +12,7 @@ export default memo(() => {
 
   useEffect(() => {
     getPageJson()
-  }, [])
+  }, [page_id])
 
   const getPageJson = async () => {
     // 获取页面信息
