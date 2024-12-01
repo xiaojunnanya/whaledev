@@ -10,7 +10,7 @@ interface IProps {
 
 export default memo((props: IProps) => {
   // 遗留的问题：这个高度？？？
-  const { children, height = 48, isLoading = false } = props
+  const { children, height = -1, isLoading = false } = props
   return (
     <Flex gap="middle" vertical>
       <Spin tip="加载中..." spinning={isLoading}>

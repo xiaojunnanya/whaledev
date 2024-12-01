@@ -30,7 +30,7 @@ export default memo(() => {
   const [showResetModal, setShowResetModal] = useState(false)
   const [pageInfo, setPageInfo] = useState<pageType>({} as pageType)
   const { width: viewWidth, setMessage } = useGlobal()
-  const { components, updeteComponent } = useComponetsStore()
+  const { components, updeteComponent, setCurComponentId } = useComponetsStore()
 
   useEffect(() => {
     Promise.allSettled([getPageInfo(), getPageJson()])
@@ -85,6 +85,7 @@ export default memo(() => {
 
   const reset = () => {
     // 重置页面
+    setCurComponentId('')
     updeteComponent(initComponents)
     setShowResetModal(false)
   }

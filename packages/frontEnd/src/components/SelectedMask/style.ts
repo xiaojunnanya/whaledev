@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SelectedMaskStyled = styled.div`
   .whale-mask-container {
-    background-color: rgba(0, 191, 255, 0.1);
+    background-color: ${props => props.theme.primaryColor['700Opacity1']};
     border: 1px dashed ${props => props.theme.primaryColor[700]};
     pointer-events: none;
     z-index: 99;

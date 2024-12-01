@@ -1,4 +1,4 @@
-import { ConfigProvider, FloatButton, message, Popover } from 'antd'
+import { ConfigProvider, message } from 'antd'
 import { memo, useEffect } from 'react'
 import { useGlobal } from './stores/global'
 import zhCN from 'antd/es/locale/zh_CN'
@@ -6,8 +6,8 @@ import { useLocation, useRoutes } from 'react-router-dom'
 import theme from './assets/theme'
 import routes from './router'
 import Footer from './components/Footer'
-import wechat from '@/assets/images/png/wechat.png'
-import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
+// import wechat from '@/assets/images/png/wechat.png'
+// import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
 
 const App = memo(() => {
   const [messageApi, msgContextHolder] = message.useMessage()

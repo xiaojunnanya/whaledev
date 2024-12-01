@@ -11,11 +11,11 @@ import AuthRouter from './components/AuthRouter/index.tsx'
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <AuthRouter>
-      <Suspense fallback={<Loading />}>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <Suspense fallback={<Loading />}>
           <App />
-        </ThemeProvider>
-      </Suspense>
+        </Suspense>
+      </ThemeProvider>
     </AuthRouter>
   </BrowserRouter>,
 )

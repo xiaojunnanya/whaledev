@@ -8,17 +8,16 @@ export const FooterStyle = styled.div`
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
+    color: ${props => props.theme.defaultColor.white};
 
     dt {
       font-weight: 700;
       font-size: 16px;
       margin-bottom: 16px;
-      color: ${props => props.theme.defaultColor.white};
     }
 
     dd {
       margin-left: 0;
-      color: rgb(235, 237, 240);
       margin-top: 10px;
       cursor: pointer;
       font-size: 14px;
