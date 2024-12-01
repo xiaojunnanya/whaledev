@@ -12,4 +12,21 @@ export const ContainerConfig: ComponentConfig = {
     dev: ContainerDev,
     prod: ContainerProd,
   },
+  // stylesSetter: [
+  //   {
+  //     title: '容器大小',
+  //     styleList: [
+  //       {
+  //         name: 'width',
+  //         label: '宽度',
+  //         type: 'inputNumber',
+  //       },
+  //       {
+  //         name: 'height',
+  //         label: '高度',
+  //         type: 'inputNumber',
+  //       },
+  //     ],
+  //   },
+  // ],
 }

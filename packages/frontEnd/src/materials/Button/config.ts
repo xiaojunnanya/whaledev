@@ -39,23 +39,6 @@ export const ButtonConfig: ComponentConfig = {
       ],
     },
   ],
-  stylesSetter: [
-    {
-      title: '按钮样式',
-      styleList: [
-        {
-          name: 'width',
-          label: '宽度',
-          type: 'inputNumber',
-        },
-        {
-          name: 'height',
-          label: '高度',
-          type: 'inputNumber',
-        },
-      ],
-    },
-  ],
   events: [
     {
       name: 'onClick',

@@ -1,9 +1,9 @@
 import { CommonComponentProps } from '../interface'
-import styles from './index.module.less'
+import styleLess from './index.module.less'
 
-const Container = ({ children, style, ...props }: CommonComponentProps) => {
+const Container = ({ children, styles, ...props }: CommonComponentProps) => {
   return (
-    <div className={styles['whale-container']} style={style} {...props}>
+    <div className={styleLess['whale-container']} style={styles} {...props}>
       {children}
     </div>
   )

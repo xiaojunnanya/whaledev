@@ -1,14 +1,14 @@
 import { Button as AntdButton } from 'antd'
 import { CommonComponentProps } from '../interface'
-import styles from './index.module.less'
+import styleLess from './index.module.less'
 
 const Button = (props: CommonComponentProps) => {
-  const { id, text, type, style } = props
+  const { id, text, type, styles } = props
   return (
     <AntdButton
       type={type}
-      className={styles['whale-button']}
-      style={style}
+      className={styleLess['whale-button']}
+      style={styles}
       data-component-id={id}
     >
       {text}

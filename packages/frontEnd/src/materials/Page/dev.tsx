@@ -1,17 +1,17 @@
 import { CommonComponentProps } from '../interface'
 import { useMaterailDrop } from '@/hooks/useMaterialDrop'
-import styles from './index.module.less'
+import styleLess from './index.module.less'
 
 const Page = (props: CommonComponentProps) => {
-  const { children, id, style } = props
+  const { children, id, styles } = props
   const { drop } = useMaterailDrop(['Button', 'Container'], id)
 
   return (
     <div
-      className={styles['whale-page']}
+      className={styleLess['whale-page']}
       ref={drop}
       data-component-id={id}
-      style={style}
+      style={styles}
     >
       {children}
     </div>
