@@ -8,6 +8,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons'
 import { useComponentMapStore } from '@/stores/componentMap'
+import ServiceLayout from './ServiceLayout'
 
 export default memo(() => {
   const { componentMap } = useComponentMapStore()
@@ -81,7 +82,7 @@ export default memo(() => {
         height="100%"
         destroyOnClose={true}
       >
-        {/* <ServiceLayout curEventAction={curEvent?.action}/> */}
+        <ServiceLayout />
       </Drawer>
     </ComponentEventStyled>
   )
