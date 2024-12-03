@@ -1,7 +1,7 @@
 import { useDrop } from 'react-dnd'
 import { useComponentMapStore } from '../stores/componentMap'
 import { useComponetsStore } from '../stores/components'
-import { getComponentById } from '@/utils'
+import { getComponentById } from '@/utils/components'
 
 export interface ItemType {
   type: string

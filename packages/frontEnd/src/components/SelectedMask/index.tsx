@@ -7,7 +7,7 @@ import {
   CopyOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
-import { getComponentById } from '@/utils'
+import { getComponentById } from '@/utils/components'
 import { Component, useComponetsStore } from '@/stores/components'
 import { useGlobal } from '@/stores/global'
 import { SelectedMaskStyled } from './style'

@@ -1,11 +1,12 @@
 import { memo, useState } from 'react'
 import { ComponentEventStyled } from './style'
 import { useComponetsStore } from '@/stores/components'
-import { Button, Collapse, CollapseProps, Drawer } from 'antd'
+import { Button, Collapse, CollapseProps, Drawer, Popover } from 'antd'
 import {
   CaretRightOutlined,
   EditOutlined,
   PlusOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons'
 import { useComponentMapStore } from '@/stores/componentMap'
 import ServiceLayout from './ServiceLayout'
@@ -62,7 +63,22 @@ export default memo(() => {
       />
 
       <Drawer
-        title="添加服务编排"
+        title={
+          <>
+            <span style={{ marginRight: '8px' }}>添加服务编排</span>
+            <Popover
+              placement="right"
+              content={
+                <>
+                  <div>1. 这是第一个</div>
+                  <div>2. 这是第二个</div>
+                </>
+              }
+            >
+              <QuestionCircleOutlined />
+            </Popover>
+          </>
+        }
         extra={
           <>
             <Button

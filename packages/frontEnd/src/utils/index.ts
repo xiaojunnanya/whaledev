@@ -1,8 +1,7 @@
 import { Files } from '@/stores/reactplay'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
-
-import { Component } from '@/stores/components'
+import { v4 as uuidv4 } from 'uuid'
 
 export const fileName2Language = (name: string) => {
   const suffix = name.split('.').pop() || ''
@@ -28,25 +27,8 @@ export async function downloadFiles(files: Files) {
   saveAs(blob, `code.zip`)
 }
 
-/**
- * 根据 id 递归查找组件
- *
- * @param id 组件 id
- * @param components 组件数组
- * @returns 匹配的组件或 null
- */
-export function getComponentById(
-  id: string | null,
-  components: Component[],
-): Component | null {
-  if (!id) return null
+// 上传指定长度的ID
 
-  for (const component of components) {
-    if (component.id == id) return component
-    if (component.children && component.children.length > 0) {
-      const result = getComponentById(id, component.children)
-      if (result !== null) return result
-    }
-  }
-  return null
+export function generateId(length: number) {
+  return uuidv4().split('-').join('').slice(0, length)
 }

@@ -1,4 +1,4 @@
-import { getComponentById } from '@/utils'
+import { getComponentById } from '@/utils/components'
 import { CSSProperties } from 'react'
 import { create } from 'zustand'
 
