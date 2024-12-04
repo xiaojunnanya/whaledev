@@ -10,45 +10,70 @@ import {
 } from '@ant-design/icons'
 import { useComponentMapStore } from '@/stores/componentMap'
 import ServiceLayout from './ServiceLayout'
+import { ComponentEvent } from '@/materials/interface'
 
 export default memo(() => {
   const { componentMap } = useComponentMapStore()
-  const { curComponent } = useComponetsStore()
-  const [open, setOpen] = useState(false)
+  const {
+    curComponent,
+    componentActionList,
+    updateComponentEvents,
+    setComponentActionList,
+  } = useComponetsStore()
   if (!curComponent) return null
+  const [curEvent, setCurEvent] = useState<ComponentEvent>({} as ComponentEvent)
+  const [open, setOpen] = useState(false)
 
-  const arr = componentMap[curComponent.name].events || []
+  const arrGet = curComponent?.events || []
+  const arrIn = componentMap[curComponent.name]?.events || []
+  // arr2是内置的事件，arr1是接口获取的，arr1存在的时候将arr2过滤掉
+
+  // 将 arr1 中的事件名称存入一个 Set 中，优化查找效率
+  const arrGetNames = new Set(arrGet.map(item => item.name))
+
+  // 过滤 arr2 中已存在的事件
+  const filteredArrIn = arrIn.filter(itemIn => !arrGetNames.has(itemIn.name))
+
+  const arr = [...arrGet, ...filteredArrIn]
 
   if (arr.length === 0)
     return <div className="whale-props-noselect">当前组件暂无事件</div>
 
-  const items: CollapseProps['items'] = arr.map((event, index) => {
-    return {
-      key: index,
-      label: event.label,
-      children: (
-        <div
-          className="addAction"
-          onClick={() => {
-            setOpen(true)
-          }}
-        >
-          {!event.name ? (
-            <>
-              <EditOutlined /> 编辑当前服务编排
-            </>
-          ) : (
-            <>
-              <PlusOutlined /> 添加服务编排
-            </>
-          )}
-        </div>
-      ),
-    }
-  })
+  const items: CollapseProps['items'] = arr.map(
+    (event: ComponentEvent, index: number) => {
+      return {
+        key: index,
+        label: event.label,
+        children: (
+          <div
+            className="addAction"
+            onClick={() => {
+              setCurEvent(event)
+              setOpen(true)
+            }}
+          >
+            {event.action && event.action?.length > 2 ? (
+              <>
+                <EditOutlined /> 编辑当前服务编排
+              </>
+            ) : (
+              <>
+                <PlusOutlined /> 添加服务编排
+              </>
+            )}
+          </div>
+        ),
+      }
+    },
+  )
 
   const save = () => {
+    updateComponentEvents(curComponent.id, {
+      ...curEvent,
+      action: componentActionList,
+    })
     setOpen(false)
+    setComponentActionList([])
   }
 
   return (
@@ -98,7 +123,12 @@ export default memo(() => {
         height="100%"
         destroyOnClose={true}
       >
-        <ServiceLayout />
+        <ServiceLayout
+          curEventActions={
+            curComponent.events?.find(e => e.name === curEvent.name)?.action ||
+            []
+          }
+        />
       </Drawer>
     </ComponentEventStyled>
   )

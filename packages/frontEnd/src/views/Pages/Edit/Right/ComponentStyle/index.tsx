@@ -21,7 +21,6 @@ export default memo(() => {
 
   function toCSSStr(css: Record<string, any>) {
     let str = `.component {\n`
-    console.log(css, 'css')
     for (let key in css) {
       let value = css[key]
       if (!value) {

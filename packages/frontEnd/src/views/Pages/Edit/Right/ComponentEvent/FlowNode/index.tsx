@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { NodeType } from '../ServiceLayout'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { generateId } from '@/utils'
@@ -6,6 +6,7 @@ import { generateId } from '@/utils'
 import cloneDeep from 'lodash-es/cloneDeep'
 import { message } from 'antd'
 import { findNodeIndexAndParent } from '@/utils/components'
+import ActionModal from '../ActionModal'
 
 interface IProps {
   type: NodeType['type']
@@ -21,7 +22,9 @@ export default memo((props: IProps) => {
   const { type, node, renderNode, list, setList } = props
   // 遗留的问题：为什么不行！！！！！！！！！！！
   // const { setMessage } = useGlobal()
-  // 遗留的问题：在分支节点前创建分支节点可以创建，是个问题需要修复
+
+  const [showActionModal, setShowActionModal] = useState(false)
+  const [saveAction, setSaveAction] = useState<any>({})
 
   const AddNode = ({ id }: { id: string }) => {
     return (
@@ -179,7 +182,18 @@ export default memo((props: IProps) => {
 
   // 修改节点行为
   const onEditAction = (node: NodeType) => {
-    const nodeList = JSON.parse(JSON.stringify(list)) as NodeType[]
+    if (node.title === '成功' || node.title === '失败') {
+      message.info('请在此节点后新增执行节点')
+      return
+    }
+
+    const nodeList = cloneDeep(list) as NodeType[]
+    const editNode = findNodeIndexAndParent(nodeList, node.id)
+    if (!editNode) return
+    const config = editNode.selfNode.config
+    const type = editNode.selfNode.type
+
+    setShowActionModal(true)
   }
 
   //   删除节点
@@ -285,6 +299,13 @@ export default memo((props: IProps) => {
           </div>
         )}
       </>
+
+      {/* <>
+        <ActionModal
+          showModal={{ showActionModal, setShowActionModal }}
+          handleAction={{ saveAction, setSaveAction }}
+        />
+      </> */}
     </>
   )
 })

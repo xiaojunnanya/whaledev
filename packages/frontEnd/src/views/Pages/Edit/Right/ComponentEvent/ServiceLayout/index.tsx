@@ -1,7 +1,12 @@
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import InfiniteViewer from 'react-infinite-viewer'
 import { ServiceLayoutStyled } from './style'
 import FlowNode from '../FlowNode'
+import { useComponetsStore } from '@/stores/components'
+
+interface IProps {
+  curEventActions: any[]
+}
 
 export interface NodeType {
   id: string
@@ -12,19 +17,29 @@ export interface NodeType {
   children?: NodeType[]
 }
 
-export default memo(() => {
-  const [list, setList] = useState<NodeType[]>([
-    {
-      id: 'start',
-      type: 'start',
-      title: '开始',
-    },
-    {
-      id: 'end',
-      type: 'end',
-      title: '结束',
-    },
-  ])
+export default memo((props: IProps) => {
+  const { curEventActions } = props
+  const { setComponentActionList } = useComponetsStore()
+  const [list, setList] = useState<NodeType[]>(
+    curEventActions.length === 0
+      ? [
+          {
+            id: 'start',
+            type: 'start',
+            title: '开始',
+          },
+          {
+            id: 'end',
+            type: 'end',
+            title: '结束',
+          },
+        ]
+      : curEventActions,
+  )
+
+  useEffect(() => {
+    setComponentActionList(list)
+  }, [list])
 
   const renderNode = (nodes: any) => {
     return nodes.map((node: any) => {
