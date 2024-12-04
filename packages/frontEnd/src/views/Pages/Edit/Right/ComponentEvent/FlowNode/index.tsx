@@ -190,8 +190,6 @@ export default memo((props: IProps) => {
     const nodeList = cloneDeep(list) as NodeType[]
     const editNode = findNodeIndexAndParent(nodeList, node.id)
     if (!editNode) return
-    const config = editNode.selfNode.config
-    const type = editNode.selfNode.type
 
     setShowActionModal(true)
   }
@@ -300,12 +298,12 @@ export default memo((props: IProps) => {
         )}
       </>
 
-      {/* <>
+      <>
         <ActionModal
           showModal={{ showActionModal, setShowActionModal }}
           handleAction={{ saveAction, setSaveAction }}
         />
-      </> */}
+      </>
     </>
   )
 })

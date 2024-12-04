@@ -1,5 +1,5 @@
 import { Form, Modal } from 'antd'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { ActionModalStyled } from './style'
 
 interface IProps {
@@ -60,14 +60,14 @@ const items = [
         label: '访问链接',
         key: 'link',
         render: () => {
-          // return  <Link></Link>
+          return <div>测试</div>
         },
       },
       {
         label: '消息提示',
         key: 'message',
         render: () => {
-          // return  <Message></Message>
+          return <div>消息提示</div>
         },
       },
     ],
@@ -75,9 +75,20 @@ const items = [
 ]
 
 export default memo((props: IProps) => {
+  const [form] = Form.useForm()
   const { showModal, handleAction } = props
   const { showActionModal, setShowActionModal } = showModal
   const { saveAction, setSaveAction } = handleAction
+
+  const itemsMap = useMemo(() => {
+    const map: Record<string, React.ReactNode> = {}
+    for (const item of items) {
+      for (const child of item.children) {
+        map[child.key] = child.render()
+      }
+    }
+    return map
+  }, [items])
 
   const handleOk = () => {
     setShowActionModal(false)
@@ -87,7 +98,9 @@ export default memo((props: IProps) => {
     setShowActionModal(false)
   }
 
-  const handleClick = (item: any) => {}
+  const handleClick = (item: any) => {
+    setSaveAction(item)
+  }
 
   return (
     <Modal
@@ -128,13 +141,13 @@ export default memo((props: IProps) => {
         </div>
         <div className="content">
           {saveAction?.key}
-          {/* <Form form={form} {...formLayout}>
-            {action?.key && action?.key !== 'none' ? (
-              <>{renderEle(action.key)}</>
+          <Form {...formLayout} form={form}>
+            {saveAction?.key && saveAction?.key !== 'none' ? (
+              <>{itemsMap[saveAction.key]}</>
             ) : (
               <div className="content-text">请选择要执行的动作</div>
             )}
-          </Form> */}
+          </Form>
         </div>
       </ActionModalStyled>
     </Modal>

@@ -2,15 +2,14 @@ import styled from 'styled-components'
 
 export const ActionModalStyled = styled.div`
   display: flex;
-  border: 1px solid #e8e9eb;
+  border: 1px solid ${props => props.theme.defaultColor.grey};
   border-radius: 8px;
-  margin-top: 15px;
 
   .menuAction {
     width: 200px;
-    height: 500px;
+    height: calc(100vh - 250px);
     overflow: auto;
-    border-right: 1px solid #e8e9eb;
+    border-right: 1px solid ${props => props.theme.defaultColor.grey};
     ul,
     li {
       list-style: none;
@@ -19,37 +18,28 @@ export const ActionModalStyled = styled.div`
       line-height: 32px;
       font-size: 14px;
       font-weight: 500;
-      background-color: #f5f5f5;
+      background-color: ${props => props.theme.defaultColor.grey};
       .navTitle {
         padding-left: 10px;
       }
       .subItem {
         line-height: 32px;
-        background-color: #fff;
+        background-color: ${props => props.theme.defaultColor.white};
         padding-left: 30px;
         font-weight: normal;
         cursor: pointer;
         &:hover {
-          color: ${props => props.theme.color.primaryColor};
+          color: ${props => props.theme.primaryColor[700]};
         }
       }
       .checked {
-        color: ${props => props.theme.color.primaryColor};
+        color: ${props => props.theme.primaryColor[700]};
       }
     }
   }
   .content {
     flex: 1;
     padding: 20px;
-    .desc {
-      .descTitle {
-        font-size: 14px;
-      }
-      .descInfo {
-        font-size: 12px;
-        color: #5c5f66;
-      }
-    }
 
     &-text {
       text-align: center;
