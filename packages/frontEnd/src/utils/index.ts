@@ -29,6 +29,6 @@ export async function downloadFiles(files: Files) {
 
 // 上传指定长度的ID
 
-export function generateId(length: number) {
+export function generateId(length: number = 8) {
   return uuidv4().split('-').join('').slice(0, length)
 }

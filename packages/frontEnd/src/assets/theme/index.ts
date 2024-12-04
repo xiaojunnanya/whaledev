@@ -19,9 +19,11 @@ export default {
     white: '#ffffff',
     whiteOpacity1: 'rgba(255, 255, 255, 0.1)',
     grey: '#EEEEEE',
+    greyOpacity1: 'rgba(238, 238, 238, 1)',
     grey2: '#bdbdbd',
-    red: '#f56c6c',
-    red2: '#fef0f0',
+    error: '#FF4D4F',
+    redOpacity1: 'rgba(255, 77, 79, 0.1)',
+    success: '#52C41A',
   },
   // mixin: {
   //     boxShadow: `

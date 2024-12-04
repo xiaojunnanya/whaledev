@@ -34,6 +34,8 @@ export default memo(() => {
           type={node.type}
           node={node}
           renderNode={renderNode}
+          list={list}
+          setList={setList}
         />
       )
     })

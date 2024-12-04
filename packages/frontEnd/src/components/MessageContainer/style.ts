@@ -13,13 +13,13 @@ export const MessageContainerStyled = styled.div`
     max-height: calc(100% - 300px);
     min-height: 40px;
     margin-bottom: 8px;
-    color: ${props => props.theme.defaultColor.red};
+    color: ${props => props.theme.defaultColor.error};
 
-    background-color: ${props => props.theme.defaultColor.red2};
+    background-color: ${props => props.theme.defaultColor.redOpacity1};
     border: 2px solid ${props => props.theme.defaultColor.white};
     border-radius: 6px;
 
-    border-color: ${props => props.theme.defaultColor.red};
+    border-color: ${props => props.theme.defaultColor.error};
   }
 
   pre {
