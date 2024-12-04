@@ -5,7 +5,7 @@ import FlowNode from '../FlowNode'
 
 export interface NodeType {
   id: string
-  type: 'start' | 'end' | 'normal' | 'condition'
+  type: 'start' | 'end' | 'normal' | 'condition' | 'success' | 'fail'
   title: string
   content?: string
   config?: any

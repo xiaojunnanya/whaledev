@@ -7,7 +7,7 @@ import { useComponentMapStore } from '@/stores/componentMap'
 import RenderFormEle from '@/components/renderFormEle'
 export default memo(() => {
   const [form] = Form.useForm()
-  console.log('属性')
+
   const { curComponentId, curComponent, updateComponentProps } =
     useComponetsStore()
   const { componentMap } = useComponentMapStore()

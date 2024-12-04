@@ -3,21 +3,25 @@ import { NodeType } from '../ServiceLayout'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { generateId } from '@/utils'
 // import { useGlobal } from '@/stores/global'
-// import cloneDeep from 'lodash-es/cloneDeep'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { message } from 'antd'
+import { findNodeIndexAndParent } from '@/utils/components'
 
 interface IProps {
-  type: 'start' | 'end' | 'normal' | 'condition' | 'success' | 'fail'
+  type: NodeType['type']
   node: NodeType
   renderNode: any
   list: NodeType[]
   setList: (list: any) => void
 }
 
+type nodeParentType = 'condition' | 'success' | 'fail' | 'normal' | undefined
+
 export default memo((props: IProps) => {
   const { type, node, renderNode, list, setList } = props
   // 遗留的问题：为什么不行！！！！！！！！！！！
   // const { setMessage } = useGlobal()
+  // 遗留的问题：在分支节点前创建分支节点可以创建，是个问题需要修复
 
   const AddNode = ({ id }: { id: string }) => {
     return (
@@ -45,7 +49,7 @@ export default memo((props: IProps) => {
     )
   }
 
-  // 创建节点
+  // 创建节点，id是他前面节点的id
   const handleCreateNode = (type: 'normal' | 'condition', id: string) => {
     // 普通节点创建需要弹框输入节点名称
     if (type === 'normal') {
@@ -56,63 +60,85 @@ export default memo((props: IProps) => {
     }
   }
 
+  /**
+   * 不能创建节点的情况
+   * 1. 开始节点后第一个节点不能添加分支节点
+   * 2. 分支节点后第一个节点不能添加分支节点
+   * 3. 分支节点前第一个节点不能添加分支节点
+   */
   const createNode = (
     title: string,
     type: 'normal' | 'condition',
     id: string,
   ) => {
-    const nodeList = JSON.parse(JSON.stringify(list))
+    const nodeList = cloneDeep(list)
     const node = findNodeIndexAndParent(nodeList, id)
+    if (!node) return
+
+    const parentNode = node.parentNode
+
+    // 拿到点击创建的当前节点，查看当前节点的下一个节点是否为是条件节点
+    const nestNode = (parentNode ? parentNode.children : nodeList)[
+      node.index + 1
+    ]
+
+    if (nestNode && nestNode.type === 'condition' && type === 'condition') {
+      message.error('分支节点前一个节点不能添加分支节点')
+      return
+    }
+
+    // 创建一个普通节点
     const taskNode = {
       id: generateId(),
       type,
       title,
-      content: '行为配置',
+      content: '编排节点',
       config: {},
       children: [],
     }
-    if (!node.parentNode) {
-      if (type === 'normal') {
-        nodeList.splice(node.index + 1, 0, taskNode)
-      } else {
-        if (node.selfNode.type === 'start') {
-          message.error('开始节点后第一个不能添加分支节点')
+
+    const parentNodeType: nodeParentType = parentNode?.type
+
+    switch (parentNodeType) {
+      case undefined:
+        if (type === 'normal') {
+          nodeList.splice(node.index + 1, 0, taskNode)
+        } else {
+          if (node.selfNode.type === 'start') {
+            message.error('开始节点后第一个节点不能添加分支节点')
+            return
+          }
+          if (node.selfNode.type === 'condition') {
+            message.error('分支节点后第一个节点不能添加分支节点')
+            return
+          }
+          nodeList.splice(node.index + 1, 0, {
+            ...taskNode,
+            children: [
+              {
+                id: generateId(),
+                type: 'success',
+                children: [],
+                title: '成功',
+                content: '成功时执行此流程',
+              },
+              {
+                id: generateId(),
+                type: 'fail',
+                title: '失败',
+                content: '失败时执行此流程',
+                children: [],
+              },
+            ],
+          })
+        }
+        break
+      case 'success':
+      case 'fail':
+        if (node.selfNode.type === 'condition' && type === 'condition') {
+          message.error('分支节点后第一个节点不能添加分支节点')
           return
         }
-        if (node.selfNode.type === 'condition') {
-          message.error('分支节点后第一个不能添加分支节点')
-          return
-        }
-        nodeList.splice(node.index + 1, 0, {
-          ...taskNode,
-          children: [
-            {
-              id: generateId(),
-              type: 'success',
-              children: [],
-              title: '成功',
-              content: '成功时执行此流程',
-            },
-            {
-              id: generateId(),
-              type: 'fail',
-              title: '失败',
-              content: '失败时执行此流程',
-              children: [],
-            },
-          ],
-        })
-      }
-    } else if (node?.parentNode?.type === 'condition') {
-      if (type === 'condition') {
-        message.error('分支节点后第一个不能添加分支节点')
-        return
-      }
-      node.parentNode.children[node.index].children.unshift(taskNode)
-    } else if (['normal', 'success', 'fail'].includes(node?.parentNode?.type)) {
-      if (type === 'normal') {
-        node.parentNode.children.splice(node.index + 1, 0, taskNode)
-      } else {
         node.parentNode.children.splice(node.index + 1, 0, {
           ...taskNode,
           children: [
@@ -134,8 +160,20 @@ export default memo((props: IProps) => {
             },
           ],
         })
-      }
+        break
+      case 'normal':
+        // 遗留的问题：待验证，是否有这种情况
+        node.parentNode.children.splice(node.index + 1, 0, taskNode)
+        break
+      case 'condition':
+        if (type === 'condition') {
+          message.error('分支节点后第一个节点不能添加分支节点')
+          return
+        }
+        node.parentNode.children[node.index].children.unshift(taskNode)
+        break
     }
+
     setList(() => [...nodeList])
   }
 
@@ -147,20 +185,35 @@ export default memo((props: IProps) => {
   //   删除节点
   const handleDelNode = (event: React.MouseEvent, id: string) => {
     event.stopPropagation()
-    const nodeList = JSON.parse(JSON.stringify(list))
+    const nodeList = cloneDeep(list)
     const node = findNodeIndexAndParent(nodeList, id)
-    if (!node.parentNode) {
-      nodeList.splice(node.index, 1)
-    } else if (['success', 'fail', 'normal'].includes(node?.parentNode?.type)) {
-      node.parentNode.children.splice(node.index, 1)
-    } else if (node?.parentNode?.type === 'condition') {
-      const parentNode = findNodeIndexAndParent(nodeList, node?.parentNode?.id)
-      if (parentNode.parentNode) {
-        parentNode.parentNode.children.splice(parentNode.index, 1)
-      } else {
-        nodeList.splice(parentNode.index, 1)
-      }
+    if (!node) return
+
+    const parentNodeType: nodeParentType = node.parentNode?.type
+
+    switch (parentNodeType) {
+      case undefined:
+        nodeList.splice(node.index, 1)
+        break
+      case 'success':
+      case 'fail':
+      case 'normal':
+        node.parentNode.children.splice(node.index, 1)
+        break
+      case 'condition':
+        const parentNode = findNodeIndexAndParent(
+          nodeList,
+          node?.parentNode?.id,
+        )
+        if (!parentNode) return
+        if (parentNode.parentNode) {
+          parentNode.parentNode.children.splice(parentNode.index, 1)
+        } else {
+          nodeList.splice(parentNode.index, 1)
+        }
+        break
     }
+
     setList(() => [...nodeList])
   }
 
@@ -235,27 +288,3 @@ export default memo((props: IProps) => {
     </>
   )
 })
-
-// 查找节点的索引及其父节点
-export function findNodeIndexAndParent(
-  children: any,
-  nodeId: string,
-  parentNode = null,
-): any {
-  for (let i = 0; i < children.length; i++) {
-    if (children[i].id === nodeId) {
-      return { index: i, parentNode, selfNode: children[i] }
-    }
-    if (children[i].children) {
-      const result = findNodeIndexAndParent(
-        children[i].children,
-        nodeId,
-        children[i],
-      )
-      if (result) {
-        return result
-      }
-    }
-  }
-  return null
-}
