@@ -8,4 +8,10 @@ export const ComponentEventStyled = styled.div`
     padding: 4px 0;
     cursor: pointer;
   }
+
+  .deleteAction {
+    &:hover {
+      color: ${props => props.theme.primaryColor[700]};
+    }
+  }
 `

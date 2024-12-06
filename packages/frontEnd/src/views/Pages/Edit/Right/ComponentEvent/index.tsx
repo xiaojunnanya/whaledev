@@ -4,6 +4,7 @@ import { useComponetsStore } from '@/stores/components'
 import { Button, Collapse, CollapseProps, Drawer, Popover } from 'antd'
 import {
   CaretRightOutlined,
+  DeleteOutlined,
   EditOutlined,
   PlusOutlined,
   QuestionCircleOutlined,
@@ -62,6 +63,18 @@ export default memo(() => {
               </>
             )}
           </div>
+        ),
+        extra: (
+          <DeleteOutlined
+            onClick={e => {
+              e.stopPropagation()
+              updateComponentEvents(curComponent.id, {
+                ...curEvent,
+                action: [],
+              })
+            }}
+            className="deleteAction"
+          />
         ),
       }
     },
