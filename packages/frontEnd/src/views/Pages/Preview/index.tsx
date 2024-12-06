@@ -47,6 +47,7 @@ export default memo(() => {
           author: 'whale',
           ...config.defaultProps,
           ...component.props,
+          // 遗留的问题：添加事件
         },
         renderComponents(component.children || []),
       )

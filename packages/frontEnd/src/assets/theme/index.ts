@@ -21,6 +21,7 @@ export default {
     grey: '#EEEEEE',
     greyOpacity1: 'rgba(238, 238, 238, 1)',
     grey2: '#bdbdbd',
+    grey3: '#5c5f66',
     error: '#FF4D4F',
     redOpacity1: 'rgba(255, 77, 79, 0.1)',
     success: '#52C41A',

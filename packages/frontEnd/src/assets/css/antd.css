@@ -71,3 +71,12 @@
     padding: 0 !important;
   }
 }
+
+.ant-modal.actonModal {
+  top: 50px;
+  padding-bottom: 0;
+
+  .ant-modal-body {
+    height: calc(100vh - 230px);
+  }
+}

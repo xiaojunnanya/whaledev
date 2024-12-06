@@ -4,10 +4,11 @@ export const ActionModalStyled = styled.div`
   display: flex;
   border: 1px solid ${props => props.theme.defaultColor.grey};
   border-radius: 8px;
+  height: 100%;
 
   .menuAction {
     width: 200px;
-    height: calc(100vh - 250px);
+    height: 100%;
     overflow: auto;
     border-right: 1px solid ${props => props.theme.defaultColor.grey};
     ul,
