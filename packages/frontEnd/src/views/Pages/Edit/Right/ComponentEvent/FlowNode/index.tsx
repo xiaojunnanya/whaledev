@@ -20,11 +20,10 @@ type nodeParentType = 'condition' | 'success' | 'fail' | 'normal' | undefined
 
 export default memo((props: IProps) => {
   const { type, node, renderNode, list, setList } = props
-  // 遗留的问题：为什么不行！！！！！！！！！！！
+  // 遗留的问题：visibility 的问题
   // const { setMessage } = useGlobal()
-
   const [showActionModal, setShowActionModal] = useState(false)
-  const [saveAction, setSaveAction] = useState<any>({})
+  const [editNode, setEditNode] = useState<NodeType>({} as NodeType)
 
   const AddNode = ({ id }: { id: string }) => {
     return (
@@ -187,10 +186,14 @@ export default memo((props: IProps) => {
       return
     }
 
-    const nodeList = cloneDeep(list) as NodeType[]
-    const editNode = findNodeIndexAndParent(nodeList, node.id)
-    if (!editNode) return
-
+    setEditNode(node)
+    // const nodeList = cloneDeep(list) as NodeType[]
+    // // editNode是取json的node，node 是我们点击的 node
+    // const editNodeJson = findNodeIndexAndParent(nodeList, node.id)
+    // if (!editNodeJson) return
+    // console.log(editNodeJson, 'editNodeJson')
+    // // editNode.selfNode.content = node.content
+    // editNodeJson.selfNode.config = node
     setShowActionModal(true)
   }
 
@@ -301,7 +304,9 @@ export default memo((props: IProps) => {
       <>
         <ActionModal
           showModal={{ showActionModal, setShowActionModal }}
-          handleAction={{ saveAction, setSaveAction }}
+          editNode={editNode}
+          setList={setList}
+          list={list}
         />
       </>
     </>

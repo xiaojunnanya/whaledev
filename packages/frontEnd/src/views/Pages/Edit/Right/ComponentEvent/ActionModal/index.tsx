@@ -1,18 +1,19 @@
 import { Form, Modal } from 'antd'
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ActionModalStyled } from './style'
-import { itemsActions, itemsChildType } from '../Actions'
+import { allActions, itemsActions, itemsChildType } from '../Actions'
 import Describe from '../Actions/Describe'
+import { NodeType } from '../ServiceLayout'
+import { cloneDeep } from 'lodash-es'
 
 interface IProps {
   showModal: {
     showActionModal: boolean
     setShowActionModal: (showActionModal: boolean) => void
   }
-  handleAction: {
-    saveAction: itemsChildType
-    setSaveAction: (action: itemsChildType) => void
-  }
+  editNode: NodeType
+  list: NodeType[]
+  setList: (list: any) => void
 }
 
 const formLayout = {
@@ -22,12 +23,42 @@ const formLayout = {
 
 export default memo((props: IProps) => {
   const [form] = Form.useForm()
-  const { showModal, handleAction } = props
-  const { showActionModal, setShowActionModal } = showModal
-  const { saveAction, setSaveAction } = handleAction
-  console.log(saveAction)
+  const { showModal, editNode, setList, list } = props
 
-  const handleOk = () => {
+  const { showActionModal, setShowActionModal } = showModal
+  const [saveAction, setSaveAction] = useState<itemsChildType>(
+    {} as itemsChildType,
+  )
+
+  useEffect(() => {
+    const obj = allActions.filter(
+      item => item.key === editNode?.config?.actionType,
+    )[0]
+    setSaveAction(obj)
+  }, [editNode])
+
+  const handleOk = async () => {
+    const res = await form.validateFields()
+
+    const obj = {
+      ...res,
+      actionType: saveAction?.key,
+      actioneName: saveAction?.label,
+    }
+
+    const newObj = {
+      ...editNode,
+      config: obj,
+      content: obj?.actioneName,
+    }
+
+    const newList = cloneDeep(list)
+
+    const index = newList.findIndex((item: NodeType) => item.id === editNode.id)
+    newList[index] = newObj
+
+    setList(newList)
+
     setShowActionModal(false)
   }
 
@@ -35,7 +66,7 @@ export default memo((props: IProps) => {
     setShowActionModal(false)
   }
 
-  const handleClick = (item: any) => {
+  const handleClick = (item: itemsChildType) => {
     setSaveAction(item)
   }
 
@@ -78,7 +109,7 @@ export default memo((props: IProps) => {
           </ul>
         </div>
         <div className="content">
-          <Form {...formLayout} form={form}>
+          <Form {...formLayout} form={form} initialValues={editNode?.config}>
             {saveAction?.key && saveAction?.key !== 'none' ? (
               <>
                 <Describe>{saveAction?.describe}</Describe>

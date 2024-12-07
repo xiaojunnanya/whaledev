@@ -216,3 +216,16 @@ export const itemsActions: itemsType[] = [
     ],
   },
 ]
+
+export const allActions = itemsActions.reduce<itemsChildType[]>(
+  (prev, next) => {
+    // 如果当前项有 children，则展开并合并到 prev 中
+    if (next.children) {
+      // 只有 children 中的项符合 itemsChildType 类型，因此直接添加到 prev 中
+      return [...prev, ...next.children]
+    }
+    // 如果没有 children，则跳过该项
+    return prev
+  },
+  [],
+)

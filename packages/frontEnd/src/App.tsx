@@ -40,12 +40,16 @@ const App = memo(() => {
   // 捕获错误：系统+网络(在封装的axios中通过promise.reject抛出)
   const catchErr = (e: any) => {
     const target = e.target
-    if (!target || (target && !target?.localName)) {
-      console.log('JS运行错误')
-    }
+    const reason = e.reason
 
-    if (target?.localName) {
+    if (reason && reason?.errorFields) {
+      console.log('react form 表单验证错误')
+    } else if (!target || (target && !target?.localName)) {
+      console.log('JS运行错误')
+    } else if (target?.localName) {
       console.log('资源加载错误')
+    } else {
+      console.log('未知错误')
     }
   }
 
