@@ -26,6 +26,7 @@ export function handleActionFlow(actions: any, params: any) {
   // 去头去尾
   arr.pop()
   arr.shift()
+  // 遗留的问题：不使用链表，就使用数组进行遍历的方式来执行编排
   const nodes = convertArrayToLinkedList(arr)
   if (nodes?.action) {
     execAction(nodes, params)
@@ -135,9 +136,16 @@ const execAction = (node: any, params: any = {}) => {
   if (!node || !node?.action) return
   console.log(node, 'node')
   try {
-    const type = node.action?.actionType
+    const action = node.action
+    const type = action?.actionType
     switch (type) {
       case 'jumpLink':
+        const link = action['jumpLink-link']
+        if (action['jumpLink-type'] === 'alink') {
+          window.open(link)
+        } else {
+          window.location.href = link
+        }
         break
       default:
         break
