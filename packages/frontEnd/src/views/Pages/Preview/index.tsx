@@ -2,6 +2,7 @@ import Container from '@/components/Container'
 import { getPageJsonByPageId } from '@/service/request/page_json'
 import { useComponentMapStore } from '@/stores/componentMap'
 import { Component, initComponents } from '@/stores/components'
+import { handleActionFlow } from '@/utils/actions'
 import { createElement, memo, ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -28,6 +29,23 @@ export default memo(() => {
     setLoading(false)
   }
 
+  const handleEvent = (component: Component) => {
+    const props: Record<string, any> = {}
+    const events = component?.events || []
+    // 一个组件可能会有多个事件，遍历事件
+    events.forEach(event => {
+      const actions = event?.action || []
+      if (actions.length <= 2) return
+
+      props[event.name] = (params: any) => {
+        // 执行事件
+        handleActionFlow(actions, params)
+      }
+    })
+
+    return props
+  }
+
   const renderComponents = (components: Component[]): ReactNode => {
     if (components.length === 0) return null
     return components.map((component: Component) => {
@@ -36,7 +54,7 @@ export default memo(() => {
       if (!config?.component.prod) {
         return null
       }
-
+      // handleEvent(component)
       return createElement(
         config.component.prod,
         {
@@ -47,7 +65,7 @@ export default memo(() => {
           author: 'whale',
           ...config.defaultProps,
           ...component.props,
-          // 遗留的问题：添加事件
+          ...handleEvent(component),
         },
         renderComponents(component.children || []),
       )

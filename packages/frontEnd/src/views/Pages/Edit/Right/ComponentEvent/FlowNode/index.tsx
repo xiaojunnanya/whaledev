@@ -187,17 +187,11 @@ export default memo((props: IProps) => {
     }
 
     setEditNode(node)
-    // const nodeList = cloneDeep(list) as NodeType[]
-    // // editNode是取json的node，node 是我们点击的 node
-    // const editNodeJson = findNodeIndexAndParent(nodeList, node.id)
-    // if (!editNodeJson) return
-    // console.log(editNodeJson, 'editNodeJson')
-    // // editNode.selfNode.content = node.content
-    // editNodeJson.selfNode.config = node
     setShowActionModal(true)
   }
 
   //   删除节点
+  // 遗留的问题：删除这边也有一定的限制
   const handleDelNode = (event: React.MouseEvent, id: string) => {
     event.stopPropagation()
     const nodeList = cloneDeep(list)

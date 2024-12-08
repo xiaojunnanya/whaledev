@@ -5,6 +5,7 @@ import { allActions, itemsActions, itemsChildType } from '../Actions'
 import Describe from '../Actions/Describe'
 import { NodeType } from '../ServiceLayout'
 import { cloneDeep } from 'lodash-es'
+import { replaceNodeById } from '@/utils/actions'
 
 interface IProps {
   showModal: {
@@ -54,10 +55,8 @@ export default memo((props: IProps) => {
 
     const newList = cloneDeep(list)
 
-    const index = newList.findIndex((item: NodeType) => item.id === editNode.id)
-    newList[index] = newObj
-
-    setList(newList)
+    const newData = replaceNodeById(newList, editNode.id, newObj)
+    setList(newData)
 
     setShowActionModal(false)
   }
