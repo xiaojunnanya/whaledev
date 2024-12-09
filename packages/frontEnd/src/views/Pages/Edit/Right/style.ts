@@ -12,6 +12,10 @@ export const RightStyled = styled.div`
     line-height: 30px;
     border-left: 1px solid ${props => props.theme.defaultColor.white};
     margin-bottom: 24px;
+
+    & > span {
+      margin-right: 10px;
+    }
   }
 
   .whale-props-noselect {
