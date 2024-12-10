@@ -15,7 +15,7 @@ export const MessageContainerStyled = styled.div`
     margin-bottom: 8px;
     color: ${props => props.theme.defaultColor.error};
 
-    background-color: ${props => props.theme.defaultColor.redOpacity1};
+    background-color: ${props => props.theme.defaultColorOpacity.redOpacity1};
     border: 2px solid ${props => props.theme.defaultColor.white};
     border-radius: 6px;
 
