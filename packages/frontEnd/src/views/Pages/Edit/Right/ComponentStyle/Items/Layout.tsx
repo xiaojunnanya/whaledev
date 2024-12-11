@@ -12,7 +12,7 @@ export default memo((props: IProps) => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">布局</div>
-      <Form.Item label="布局模式" name="display">
+      <Form.Item label="模式" name="display">
         <WSelect
           placeholder="display"
           options={[

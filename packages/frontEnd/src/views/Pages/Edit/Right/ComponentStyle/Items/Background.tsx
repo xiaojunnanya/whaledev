@@ -7,9 +7,7 @@ export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">背景</div>
-      <Form.Item name="backgroundColor" label="颜色">
-        <WColorPicker />
-      </Form.Item>
+      <WColorPicker label="颜色" name="backgroundColor" />
       <Form.Item name="backgroundImage" label="图片">
         <Input placeholder="backgroundImage" />
       </Form.Item>

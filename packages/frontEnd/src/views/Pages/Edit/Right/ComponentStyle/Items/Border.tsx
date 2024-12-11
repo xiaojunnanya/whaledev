@@ -11,10 +11,10 @@ export default memo(() => {
       <Form.Item name="borderRadius" label="圆角">
         <WInputNumber placeholder="borderRadius" notAfter />
       </Form.Item>
-      <Form.Item name="borderWidth" label="边框宽度">
+      <Form.Item name="borderWidth" label="宽度">
         <WInputNumber placeholder="borderWidth" notAfter />
       </Form.Item>
-      <Form.Item name="borderStyle" label="边框样式">
+      <Form.Item name="borderStyle" label="样式">
         <WSelect
           placeholder="borderStyle"
           options={[
@@ -45,9 +45,7 @@ export default memo(() => {
           ]}
         ></WSelect>
       </Form.Item>
-      <Form.Item name="borderColor" label="边框颜色">
-        <WColorPicker />
-      </Form.Item>
+      <WColorPicker name="borderColor" label="颜色" />
 
       {/* 遗留的问题：阴影 */}
     </div>

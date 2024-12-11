@@ -1,26 +1,35 @@
 import { memo } from 'react'
 import theme from '@/assets/theme'
-import { ColorPicker } from 'antd'
+import { ColorPicker, Form } from 'antd'
 
 const primaryColor = Object.values(theme.primaryColor)
 const defaultColor = Object.values(theme.defaultColor)
 
-export default memo(() => {
+interface IProps {
+  label: string
+  name: string
+}
+
+export default memo((props: IProps) => {
+  const { label, name } = props
+
   return (
-    <ColorPicker
-      showText
-      allowClear
-      arrow={false}
-      presets={[
-        {
-          label: 'PrimaryColor',
-          colors: primaryColor,
-        },
-        {
-          label: 'DefaultColor',
-          colors: defaultColor,
-        },
-      ]}
-    ></ColorPicker>
+    <Form.Item name={name} label={label}>
+      <ColorPicker
+        showText
+        allowClear
+        arrow={false}
+        presets={[
+          {
+            label: 'PrimaryColor',
+            colors: primaryColor,
+          },
+          {
+            label: 'DefaultColor',
+            colors: defaultColor,
+          },
+        ]}
+      ></ColorPicker>
+    </Form.Item>
   )
 })

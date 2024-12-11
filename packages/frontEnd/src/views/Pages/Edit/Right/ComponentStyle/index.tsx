@@ -62,7 +62,7 @@ export default memo(() => {
     form.setFieldsValue(style)
 
     // setCss(toCSSStr(curComponent?.styles!))
-  }, [curComponent, curComponentId])
+  }, [curComponent])
 
   if (!curComponentId || !curComponent) return null
 
@@ -116,6 +116,15 @@ export default memo(() => {
         // 添加单位
         if (newData[name]) newData[name] += value
         newData[key] = undefined
+      }
+
+      // 处理color
+      if (key.toLowerCase().includes('color') && value) {
+        // @ts-ignore
+        const { metaColor } = value
+        const { r, g, b, a } = metaColor
+
+        newData[key] = `rgba(${r},${g},${b},${a})`
       }
     })
 

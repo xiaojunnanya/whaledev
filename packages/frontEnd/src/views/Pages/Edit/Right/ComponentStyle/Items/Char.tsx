@@ -8,13 +8,13 @@ export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">文字</div>
-      <Form.Item label="字体大小" name="fontSize">
+      <Form.Item label="大小" name="fontSize">
         <WInputNumber placeholder="fontSize" />
       </Form.Item>
       <Form.Item label="行高" name="lineHeight">
         <WInputNumber placeholder="lineHeight" />
       </Form.Item>
-      <Form.Item label="字体粗细" name="fontWeight">
+      <Form.Item label="粗细" name="fontWeight">
         <WSelect
           placeholder="fontWeight"
           options={[
@@ -58,9 +58,7 @@ export default memo(() => {
           ]}
         ></WSelect>
       </Form.Item>
-      <Form.Item name="color" label="颜色">
-        <WColorPicker />
-      </Form.Item>
+      <WColorPicker name="color" label="颜色" />
       <Form.Item label="对齐" name="textAlign">
         <WSelect
           placeholder="textAlign"
