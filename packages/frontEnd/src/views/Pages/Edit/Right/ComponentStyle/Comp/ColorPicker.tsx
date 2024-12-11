@@ -5,7 +5,7 @@ import { ColorPicker } from 'antd'
 const primaryColor = Object.values(theme.primaryColor)
 const defaultColor = Object.values(theme.defaultColor)
 
-export default memo(() => {
+const WColorPicker = memo(() => {
   return (
     <ColorPicker
       showText
@@ -24,3 +24,5 @@ export default memo(() => {
     ></ColorPicker>
   )
 })
+
+export default WColorPicker

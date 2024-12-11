@@ -1,20 +1,20 @@
 import { Form, Input } from 'antd'
 import { memo } from 'react'
-import Select from '../Comp/Select'
-import ColorPicker from '../Comp/ColorPicker'
+import WColorPicker from '../Comp/ColorPicker'
+import WSelect from '../Comp/Select'
 
 export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">背景</div>
       <Form.Item name="backgroundColor" label="颜色">
-        <ColorPicker />
+        <WColorPicker />
       </Form.Item>
       <Form.Item name="backgroundImage" label="图片">
         <Input placeholder="backgroundImage" />
       </Form.Item>
       <Form.Item name="backgroundSize" label="尺寸">
-        <Select
+        <WSelect
           placeholder="backgroundSize"
           options={[
             {
@@ -30,10 +30,10 @@ export default memo(() => {
               value: 'cover',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
       <Form.Item label="平铺" name="backgroundRepeat">
-        <Select
+        <WSelect
           placeholder="backgroundRepeat"
           options={[
             {
@@ -53,10 +53,10 @@ export default memo(() => {
               value: 'repeat-y',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
       <Form.Item name="backgroundPosition" label="位置">
-        <Select
+        <WSelect
           placeholder="backgroundPosition"
           options={[
             {
@@ -80,7 +80,7 @@ export default memo(() => {
               value: 'center',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
     </div>
   )

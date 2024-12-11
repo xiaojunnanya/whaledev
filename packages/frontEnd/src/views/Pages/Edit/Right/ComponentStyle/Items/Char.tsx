@@ -1,21 +1,21 @@
 import { Form } from 'antd'
 import { memo } from 'react'
-import InputNumber from '../Comp/InputNumber'
-import ColorPicker from '../Comp/ColorPicker'
-import Select from '../Comp/Select'
+import WInputNumber from '../Comp/InputNumber'
+import WColorPicker from '../Comp/ColorPicker'
+import WSelect from '../Comp/Select'
 
 export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">文字</div>
       <Form.Item label="字体大小" name="fontSize">
-        <InputNumber placeholder="fontSize" />
+        <WInputNumber placeholder="fontSize" />
       </Form.Item>
       <Form.Item label="行高" name="lineHeight">
-        <InputNumber placeholder="lineHeight" />
+        <WInputNumber placeholder="lineHeight" />
       </Form.Item>
       <Form.Item label="字体粗细" name="fontWeight">
-        <Select
+        <WSelect
           placeholder="fontWeight"
           options={[
             {
@@ -56,13 +56,13 @@ export default memo(() => {
               label: '900 Black Bold',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
       <Form.Item name="color" label="颜色">
-        <ColorPicker />
+        <WColorPicker />
       </Form.Item>
       <Form.Item label="对齐" name="textAlign">
-        <Select
+        <WSelect
           placeholder="textAlign"
           options={[
             {
@@ -78,7 +78,7 @@ export default memo(() => {
               label: '右对齐 right',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
     </div>
   )

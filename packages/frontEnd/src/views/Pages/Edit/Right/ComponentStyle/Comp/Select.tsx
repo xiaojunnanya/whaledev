@@ -9,6 +9,8 @@ interface IProps {
   }[]
 }
 
-export default memo((props: IProps) => {
+const WSelect = memo((props: IProps) => {
   return <Select {...props} allowClear></Select>
 })
+
+export default WSelect

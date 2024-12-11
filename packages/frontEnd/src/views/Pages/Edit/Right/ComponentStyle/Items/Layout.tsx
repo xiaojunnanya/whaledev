@@ -1,6 +1,6 @@
 import { Form, FormInstance, Radio } from 'antd'
 import { memo } from 'react'
-import Select from '../Comp/Select'
+import WSelect from '../Comp/Select'
 
 interface IProps {
   form: FormInstance
@@ -13,7 +13,7 @@ export default memo((props: IProps) => {
     <div className="whale-style">
       <div className="whale-right-title">布局</div>
       <Form.Item label="布局模式" name="display">
-        <Select
+        <WSelect
           placeholder="display"
           options={[
             {
@@ -41,12 +41,12 @@ export default memo((props: IProps) => {
               label: '隐藏 none',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
       {['inline-flex', 'flex'].includes(form?.getFieldValue('display')) && (
         <>
           <Form.Item name="flexDirection" label="主轴方向">
-            <Select
+            <WSelect
               placeholder="flexDirection"
               options={[
                 {
@@ -69,7 +69,7 @@ export default memo((props: IProps) => {
             />
           </Form.Item>
           <Form.Item name="justifyContent" label="主轴对齐">
-            <Select
+            <WSelect
               placeholder="justifyContent"
               options={[
                 {
@@ -100,7 +100,7 @@ export default memo((props: IProps) => {
             />
           </Form.Item>
           <Form.Item name="alignItems" label="副轴对齐">
-            <Select
+            <WSelect
               placeholder="alignItems"
               options={[
                 {

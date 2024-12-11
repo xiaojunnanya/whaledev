@@ -6,7 +6,7 @@ interface IProps {
   notAfter?: boolean
 }
 
-export default memo((props: IProps) => {
+const WInputNumber = memo((props: IProps) => {
   const { notAfter = true } = props
 
   const addonAfter = (
@@ -30,3 +30,5 @@ export default memo((props: IProps) => {
     />
   )
 })
+
+export default WInputNumber

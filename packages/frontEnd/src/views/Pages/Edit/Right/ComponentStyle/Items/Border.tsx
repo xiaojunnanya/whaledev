@@ -1,21 +1,21 @@
 import { Form } from 'antd'
 import { memo } from 'react'
-import InputNumber from '../Comp/InputNumber'
-import ColorPicker from '../Comp/ColorPicker'
-import Select from '../Comp/Select'
+import WInputNumber from '../Comp/InputNumber'
+import WColorPicker from '../Comp/ColorPicker'
+import WSelect from '../Comp/Select'
 
 export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">边框</div>
       <Form.Item name="borderRadius" label="圆角">
-        <InputNumber placeholder="borderRadius" notAfter />
+        <WInputNumber placeholder="borderRadius" notAfter />
       </Form.Item>
       <Form.Item name="borderWidth" label="边框宽度">
-        <InputNumber placeholder="borderWidth" notAfter />
+        <WInputNumber placeholder="borderWidth" notAfter />
       </Form.Item>
       <Form.Item name="borderStyle" label="边框样式">
-        <Select
+        <WSelect
           placeholder="borderStyle"
           options={[
             {
@@ -43,10 +43,10 @@ export default memo(() => {
               value: 'hidden',
             },
           ]}
-        ></Select>
+        ></WSelect>
       </Form.Item>
       <Form.Item name="borderColor" label="边框颜色">
-        <ColorPicker />
+        <WColorPicker />
       </Form.Item>
 
       {/* 遗留的问题：阴影 */}

@@ -1,14 +1,14 @@
 import { Form } from 'antd'
 import { memo } from 'react'
-import InputNumber from '../Comp/InputNumber'
-import Select from '../Comp/Select'
+import WInputNumber from '../Comp/InputNumber'
+import WSelect from '../Comp/Select'
 
 export default memo(() => {
   return (
     <div className="whale-style">
       <div className="whale-right-title">定位</div>
       <Form.Item name="position" label="定位">
-        <Select
+        <WSelect
           placeholder="position"
           options={[
             {
@@ -38,24 +38,24 @@ export default memo(() => {
       {/* {!['', undefined, 'static'].includes(formData?.position) && (
               <Form.Item label="位置">
                 <Form.Item name={['scopeStyle', 'top']} noStyle>
-                  <InputNumber placeholder="T: 10" />
+                  <WInputNumber placeholder="T: 10" />
                 </Form.Item>
                 <Form.Item name={['scopeStyle', 'right']} noStyle>
-                  <InputNumber placeholder="R: 10" />
+                  <WInputNumber placeholder="R: 10" />
                 </Form.Item>
                 <Form.Item name={['scopeStyle', 'bottom']} noStyle>
-                  <InputNumber placeholder="B: 10" />
+                  <WInputNumber placeholder="B: 10" />
                 </Form.Item>
                 <Form.Item name={['scopeStyle', 'left']} noStyle>
-                  <InputNumber placeholder="L: 10" />
+                  <WInputNumber placeholder="L: 10" />
                 </Form.Item>
               </Form.Item>
             )} */}
       <Form.Item name="zIndex" label="层级">
-        <InputNumber placeholder="zIndex" notAfter={false} />
+        <WInputNumber placeholder="zIndex" notAfter={false} />
       </Form.Item>
       <Form.Item name="overflow" label="溢出">
-        <Select
+        <WSelect
           placeholder="overflow"
           options={[
             {
