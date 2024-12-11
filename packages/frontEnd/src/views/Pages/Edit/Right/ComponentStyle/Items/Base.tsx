@@ -1,6 +1,6 @@
 import { Form, Slider } from 'antd'
 import { memo } from 'react'
-import WInputNumber from '../Comp/InputNumber'
+import WInputNumber from '../Comp/WInputNumber'
 
 export default memo(() => {
   return (

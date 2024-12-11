@@ -1,6 +1,6 @@
 import { Form, FormInstance, Radio } from 'antd'
 import { memo } from 'react'
-import WSelect from '../Comp/Select'
+import WSelect from '../Comp/WSelect'
 
 interface IProps {
   form: FormInstance

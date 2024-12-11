@@ -1,8 +1,8 @@
 import { Form } from 'antd'
 import { memo } from 'react'
-import WInputNumber from '../Comp/InputNumber'
-import WColorPicker from '../Comp/ColorPicker'
-import WSelect from '../Comp/Select'
+import WInputNumber from '../Comp/WInputNumber'
+import WColorPicker from '../Comp/WColorPicker'
+import WSelect from '../Comp/WSelect'
 
 export default memo(() => {
   return (

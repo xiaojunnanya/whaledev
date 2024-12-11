@@ -1,7 +1,7 @@
 import { Form, Input } from 'antd'
 import { memo } from 'react'
-import WColorPicker from '../Comp/ColorPicker'
-import WSelect from '../Comp/Select'
+import WColorPicker from '../Comp/WColorPicker'
+import WSelect from '../Comp/WSelect'
 
 export default memo(() => {
   return (
