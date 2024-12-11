@@ -1,29 +1,32 @@
-import { InputNumber, Select } from 'antd'
+import { Form, InputNumber, Select } from 'antd'
 import { memo } from 'react'
-
-const addonAfter = (
-  <Select
-    defaultValue="px"
-    options={[
-      { label: 'px', value: 'px' },
-      { label: '%', value: '%' },
-    ]}
-  ></Select>
-)
 
 interface IProps {
   placeholder: string
-  afterIsObj?: boolean
+  afterisobj?: boolean
 }
 
 export default memo((props: IProps) => {
-  const { afterIsObj = true } = props
+  const { afterisobj = true } = props
+
+  const addonAfter = (
+    <Form.Item name={props.placeholder + '-prefix'} noStyle>
+      <Select
+        options={[
+          { label: 'px', value: 'px' },
+          { label: '%', value: '%' },
+        ]}
+      ></Select>
+    </Form.Item>
+  )
 
   return (
     <InputNumber
       {...props}
+      key={props.placeholder}
       style={{ width: '100%' }}
-      addonAfter={afterIsObj ? addonAfter : 'px'}
+      changeOnWheel
+      addonAfter={afterisobj ? addonAfter : 'px'}
     />
   )
 })

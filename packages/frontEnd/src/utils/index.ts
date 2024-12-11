@@ -32,3 +32,20 @@ export async function downloadFiles(files: Files) {
 export function generateId(length: number = 8) {
   return uuidv4().split('-').join('').slice(0, length)
 }
+
+// 将驼峰转为连字符
+export function camelToHyphen(key: any) {
+  return key.replace(/([A-Z])/g, '-$1').toLowerCase()
+}
+
+// 将带单位的字符串转为数字+单位
+export function splitValue(value: string) {
+  const match = value?.match(/^(\d+(?:\.\d+)?)([a-z%]*)$/i)
+  if (match) {
+    return {
+      number: Number(match[1]), // 提取数字部分并转换为浮点数
+      unit: match[2], // 提取单位部分
+    }
+  }
+  return null // 无法匹配时返回 null
+}

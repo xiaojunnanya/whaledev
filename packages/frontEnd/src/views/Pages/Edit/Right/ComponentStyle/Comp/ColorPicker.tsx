@@ -1,6 +1,9 @@
-import { ColorPicker } from 'antd'
 import { memo } from 'react'
 import theme from '@/assets/theme'
+import { ColorPicker } from 'antd'
+
+const primaryColor = Object.values(theme.primaryColor)
+const defaultColor = Object.values(theme.defaultColor)
 
 export default memo(() => {
   return (
@@ -11,11 +14,11 @@ export default memo(() => {
       presets={[
         {
           label: 'PrimaryColor',
-          colors: Object.values(theme.primaryColor),
+          colors: primaryColor,
         },
         {
           label: 'DefaultColor',
-          colors: Object.values(theme.defaultColor),
+          colors: defaultColor,
         },
       ]}
     ></ColorPicker>
