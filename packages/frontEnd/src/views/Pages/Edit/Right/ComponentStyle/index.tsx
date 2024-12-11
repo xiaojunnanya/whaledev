@@ -22,6 +22,10 @@ const initStyle = {
   'height-prefix': 'px',
   'width-prefix': 'px',
   'lineHeight-prefix': 'px',
+  'margin-prefix': 'px',
+  'padding-prefix': 'px',
+  'borderRadius-prefix': 'px',
+  'borderWidth-prefix': 'px',
 }
 
 // 遗留的问题：功能问题

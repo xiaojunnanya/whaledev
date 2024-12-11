@@ -52,7 +52,7 @@ export default memo(() => {
               </Form.Item>
             )} */}
       <Form.Item name="zIndex" label="层级">
-        <InputNumber placeholder="zIndex" afterisobj={false} />
+        <InputNumber placeholder="zIndex" notAfter={false} />
       </Form.Item>
       <Form.Item name="overflow" label="溢出">
         <Select
