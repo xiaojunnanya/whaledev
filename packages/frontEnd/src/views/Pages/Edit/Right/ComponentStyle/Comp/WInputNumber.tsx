@@ -3,11 +3,11 @@ import { memo } from 'react'
 
 interface IProps {
   placeholder: string
-  notAfter?: boolean
+  notafter?: boolean
 }
 
 export default memo((props: IProps) => {
-  const { notAfter = true } = props
+  const { notafter = true } = props
 
   const addonAfter = (
     <Form.Item name={props.placeholder + '-prefix'} noStyle>
@@ -26,7 +26,7 @@ export default memo((props: IProps) => {
       key={props.placeholder}
       style={{ width: '100%' }}
       changeOnWheel
-      addonAfter={notAfter && addonAfter}
+      addonAfter={notafter && addonAfter}
     />
   )
 })

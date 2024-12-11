@@ -1,11 +1,10 @@
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ComponentStyleStyled } from './style'
 import { useComponetsStore } from '@/stores/components'
-// import { debounce } from 'lodash-es'
-// import styleToObject from 'style-to-object'
-// import Editor from '@/components/Editor'
+import { debounce } from 'lodash-es'
+import styleToObject from 'style-to-object'
+import Editor from '@/components/Editor'
 import { Form } from 'antd'
-// import { QuestionCircleOutlined } from '@ant-design/icons'
 import Container from '@/components/Container'
 import Base from './Items/Base'
 import Layout from './Items/Layout'
@@ -14,7 +13,7 @@ import Background from './Items/Background'
 import Position from './Items/Position'
 import Border from './Items/Border'
 import { splitValue } from '@/utils'
-// import { camelToHyphen } from '@/utils'
+import { camelToHyphen } from '@/utils'
 
 const initStyle = {
   opacity: '1',
@@ -28,14 +27,13 @@ const initStyle = {
   'borderWidth-prefix': 'px',
 }
 
-// 遗留的问题：功能问题
 export default memo(() => {
   const [form] = Form.useForm()
 
   const { curComponentId, curComponent, updateComponentStyles } =
     useComponetsStore()
 
-  // const [css, setCss] = useState(`.component{\n\n}`)
+  const [css, setCss] = useState(`.component{\n\n}`)
 
   useEffect(() => {
     if (!curComponent) return
@@ -45,63 +43,38 @@ export default memo(() => {
     if (curComponent?.styles) {
       // 对style进行处理，剥离出单位
       style = { ...curComponent?.styles, ...initStyle }
-      Object.entries(style).forEach(([key, _]) => {
-        if (key.includes('-prefix')) {
-          const [n, _] = key.split('-')
-          const value = splitValue(style[n])
-          if (!value) return
-          const { number, unit } = value
-          style[n] = number
-          style[key] = unit
-        }
-      })
+      style = splitStyle(style)
     } else {
       style = { ...initStyle }
     }
 
     form.setFieldsValue(style)
 
-    // setCss(toCSSStr(curComponent?.styles!))
+    setCss(toCSSStr(curComponent?.styles!))
   }, [curComponent])
 
   if (!curComponentId || !curComponent) return null
 
-  // function toCSSStr(css: Record<string, any>) {
-  //   let str = `.component {\n`
-  //   for (let key in css) {
-  //     let value = css[key]
-  //     if (!value) {
-  //       continue
-  //     }
+  const handleEditorChange = debounce(value => {
+    setCss(value)
+    let css: Record<string, any> = {}
+    try {
+      const cssStr = value
+        .replace(/\/\*.*\*\//, '') // 去掉注释 /** */
+        .replace(/(\.?[^{]+{)/, '') // 去掉 .comp {
+        .replace('}', '') // 去掉 }
+      // 将连字符转为驼峰
+      styleToObject(cssStr, (name, value) => {
+        css[name.replace(/-\w/, item => item.toUpperCase().replace('-', ''))] =
+          value
+      })
 
-  //     str += `\t${camelToHyphen(key)}: ${value};\n`
-  //   }
-  //   str += `}`
-  //   return str
-  // }
+      form.setFieldsValue(splitStyle({ ...css, ...initStyle }))
+      updateComponentStyles(curComponentId, { ...css }, true)
+    } catch (e) {}
+  }, 500)
 
-  // const handleEditorChange = debounce(value => {
-  //   setCss(value)
-
-  //   let css: Record<string, any> = {}
-
-  //   try {
-  //     const cssStr = value
-  //       .replace(/\/\*.*\*\//, '') // 去掉注释 /** */
-  //       .replace(/(\.?[^{]+{)/, '') // 去掉 .comp {
-  //       .replace('}', '') // 去掉 }
-
-  //     // 将连字符转为驼峰
-  //     styleToObject(cssStr, (name, value) => {
-  //       css[name.replace(/-\w/, item => item.toUpperCase().replace('-', ''))] =
-  //         value
-  //     })
-
-  //     updateComponentStyles(curComponentId, { ...css }, true)
-  //   } catch (e) {}
-  // }, 500)
-
-  const fromChange = () => {
+  const fromChange = debounce(() => {
     const data = form.getFieldsValue()
 
     let newData = { ...data }
@@ -127,29 +100,15 @@ export default memo(() => {
         newData[key] = `rgba(${r},${g},${b},${a})`
       }
     })
-    console.log(newData, '123')
+    handleEditorChange(toCSSStr(newData))
     updateComponentStyles(curComponentId, newData)
-  }
+  }, 500)
 
   return (
     <Container height={132}>
       <ComponentStyleStyled>
-        {/* <div className="whale-style">
-          <div className="whale-right-title">
-            <span>自定义样式</span>
-            <Popover
-              placement="right"
-              content={
-                <>
-                  <div>
-                    1. 自定义样式的优先级最低，设置其他样式会覆盖自定义样式
-                  </div>
-                </>
-              }
-            >
-              <QuestionCircleOutlined />
-            </Popover>
-          </div>
+        <div className="whale-style">
+          <div className="whale-right-title">自定义样式</div>
           <div className="whale-style-csseditor">
             <Editor
               file={{
@@ -160,7 +119,7 @@ export default memo(() => {
               onChange={handleEditorChange}
             />
           </div>
-        </div> */}
+        </div>
         <Form
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 16 }}
@@ -185,3 +144,34 @@ export default memo(() => {
     </Container>
   )
 })
+
+function toCSSStr(css: Record<string, any>) {
+  let str = `.component {\n`
+  for (let key in css) {
+    let value = css[key]
+    if (!value) {
+      continue
+    }
+
+    str += `\t${camelToHyphen(key)}: ${value};\n`
+  }
+  str += `}`
+  return str
+}
+
+// 对style进行处理，剥离出单位
+function splitStyle(obj: any) {
+  const style = { ...obj }
+  Object.entries(style).forEach(([key, _]) => {
+    if (key.includes('-prefix')) {
+      const [n, _] = key.split('-')
+      const value = splitValue(style[n])
+      if (!value) return
+      const { number, unit } = value
+      style[n] = number
+      style[key] = unit
+    }
+  })
+
+  return style
+}
