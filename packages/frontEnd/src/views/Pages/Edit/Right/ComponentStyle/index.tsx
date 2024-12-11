@@ -106,7 +106,7 @@ export default memo(() => {
 
     let newData = { ...data }
 
-    Object.entries(data).forEach(([key, value]) => {
+    Object.entries(data).forEach(([key, value]: [string, any]) => {
       if (value === null) {
         newData[key] = undefined
       }
@@ -120,14 +120,14 @@ export default memo(() => {
 
       // 处理color
       if (key.toLowerCase().includes('color') && value) {
-        // @ts-ignore
-        const { metaColor } = value
+        const metaColor = value?.metaColor
+        if (!metaColor) return
         const { r, g, b, a } = metaColor
 
         newData[key] = `rgba(${r},${g},${b},${a})`
       }
     })
-
+    console.log(newData, '123')
     updateComponentStyles(curComponentId, newData)
   }
 
