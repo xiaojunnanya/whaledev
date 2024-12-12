@@ -9,10 +9,10 @@ export default memo(() => {
     <div className="whale-style">
       <div className="whale-right-title">边框</div>
       <Form.Item name="borderRadius" label="圆角">
-        <WInputNumber placeholder="borderRadius" notafter />
+        <WInputNumber placeholder="borderRadius" notafter={1} />
       </Form.Item>
       <Form.Item name="borderWidth" label="宽度">
-        <WInputNumber placeholder="borderWidth" notafter />
+        <WInputNumber placeholder="borderWidth" notafter={1} />
       </Form.Item>
       <Form.Item name="borderStyle" label="样式">
         <WSelect

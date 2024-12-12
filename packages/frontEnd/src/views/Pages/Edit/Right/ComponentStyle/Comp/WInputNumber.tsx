@@ -3,11 +3,11 @@ import { memo } from 'react'
 
 interface IProps {
   placeholder: string
-  notafter?: boolean
+  notafter?: boolean | number
 }
 
 export default memo((props: IProps) => {
-  const { notafter = true } = props
+  const notafter = Boolean(props?.notafter)
 
   const addonAfter = (
     <Form.Item name={props.placeholder + '-prefix'} noStyle>
