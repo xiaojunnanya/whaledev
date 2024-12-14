@@ -40,8 +40,8 @@ export default memo(() => {
 
   const handleWindowResize = () => {
     if (!editMiddleContent.current) return
-    const { scrollWidth } = editMiddleContent.current
-    setWidth(scrollWidth || 0)
+    const { offsetWidth } = editMiddleContent.current
+    setWidth(offsetWidth || 0)
   }
 
   return (

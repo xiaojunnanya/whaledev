@@ -6,7 +6,6 @@ import { DownOutlined } from '@ant-design/icons'
 
 export default memo(() => {
   const { components, setCurComponentId } = useComponetsStore()
-  // 遗留的问题：滚动条
   return (
     <OutlineTreeStyled>
       <Tree
