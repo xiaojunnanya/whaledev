@@ -2,6 +2,8 @@ import { getComponentById } from '@/utils/components'
 import { CSSProperties } from 'react'
 import { create } from 'zustand'
 
+export const PAGEID = 'Page_0'
+
 // 待思考：组件添加版本
 export interface Component {
   id: string // ID
@@ -39,7 +41,7 @@ interface Action {
 
 export const initComponents: Component[] = [
   {
-    id: 'Page_0',
+    id: PAGEID,
     name: 'Page',
     props: {},
     desc: '页面',

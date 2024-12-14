@@ -8,3 +8,7 @@
 .ant-pagination.ant-pagination-end {
   margin-right: 40px;
 }
+
+.ant-tree-node-content-wrapper {
+  white-space: nowrap;
+}

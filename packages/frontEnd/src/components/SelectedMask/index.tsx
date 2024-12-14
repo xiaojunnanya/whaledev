@@ -8,7 +8,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons'
 import { getComponentById } from '@/utils/components'
-import { Component, useComponetsStore } from '@/stores/components'
+import { Component, PAGEID, useComponetsStore } from '@/stores/components'
 import { useGlobal } from '@/stores/global'
 import { SelectedMaskStyled } from './style'
 
@@ -44,6 +44,8 @@ const SelectedMask = memo(
     } = useComponetsStore()
     const { width } = useGlobal()
 
+    const el = document.querySelector(`.${portalWrapperClassName}`)!
+
     useEffect(() => {
       updatePosition()
     }, [componentId, width])
@@ -75,7 +77,7 @@ const SelectedMask = memo(
 
       if (labelTop <= 0) {
         // 除了页面组件，其他组件在最上方的时候，内容展示放在下面
-        if (componentId === 'Page_0') {
+        if (componentId === PAGEID) {
           labelTop += 20
         } else {
           labelTop += 20 + height
@@ -98,10 +100,6 @@ const SelectedMask = memo(
         labelLeft,
       })
     }
-
-    const el = useMemo(() => {
-      return document.querySelector(`.${portalWrapperClassName}`)!
-    }, [])
 
     const curComponent = useMemo(() => {
       return getComponentById(componentId, components)
@@ -155,7 +153,7 @@ const SelectedMask = memo(
             >
               <div className="whale-mask-desc">{curComponent?.desc}</div>
               {/* 画布不能被选中 */}
-              {curComponentId !== 'Page_0' && (
+              {curComponentId !== PAGEID && (
                 <>
                   <div className="whale-mask-line">|</div>
                   <div className="whale-mask-icon">
