@@ -118,6 +118,7 @@ export default memo(() => {
             <DesktopOutlined />
             <TabletOutlined rotate={90} />
             <MobileOutlined />
+            {/* 遗留的问题：出现滚动后画布的宽度 */}
             <InputNumber addonAfter="px" value={viewWidth} />
           </div>
           <div className="edit-top-right">

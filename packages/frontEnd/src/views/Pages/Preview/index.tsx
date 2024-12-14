@@ -6,7 +6,12 @@ import { handleActionFlow } from '@/utils/actions'
 import { createElement, memo, ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-export default memo(() => {
+interface IProps {
+  height?: number
+}
+
+export default memo((props: IProps) => {
+  const { height } = props
   const params = useParams()
   const { page_id = '' } = params
   const { componentMap } = useComponentMapStore()
@@ -79,7 +84,9 @@ export default memo(() => {
           该页面暂无组件
         </div>
       ) : (
-        <Container isLoading={loading}>{renderComponents(pageJson)}</Container>
+        <Container isLoading={loading} height={height ? height : 0}>
+          {renderComponents(pageJson)}
+        </Container>
       )}
     </>
   )

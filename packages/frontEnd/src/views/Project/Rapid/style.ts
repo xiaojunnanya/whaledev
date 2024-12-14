@@ -21,7 +21,7 @@ export const RapidStyled = styled.div`
 
     .page {
       height: calc(100% - 44px);
-      overflow-y: scroll;
+      overflow-y: auto;
 
       .page-item {
         padding: 10px;
