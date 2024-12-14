@@ -12,10 +12,7 @@ const Container = (props: CommonComponentProps) => {
       className={styleLess['whale-container']}
       ref={drop}
       data-component-id={id}
-      style={{
-        border: canDrop ? '1px dashed #1890ff' : '1px solid #d9d9d9',
-        ...styles,
-      }}
+      style={styles}
     >
       {children}
     </div>

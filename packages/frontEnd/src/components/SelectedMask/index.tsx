@@ -65,6 +65,7 @@ const SelectedMask = memo(
       )
       if (!node) return
 
+      // 组件的信息
       const { top, left, width, height } = node.getBoundingClientRect()
       const { top: containerTop, left: containerLeft } =
         container.getBoundingClientRect()
@@ -81,9 +82,9 @@ const SelectedMask = memo(
         }
       }
 
-      // 如果组件的长度没有展示内容的长度长，展示内容需要从左开始
       const maskWidth = whaleMask?.current?.offsetWidth || 0
 
+      // 如果组件的长度没有展示内容的长度长，展示内容需要从左开始
       if (labelLeft < maskWidth) {
         labelLeft = labelLeft + maskWidth - width
       }

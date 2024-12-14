@@ -14,9 +14,12 @@ export const ContentStyled = styled.div`
       flex: 1;
       background-color: ${props => props.theme.defaultColor.grey};
       padding: 16px 7px 16px 16px;
+      overflow: auto;
 
       .edit-middle-content {
+        /* 遗留的问题：解决高度/宽度的问题 */
         height: 100%;
+        position: relative;
         background-color: ${props => props.theme.defaultColor.white};
       }
     }

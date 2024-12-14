@@ -39,7 +39,12 @@ export default memo(() => {
   }, [isAffix, rightContentExpand, leftwiden])
 
   const handleWindowResize = () => {
-    setWidth(editMiddleContent.current?.offsetWidth || 0)
+    if (!editMiddleContent.current) return
+    const { offsetWidth, scrollHeight, clientHeight } =
+      editMiddleContent.current
+
+    console.log(scrollHeight, clientHeight)
+    setWidth(offsetWidth || 0)
   }
 
   return (
