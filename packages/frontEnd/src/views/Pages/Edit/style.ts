@@ -4,28 +4,31 @@ export const ContentStyled = styled.div`
   display: flex;
   height: calc(100vh - 90px);
   position: relative;
+  background-color: ${props => props.theme.defaultColor.grey};
 
   .edit {
     &-left {
       width: 48px;
+      background-color: ${props => props.theme.defaultColor.white};
     }
 
     &-middle {
       flex: 1;
-      background-color: ${props => props.theme.defaultColor.grey};
-      padding: 16px 7px 16px 16px;
+      background-color: ${props => props.theme.defaultColor.white};
+      margin: 16px 7px 16px 16px;
       overflow: auto;
 
       .edit-middle-content {
         /* 遗留的问题：解决高度/宽度的问题 */
         height: 100%;
         position: relative;
-        background-color: ${props => props.theme.defaultColor.white};
+        /* background-color: ${props => props.theme.defaultColor.white}; */
       }
     }
 
     &-right {
       width: 300px;
+      background-color: ${props => props.theme.defaultColor.white};
     }
   }
 
@@ -66,7 +69,6 @@ export const ContentStyled = styled.div`
   }
 
   .right-dot {
-    background-color: ${props => props.theme.defaultColor.grey};
     height: 100%;
     display: flex;
     align-items: center;
