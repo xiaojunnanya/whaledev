@@ -216,7 +216,7 @@ export default memo(() => {
       </div>
 
       <div className="page-preview">
-        {page_id ? <Preview height={106}></Preview> : <div>请选择页面</div>}
+        {page_id ? <Preview height={122}></Preview> : <div>请选择页面</div>}
       </div>
 
       <Modal

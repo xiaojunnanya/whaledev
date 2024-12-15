@@ -1,17 +1,50 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { OutlineTreeStyled, TreeTitleStyled } from './style'
-import { PAGEID, useComponetsStore } from '@/stores/components'
-import { Tree } from 'antd'
-import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons'
+import { Component, PAGEID, useComponetsStore } from '@/stores/components'
+import { Input, Tree } from 'antd'
+import {
+  CheckOutlined,
+  DeleteOutlined,
+  DownOutlined,
+  EditOutlined,
+} from '@ant-design/icons'
+import { removeLastParenthesisContent } from '@/utils'
 
 export default memo(() => {
-  const { components, setCurComponentId, deleteComponent } = useComponetsStore()
+  const {
+    components,
+    setCurComponentId,
+    deleteComponent,
+    updeteComponentById,
+  } = useComponetsStore()
 
-  const handleDelete = (e: any, node: any) => {
-    console.log('12', node.id)
+  const [isEdit, setIsEdit] = useState(false)
+  const [editId, setEditId] = useState('')
+  const [inputValue, setInputValue] = useState('')
+
+  const handleDelete = (e: any, node: Component) => {
     e.stopPropagation()
     deleteComponent(node.id)
     setCurComponentId('')
+  }
+
+  const handleEdit = (e: any, node: Component, type: 'edit' | 'save') => {
+    e.stopPropagation()
+    setIsEdit(!isEdit)
+    const { withoutLastParenthesis, lastParenthesisContent } =
+      removeLastParenthesisContent(node.desc)
+    if (type === 'edit') {
+      setCurComponentId('')
+      setEditId(node.id)
+      setInputValue(withoutLastParenthesis)
+    } else {
+      setEditId('')
+      const obj = {
+        ...node,
+        desc: `${inputValue}(${lastParenthesisContent})`,
+      }
+      updeteComponentById(node.id, obj)
+    }
   }
 
   return (
@@ -25,20 +58,30 @@ export default memo(() => {
         onSelect={([selectedKey]) => {
           setCurComponentId(selectedKey as string)
         }}
-        titleRender={node => {
+        // @ts-ignore
+        titleRender={(node: Component) => {
+          if (node?.id === PAGEID) return node.desc
+
           return (
             <TreeTitleStyled>
-              {/* @ts-ignore */}
-              <span>{node?.desc}</span>
-              {
-                // @ts-ignore
-                node?.id !== PAGEID && (
-                  <>
-                    <EditOutlined />
-                    <DeleteOutlined onClick={e => handleDelete(e, node)} />
-                  </>
-                )
-              }
+              {isEdit && node.id === editId ? (
+                <>
+                  <Input
+                    value={inputValue}
+                    size="small"
+                    style={{ width: 100 }}
+                    onChange={e => setInputValue(e.target.value)}
+                  />
+                  <CheckOutlined onClick={e => handleEdit(e, node, 'save')} />
+                </>
+              ) : (
+                <>
+                  <span>{node.desc}</span>
+                  <EditOutlined onClick={e => handleEdit(e, node, 'edit')} />
+                </>
+              )}
+
+              <DeleteOutlined onClick={e => handleDelete(e, node)} />
             </TreeTitleStyled>
           )
         }}

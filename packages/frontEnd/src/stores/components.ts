@@ -1,4 +1,4 @@
-import { getComponentById } from '@/utils/components'
+import { getComponentById, updateObjectById } from '@/utils/components'
 import { CSSProperties } from 'react'
 import { create } from 'zustand'
 
@@ -105,9 +105,10 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
   updeteComponentById: (componentId, comp) =>
     set(state => {
       let component = getComponentById(componentId, state.components)
+
       if (component) {
-        component = { ...component, ...comp }
-        return { components: [...state.components] }
+        const arr = updateObjectById(state.components, componentId, comp)
+        return { components: [...arr] }
       }
       return { components: [...state.components] }
     }),

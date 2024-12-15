@@ -60,3 +60,33 @@ export function findNodeIndexAndParent(
   }
   return null
 }
+
+/**
+ * 通过id更新数组中某个对象
+ * @param components
+ * @param targetId
+ * @param newObject
+ * @returns
+ */
+export function updateObjectById(
+  components: Component[],
+  targetId: string,
+  newObject: Component,
+): Component[] {
+  for (let i = 0; i < components.length; i++) {
+    // 如果找到了目标id，进行更新
+    if (components[i].id === targetId) {
+      components[i] = { ...components[i], ...newObject } // 使用新对象覆盖原对象
+
+      return components
+    }
+
+    // 如果当前对象有子元素，递归更新子元素
+    if (components[i].children) {
+      // @ts-ignore
+      updateObjectById(components[i].children, targetId, newObject)
+    }
+  }
+
+  return components
+}

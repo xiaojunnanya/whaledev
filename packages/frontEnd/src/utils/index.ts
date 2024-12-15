@@ -13,6 +13,21 @@ export const fileName2Language = (name: string) => {
 }
 
 /**
+ * 替换最后一个括号及其内容
+ * @param str
+ * @returns
+ */
+export function removeLastParenthesisContent(str: string) {
+  const regex = /(.*)\((.*)\)$/ // 捕获括号内的内容和最后的括号部分
+  const match = str.match(regex)
+
+  return {
+    withoutLastParenthesis: match ? match[1] : str, // 去掉最后括号及内容后的字符串
+    lastParenthesisContent: match ? match[2] : str, // 最后括号及内容部分
+  }
+}
+
+/**
  * 下载文件
  * @param files
  */
