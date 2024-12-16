@@ -4,7 +4,7 @@ import { useComponetsStore } from '@/stores/components'
 import { Form, Input } from 'antd'
 import { ComponentConfig } from '@/materials/interface'
 import { useComponentMapStore } from '@/stores/componentMap'
-import RenderFormEle from '@/components/renderFormEle'
+import RenderFormEle from '@/components/renderAttrEle'
 export default memo(() => {
   const [form] = Form.useForm()
 

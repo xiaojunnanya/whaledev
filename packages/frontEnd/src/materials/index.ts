@@ -1,7 +1,7 @@
-import { ButtonConfig } from './Button/config'
-import { ContainerConfig } from './Container/config'
+import { ButtonConfig } from './General/Button/config'
 import { ComponentConfig } from './interface'
-import { PageConfig } from './Page/config'
+import { ContainerConfig } from './Layout/Container/config'
+import { PageConfig } from './Layout/Page/config'
 
 interface IType {
   [key: string]: ComponentConfig

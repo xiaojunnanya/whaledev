@@ -1,6 +1,6 @@
 import ButtonDev from './dev'
 import ButtonProd from './prod'
-import { ComponentConfig } from '../interface'
+import { ComponentConfig } from '../../interface'
 
 export const ButtonConfig: ComponentConfig = {
   firstTitle: '基础组件',

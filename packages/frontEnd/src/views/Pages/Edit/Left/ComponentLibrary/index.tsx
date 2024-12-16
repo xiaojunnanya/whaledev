@@ -5,7 +5,7 @@ import { Collapse, CollapseProps, Input, Tabs, TabsProps } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import { debounce } from 'lodash-es'
 import { useComponentMapStore } from '@/stores/componentMap'
-import Container from '@/components/Container'
+import Container from '@/components/ContainerVh'
 
 export default memo(() => {
   const [inputValue, setInputValue] = useState('')

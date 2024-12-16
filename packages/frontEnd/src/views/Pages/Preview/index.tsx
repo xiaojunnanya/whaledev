@@ -1,4 +1,4 @@
-import Container from '@/components/Container'
+import Container from '@/components/ContainerVh'
 import { getPageJsonByPageId } from '@/service/request/page_json'
 import { useComponentMapStore } from '@/stores/componentMap'
 import { Component, initComponents } from '@/stores/components'
