@@ -1,3 +1,4 @@
+import { NodeType } from '@/views/Pages/Edit/Right/ComponentEvent/ServiceLayout'
 import { cloneDeep } from 'lodash-es'
 
 // 查找并替换节点
@@ -21,7 +22,7 @@ export function replaceNodeById(data: any[], nodeId: string, newObj: any) {
  * 必须保证第一个行为执行完以后，再执行第二个行为
  * @param params 事件触发时，组件传递的参数
  */
-export function handleActionFlow(actions: any, params: any) {
+export function handleActionFlow(actions: NodeType[], params: any) {
   const arr = cloneDeep(actions)
   // 去头去尾
   arr.pop()
@@ -134,7 +135,6 @@ function convertArrayToLinkedList(nodes: any, isSuccessBranch = true) {
  */
 const execAction = (node: any, params: any = {}) => {
   if (!node || !node?.action) return
-  console.log(node, 'node')
   try {
     const action = node.action
     const type = action?.actionType
