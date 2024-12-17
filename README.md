@@ -54,7 +54,7 @@ npm run start:db
 ### 快速开始
 
 运行需要 node 环境，建议`node:18`以上版本。使用`npm`作为依赖管理工具，仓库开源者使用 node 版本为`20.8.1`。
-文件已 xxx-gitignore 命名的则本身文件未提交，请自行添加重命名 xxx-gitignore 文件名为 xxx，并修改内容为自己的信息
+文件以 xxx-gitignore 命名的则本身文件未提交，请自行添加重命名 xxx-gitignore 文件名为 xxx，并修改内容为自己的信息
 
 ## 参与贡献
 
