@@ -5,6 +5,7 @@ import {
   FormInstance,
   Input,
   InputNumber,
+  Segmented,
   Select,
   Switch,
   Tooltip,
@@ -47,6 +48,7 @@ export default memo((props: IProps) => {
       {type === 'input' && <Input />}
       {type === 'inputNumber' && <InputNumber style={{ width: '100%' }} />}
       {type === 'switch' && <Switch />}
+      {type == 'segmented' && <Segmented options={options || []} />}
       {type == 'selectIcon' && (
         <SelectIcon form={form} name={name} valueChange={valueChange} />
       )}

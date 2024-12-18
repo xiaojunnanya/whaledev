@@ -13,6 +13,10 @@ export const ButtonConfig: ComponentConfig = {
     block: false,
     disabled: false,
     icon: '',
+    iconPosition: 'start',
+    loading: false,
+    shape: 'default',
+    size: 'middle',
   },
   desc: '按钮',
   component: {
@@ -61,6 +65,64 @@ export const ButtonConfig: ComponentConfig = {
           name: 'icon',
           label: '图标',
           type: 'selectIcon',
+        },
+        {
+          name: 'iconPosition',
+          label: '图标位置',
+          type: 'segmented',
+          options: [
+            {
+              label: '左',
+              value: 'start',
+            },
+            {
+              label: '右',
+              value: 'end',
+            },
+          ],
+        },
+        {
+          name: 'loading',
+          label: '加载中',
+          type: 'switch',
+        },
+        {
+          name: 'shape',
+          label: '按钮形状',
+          type: 'select',
+          options: [
+            {
+              label: '默认',
+              value: 'default',
+            },
+            {
+              label: '圆形',
+              value: 'circle',
+            },
+            {
+              label: '椭圆',
+              value: 'round',
+            },
+          ],
+        },
+        {
+          name: 'size',
+          label: '按钮大小',
+          type: 'select',
+          options: [
+            {
+              label: '大',
+              value: 'large',
+            },
+            {
+              label: '中',
+              value: 'middle',
+            },
+            {
+              label: '小',
+              value: 'small',
+            },
+          ],
         },
       ],
     },

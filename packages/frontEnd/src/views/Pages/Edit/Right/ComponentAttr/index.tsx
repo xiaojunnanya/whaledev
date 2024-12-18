@@ -5,6 +5,7 @@ import { Form, Input } from 'antd'
 import { ComponentConfig } from '@/materials/interface'
 import { useComponentMapStore } from '@/stores/componentMap'
 import RenderFormEle from '@/components/renderAttrEle'
+import ContainerVh from '@/components/ContainerVh'
 export default memo(() => {
   const [form] = Form.useForm()
 
@@ -28,43 +29,45 @@ export default memo(() => {
 
   return (
     <ComponentAttrStyled>
-      <Form
-        form={form}
-        onValuesChange={valueChange}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 15 }}
-      >
-        <div className="whale-attr">
-          <div className="whale-right-title">基础</div>
-          <Form.Item label="组件ID">
-            <Input value={curComponent.id} disabled />
-          </Form.Item>
-          <Form.Item label="组件名称">
-            <Input value={curComponent.name} disabled />
-          </Form.Item>
-          <Form.Item label="组件描述">
-            <Input value={curComponent.desc} disabled />
-          </Form.Item>
-        </div>
+      <ContainerVh height={132}>
+        <Form
+          form={form}
+          onValuesChange={valueChange}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 15 }}
+        >
+          <div className="whale-attr">
+            <div className="whale-right-title">基础</div>
+            <Form.Item label="组件ID">
+              <Input value={curComponent.id} disabled />
+            </Form.Item>
+            <Form.Item label="组件名称">
+              <Input value={curComponent.name} disabled />
+            </Form.Item>
+            <Form.Item label="组件描述">
+              <Input value={curComponent.desc} disabled />
+            </Form.Item>
+          </div>
 
-        {componentMap[curComponent.name]?.setter?.map((item, index) => {
-          return (
-            <div className="whale-attr" key={index}>
-              <div className="whale-right-title">{item.title}</div>
-              {item.propsList.map(setter => {
-                return (
-                  <RenderFormEle
-                    setting={setter}
-                    key={setter.name}
-                    form={form}
-                    valueChange={valueChange}
-                  />
-                )
-              })}
-            </div>
-          )
-        })}
-      </Form>
+          {componentMap[curComponent.name]?.setter?.map((item, index) => {
+            return (
+              <div className="whale-attr" key={index}>
+                <div className="whale-right-title">{item.title}</div>
+                {item.propsList.map(setter => {
+                  return (
+                    <RenderFormEle
+                      setting={setter}
+                      key={setter.name}
+                      form={form}
+                      valueChange={valueChange}
+                    />
+                  )
+                })}
+              </div>
+            )
+          })}
+        </Form>
+      </ContainerVh>
     </ComponentAttrStyled>
   )
 })
