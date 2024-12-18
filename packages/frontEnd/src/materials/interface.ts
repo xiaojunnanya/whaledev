@@ -7,11 +7,12 @@ export interface CommonComponentProps extends PropsWithChildren {
   [key: string]: any
 }
 
-type IType = 'select' | 'input' | 'inputNumber'
+type IType = 'select' | 'input' | 'inputNumber' | 'switch' | 'selectIcon'
 export interface ComponentSetter {
   name: string // 字段名
   label: string // 前面的文案
   type: IType // 表单类型，比如 select
+  prompt?: string // 提示
   [key: string]: any
 }
 

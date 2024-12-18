@@ -40,11 +40,10 @@ export default memo((props: IProps) => {
 
   const handleOk = async () => {
     const res = await form.validateFields()
-
     const obj = {
       ...res,
-      actionType: saveAction?.key,
-      actioneName: saveAction?.label,
+      actionType: saveAction?.key || '',
+      actioneName: saveAction?.label || '编排节点',
     }
 
     const newObj = {

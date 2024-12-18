@@ -6,8 +6,6 @@ import { useLocation, useRoutes } from 'react-router-dom'
 import theme from './assets/theme'
 import routes from './router'
 import Footer from './components/Footer'
-// import wechat from '@/assets/images/png/wechat.png'
-// import { CommentOutlined, MessageOutlined } from '@ant-design/icons'
 
 const App = memo(() => {
   const [messageApi, msgContextHolder] = message.useMessage()
@@ -69,24 +67,6 @@ const App = memo(() => {
           {useRoutes(routes)}
         </ConfigProvider>
       </article>
-
-      {/* <>
-        <FloatButton.Group
-          trigger="hover"
-          type="primary"
-          style={{ insetInlineEnd: 25 }}
-          icon={<MessageOutlined />}
-        >
-          <Popover
-            content={<img src={wechat} alt="wechat" style={{ width: 200 }} />}
-            title="加我微信"
-            placement="left"
-          >
-            <FloatButton icon={<CommentOutlined />} />
-          </Popover>
-        </FloatButton.Group>
-      </> */}
-
       {pathname === '/' && (
         <footer>
           <Footer></Footer>

@@ -80,3 +80,19 @@
     height: calc(100vh - 230px);
   }
 }
+
+.whale-attr,
+.whale-style {
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+}
+
+.ant-modal-content {
+  .ant-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+    width: 100%;
+  }
+}

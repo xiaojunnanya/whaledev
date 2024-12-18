@@ -1,6 +1,6 @@
-import { CommonComponentProps } from '../interface'
 import { useMaterailDrop } from '@/hooks/useMaterialDrop'
 import styleLess from './index.module.less'
+import { CommonComponentProps } from '@/materials/interface'
 
 const Container = (props: CommonComponentProps) => {
   const { id, styles, children } = props

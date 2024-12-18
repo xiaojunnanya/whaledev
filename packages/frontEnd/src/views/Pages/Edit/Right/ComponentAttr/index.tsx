@@ -31,8 +31,8 @@ export default memo(() => {
       <Form
         form={form}
         onValuesChange={valueChange}
-        labelCol={{ span: 7 }}
-        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 15 }}
       >
         <div className="whale-attr">
           <div className="whale-right-title">基础</div>
@@ -52,7 +52,14 @@ export default memo(() => {
             <div className="whale-attr" key={index}>
               <div className="whale-right-title">{item.title}</div>
               {item.propsList.map(setter => {
-                return <RenderFormEle setting={setter} key={setter.name} />
+                return (
+                  <RenderFormEle
+                    setting={setter}
+                    key={setter.name}
+                    form={form}
+                    valueChange={valueChange}
+                  />
+                )
               })}
             </div>
           )
