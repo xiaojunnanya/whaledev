@@ -5,6 +5,10 @@ export const ModalStyled = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 
+  .searchInput {
+    margin-bottom: 10px;
+  }
+
   .iconSpan {
     display: inline-block;
     padding: 20px;

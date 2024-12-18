@@ -1,4 +1,4 @@
-import { FormInstance, Modal, Pagination, Tabs, TabsProps } from 'antd'
+import { FormInstance, Input, Modal, Pagination, Tabs, TabsProps } from 'antd'
 import { createElement, memo, useEffect, useState } from 'react'
 import { WhaleIcons } from '@/utils/global'
 import { ModalStyled, SelectIconStyled } from './style'
@@ -44,6 +44,8 @@ export default memo((props: IProps) => {
   const [current, setCurrent] = useState(1)
   const [tabsValue, setTabsValue] = useState('1')
   const [seletctedIcon, setSelectedIcon] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+  const [allIconsList, setAllIconsList] = useState(allIcons)
 
   const handleCancel = () => {
     setIsModalOpen(false)
@@ -52,6 +54,15 @@ export default memo((props: IProps) => {
   useEffect(() => {
     setSelectedIcon(nowIcon)
   }, [nowIcon])
+
+  useEffect(() => {
+    if (!searchValue) {
+      setAllIconsList(allIcons)
+    } else {
+      const arr = allIcons.filter(item => item.includes(searchValue))
+      setAllIconsList(arr)
+    }
+  }, [searchValue])
 
   const handleOk = () => {
     setIsModalOpen(false)
@@ -109,32 +120,41 @@ export default memo((props: IProps) => {
           items={items}
           onChange={value => setTabsValue(value)}
         />
-        <ModalStyled>
-          {allIcons
-            .slice((current - 1) * defaultPageSize, current * defaultPageSize)
-            .map(key => {
-              return (
-                <span
-                  key={key}
-                  className={`iconSpan ${
-                    key === seletctedIcon ? 'iconSpanActive' : ''
-                  }`}
-                  onClick={() => setSelectedIcon(key)}
-                >
-                  {createIcon(key)}
-                </span>
-              )
-            })}
-          <Pagination
-            current={current}
-            total={allIcons.length}
-            pageSize={defaultPageSize}
-            size="small"
-            responsive={true}
-            showSizeChanger={false}
-            onChange={handleChange}
-          />
-        </ModalStyled>
+
+        {tabsValue === '1' && (
+          <ModalStyled>
+            <Input
+              placeholder="在此搜索图标"
+              className="searchInput"
+              value={searchValue}
+              onChange={e => setSearchValue(e.target.value)}
+            />
+            {allIconsList
+              .slice((current - 1) * defaultPageSize, current * defaultPageSize)
+              .map(key => {
+                return (
+                  <span
+                    key={key}
+                    className={`iconSpan ${
+                      key === seletctedIcon ? 'iconSpanActive' : ''
+                    }`}
+                    onClick={() => setSelectedIcon(key)}
+                  >
+                    {createIcon(key)}
+                  </span>
+                )
+              })}
+            <Pagination
+              current={current}
+              total={allIconsList.length}
+              pageSize={defaultPageSize}
+              size="small"
+              responsive={true}
+              showSizeChanger={false}
+              onChange={handleChange}
+            />
+          </ModalStyled>
+        )}
       </Modal>
     </SelectIconStyled>
   )
