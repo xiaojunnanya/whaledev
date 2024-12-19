@@ -106,7 +106,7 @@ export default memo((props: IProps) => {
             })}
           </ul>
         </div>
-        <div className="content">
+        <div className="actionModalContent">
           <Form {...formLayout} form={form} initialValues={editNode?.config}>
             {saveAction?.key && saveAction?.key !== 'none' ? (
               <>

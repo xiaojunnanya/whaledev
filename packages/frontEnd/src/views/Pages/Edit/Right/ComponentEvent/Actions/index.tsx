@@ -1,5 +1,6 @@
 import JumpLink from './Components/JumpLink'
 import ReloadPage from './Components/ReloadPage'
+import ScriptRun from './Components/ScriptRun'
 
 interface itemsType {
   label: string
@@ -11,7 +12,7 @@ export interface itemsChildType {
   label: string
   key: string
   describe?: string
-  render: () => JSX.Element
+  render: (obj?: any) => JSX.Element
 }
 
 export const itemsActions: itemsType[] = [
@@ -210,7 +211,7 @@ export const itemsActions: itemsType[] = [
         label: '脚本运行',
         key: 'scriptRun',
         render: () => {
-          return <div>脚本运行</div>
+          return <ScriptRun />
         },
       },
     ],

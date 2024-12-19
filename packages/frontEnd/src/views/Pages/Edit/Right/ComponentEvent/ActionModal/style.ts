@@ -38,7 +38,7 @@ export const ActionModalStyled = styled.div`
       }
     }
   }
-  .content {
+  .actionModalContent {
     flex: 1;
     padding: 20px;
 
