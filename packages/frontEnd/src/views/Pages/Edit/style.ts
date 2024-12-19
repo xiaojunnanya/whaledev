@@ -14,13 +14,16 @@ export const ContentStyled = styled.div`
 
     &-middle {
       flex: 1;
-      background-color: ${props => props.theme.defaultColor.white};
       margin: 16px 7px 16px 16px;
 
       .edit-middle-content {
         overflow: auto;
         height: 100%;
         position: relative;
+        background-color: ${props => props.theme.defaultColor.white};
+
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 

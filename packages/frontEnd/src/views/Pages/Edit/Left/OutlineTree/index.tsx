@@ -39,12 +39,17 @@ export default memo(() => {
       setInputValue(withoutLastParenthesis)
     } else {
       setEditId('')
+      if (!inputValue || lastParenthesisContent === inputValue) return
       const obj = {
         ...node,
         desc: `${inputValue}(${lastParenthesisContent})`,
       }
       updeteComponentById(node.id, obj)
     }
+  }
+
+  const handleChange = (value: string) => {
+    setInputValue(value)
   }
 
   return (
@@ -70,7 +75,7 @@ export default memo(() => {
                     value={inputValue}
                     size="small"
                     style={{ width: 100 }}
-                    onChange={e => setInputValue(e.target.value)}
+                    onChange={e => handleChange(e.target.value)}
                   />
                   <CheckOutlined onClick={e => handleEdit(e, node, 'save')} />
                 </>

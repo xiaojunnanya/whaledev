@@ -2,6 +2,7 @@ import { useDrop } from 'react-dnd'
 import { useComponentMapStore } from '../stores/componentMap'
 import { useComponetsStore } from '../stores/components'
 import { getComponentById } from '@/utils/components'
+import { generateId } from '@/utils'
 
 export interface ItemType {
   type: string
@@ -37,7 +38,7 @@ export function useMaterailDrop(accept: string[], id: string) {
 
           addComponent(
             {
-              id: item.type + '_' + String(+new Date()),
+              id: item.type + '_' + generateId(10),
               name: item.type,
               desc: config.desc,
               props: config.defaultProps,

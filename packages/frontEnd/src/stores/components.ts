@@ -2,7 +2,7 @@ import { getComponentById, updateObjectById } from '@/utils/components'
 import { CSSProperties } from 'react'
 import { create } from 'zustand'
 
-export const PAGEID = 'Page_0'
+export const PAGEID = 'Page_WhaleDev'
 
 // 待思考：组件添加版本
 export interface Component {
