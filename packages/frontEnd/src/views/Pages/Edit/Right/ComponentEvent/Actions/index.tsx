@@ -1,3 +1,4 @@
+import { FormInstance } from 'antd'
 import JumpLink from './Components/JumpLink'
 import ReloadPage from './Components/ReloadPage'
 import ScriptRun from './Components/ScriptRun'
@@ -12,7 +13,7 @@ export interface itemsChildType {
   label: string
   key: string
   describe?: string
-  render: (obj?: any) => JSX.Element
+  render: (form: FormInstance) => JSX.Element
 }
 
 export const itemsActions: itemsType[] = [
@@ -210,8 +211,8 @@ export const itemsActions: itemsType[] = [
       {
         label: '脚本运行',
         key: 'scriptRun',
-        render: () => {
-          return <ScriptRun />
+        render: form => {
+          return <ScriptRun form={form} />
         },
       },
     ],

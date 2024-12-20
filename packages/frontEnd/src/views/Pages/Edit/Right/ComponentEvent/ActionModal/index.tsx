@@ -40,6 +40,7 @@ export default memo((props: IProps) => {
 
   const handleOk = async () => {
     const res = await form.validateFields()
+    console.log(res, 'res')
     const obj = {
       ...res,
       actionType: saveAction?.key || '',
@@ -111,7 +112,7 @@ export default memo((props: IProps) => {
             {saveAction?.key && saveAction?.key !== 'none' ? (
               <>
                 <Describe>{saveAction?.describe}</Describe>
-                {saveAction.render()}
+                {saveAction.render(form)}
               </>
             ) : (
               <div className="content-text">请选择要执行的动作</div>
