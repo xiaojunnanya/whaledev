@@ -5,7 +5,7 @@ import { allActions, itemsActions, itemsChildType } from '../Actions'
 import Describe from '../Actions/Describe'
 import { NodeType } from '../ServiceLayout'
 import { cloneDeep } from 'lodash-es'
-import { replaceNodeById } from '@/utils/actions'
+import { replaceNodeById } from '@/utils'
 
 interface IProps {
   showModal: {

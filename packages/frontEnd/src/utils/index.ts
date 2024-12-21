@@ -75,3 +75,19 @@ export function splitValue(value: string) {
   }
   return null // 无法匹配时返回 null
 }
+
+// 查找并替换节点
+export function replaceNodeById(data: any[], nodeId: string, newObj: any) {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].id === nodeId) {
+      data[i] = { ...newObj } // 替换找到的节点
+      return data // 找到并替换后退出
+    }
+    // 如果节点有子节点，递归查找
+    if (data[i].children && data[i].children.length > 0) {
+      replaceNodeById(data[i].children, nodeId, newObj)
+    }
+  }
+
+  return data
+}

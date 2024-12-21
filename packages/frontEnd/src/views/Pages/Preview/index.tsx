@@ -42,9 +42,9 @@ export default memo((props: IProps) => {
       const actions = event?.action || []
       if (actions.length <= 2) return
 
-      props[event.name] = (params: any) => {
+      props[event.name] = () => {
         // 执行事件
-        handleActionFlow(actions, params)
+        handleActionFlow(actions)
       }
     })
 
