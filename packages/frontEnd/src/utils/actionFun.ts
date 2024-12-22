@@ -96,10 +96,13 @@ export function convertArrayToLinkedList(nodes: any, isSuccessBranch = true) {
  * 创建动态函数
  */
 export function createFunction(body: string) {
-  // 删除注释
+  if (!body || typeof body !== 'string') {
+    return () => {}
+  }
+
   const scripts = body
-    .replace(/^\s*\/\/.*$/gm, '')
-    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^\s*\/\/.*$/gm, '') // 删除单行注释
+    .replace(/\/\*[\s\S]*?\*\//g, '') // 删除单行注释
     .trim()
 
   // 支持内部嵌套函数
@@ -107,7 +110,7 @@ export function createFunction(body: string) {
     return new Function(`return ${scripts};`)
   }
 
-  // 构造函数体
+  // 构造函数体:如果没有 return 关键字，则手动加上 return。
   const funcStr =
     scripts.indexOf('return') > -1 ? scripts : `return ${scripts};`
   return new Function(funcStr)
