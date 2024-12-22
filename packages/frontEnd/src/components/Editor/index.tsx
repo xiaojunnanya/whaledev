@@ -80,24 +80,22 @@ export default memo((props: IProps) => {
   }
 
   return (
-    <>
-      <Editor
-        height={'100%'}
-        path={file.name}
-        language={file.language}
-        onMount={isMount ? handleEditorMount : undefined}
-        onChange={onChange}
-        value={file.value}
-        loading={'依赖构建中...'}
-        options={{
-          fontSize: 14,
-          scrollBeyondLastLine: false,
-          minimap: {
-            enabled: false,
-          },
-          ...options,
-        }}
-      />
-    </>
+    <Editor
+      height={'100%'}
+      path={file.name}
+      language={file.language}
+      onMount={isMount ? handleEditorMount : undefined}
+      onChange={onChange}
+      value={file.value}
+      loading={'依赖构建中...'}
+      options={{
+        fontSize: 14,
+        scrollBeyondLastLine: false,
+        minimap: {
+          enabled: false,
+        },
+        ...options,
+      }}
+    />
   )
 })
