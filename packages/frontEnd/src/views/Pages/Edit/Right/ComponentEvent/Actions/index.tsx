@@ -45,38 +45,10 @@ export const itemsActions: itemsType[] = [
     key: 'form',
     children: [
       {
-        label: '表单重置',
-        key: 'formReset',
+        label: '表单功能',
+        key: 'formUse',
         render: () => {
-          return <div>表单重置</div>
-        },
-      },
-      {
-        label: '表单提交',
-        key: 'formSubmit',
-        render: () => {
-          return <div>表单提交</div>
-        },
-      },
-      {
-        label: '表单验证',
-        key: 'formValidate',
-        render: () => {
-          return <div>表单验证</div>
-        },
-      },
-      {
-        label: '表单赋值',
-        key: 'formSetValues',
-        render: () => {
-          return <div>表单赋值</div>
-        },
-      },
-      {
-        label: '获取表单值',
-        key: 'formGetValues',
-        render: () => {
-          return <div>获取表单值</div>
+          return <div>表单重置/提交/验证/赋值/获取表单值</div>
         },
       },
     ],
@@ -86,31 +58,17 @@ export const itemsActions: itemsType[] = [
     key: 'modal',
     children: [
       {
-        label: '打开弹框',
-        key: 'openModal',
+        label: '弹框功能',
+        key: 'modalUse',
         render: () => {
-          return <div>打开弹框</div>
+          return <div>打开弹框/关闭弹框</div>
         },
       },
       {
-        label: '关闭弹框',
-        key: 'closeModal',
+        label: '抽屉功能',
+        key: 'drawerUse',
         render: () => {
-          return <div>关闭弹框</div>
-        },
-      },
-      {
-        label: '打开抽屉',
-        key: 'openDrawer',
-        render: () => {
-          return <div>打开抽屉</div>
-        },
-      },
-      {
-        label: '关闭抽屉',
-        key: 'closeDrawer',
-        render: () => {
-          return <div>关闭抽屉</div>
+          return <div>打开抽屉/关闭抽屉</div>
         },
       },
       {
@@ -186,6 +144,13 @@ export const itemsActions: itemsType[] = [
         key: 'variableSet',
         render: () => {
           return <div>变量赋值</div>
+        },
+      },
+      {
+        label: '刷新组件',
+        key: 'refreshComponent',
+        render: () => {
+          return <div>刷新组件</div>
         },
       },
     ],

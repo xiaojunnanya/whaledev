@@ -10,7 +10,6 @@ const Project = lazy(() => import('@/views/Project'))
 const Pages = lazy(() => import('@/views/Pages'))
 const PreviewPages = lazy(() => import('@/views/Pages/Preview'))
 
-// 遗留的问题，URL权限问题
 const routes: RouteObject[] = [
   {
     path: '/',

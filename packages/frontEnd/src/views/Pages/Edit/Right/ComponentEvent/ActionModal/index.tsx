@@ -40,7 +40,7 @@ export default memo((props: IProps) => {
 
   const handleOk = async () => {
     const res = await form.validateFields()
-    console.log(res, 'res')
+
     const obj = {
       ...res,
       actionType: saveAction?.key || '',
@@ -63,6 +63,7 @@ export default memo((props: IProps) => {
 
   const handleCancel = () => {
     setShowActionModal(false)
+    form.resetFields()
   }
 
   const handleClick = (item: itemsChildType) => {

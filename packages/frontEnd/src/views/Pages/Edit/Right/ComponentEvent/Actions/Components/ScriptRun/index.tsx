@@ -21,12 +21,6 @@ export default memo((props: IProps) => {
             language: 'javascript',
           }}
           isMount={false}
-          // 遗留的问题：点击取消按钮的时候应该不保存数据
-          // onChange={value => {
-          //   form.setFieldsValue({
-          //     'scriptRun-run': value,
-          //   })
-          // }}
         ></Editor>
       </Form.Item>
     </ScriptRunStyled>
