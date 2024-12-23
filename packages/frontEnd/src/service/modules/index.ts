@@ -42,12 +42,23 @@ class WhaleRequest {
         const { status } = error
         console.log(status, 'errstatus')
 
-        if (status === 401) {
+        let messageText = ''
+
+        switch (status) {
+          case 401:
+            messageText = '登录过期，请重新登录'
+            break
+          case 500:
+            messageText = '服务器内部错误'
+            break
+        }
+
+        if (messageText) {
           // 跳转到登录页面
           window.location.href = '/login'
           localStorage.removeItem('token')
           message.destroy()
-          message.error('登录过期，请重新登录')
+          message.error(messageText)
           return
         }
 
