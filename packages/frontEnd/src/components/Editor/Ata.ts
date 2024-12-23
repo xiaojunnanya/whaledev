@@ -21,7 +21,7 @@ export function createATA(
             return
           }
 
-          // 文档纪录：难点纪录
+          // 遗留的问题：文档难点纪录
           // 缓存检查：如果文件已经下载过，则跳过
           if (downloadedFilesCache.has(path)) {
             console.log(`File already downloaded: ${path}`)

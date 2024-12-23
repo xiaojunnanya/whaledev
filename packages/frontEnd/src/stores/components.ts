@@ -4,7 +4,7 @@ import { create } from 'zustand'
 
 export const PAGEID = 'Page_WhaleDev'
 
-// 待思考：组件添加版本
+// 遗留的问题：组件是否添加版本
 export interface Component {
   id: string // ID
   name: string // 名字

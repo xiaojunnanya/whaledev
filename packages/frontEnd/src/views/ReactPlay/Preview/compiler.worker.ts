@@ -16,7 +16,7 @@ export const beforeTransformCode = (filename: string, code: string) => {
   return _code
 }
 
-// 文档纪录：可以作为难点纪录 web worker 优化
+// 遗留的问题：可以作为难点纪录 web worker 优化
 // https://vitejs.cn/vite3-cn/guide/features.html#web-workers
 export const babelTransform = (
   filename: string,

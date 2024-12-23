@@ -80,7 +80,7 @@ export default memo(() => {
           <LeftOutlined />
           <span className="project-name-text">
             &nbsp;{projectDetail?.project_name}
-            {/* 待思考：项目版本问题 */}
+            {/* 遗留的问题：项目版本问题 */}
             &nbsp;&nbsp;版本：V1.0.0
           </span>
         </div>
