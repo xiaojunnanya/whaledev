@@ -38,6 +38,9 @@ const execAction = (node: any) => {
           window.location.href = link
         }
         break
+      case 'reloadPage':
+        window.location.reload()
+        break
       case 'scriptRun':
         const script = action['scriptRun-run']
         const fun = createFunction(script)

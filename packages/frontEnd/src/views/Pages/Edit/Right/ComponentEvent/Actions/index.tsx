@@ -25,7 +25,7 @@ export const itemsActions: itemsType[] = [
         label: '跳转链接',
         key: 'jumpLink',
         describe:
-          '跳转到指定页面。1. 系统内跳转会通过自身路由实现；2. 跨服务跳转主要是基于microApp的父子应用通信方式，主应用需要监听数据，并添加跳转代码；3. 超链接跳转通过window.open或location方式实现；',
+          '跳转到指定页面。1. 系统内跳转会通过自身路由实现；2. 超链接跳转通过window.open实现；',
         render: () => {
           return <JumpLink />
         },
@@ -33,7 +33,7 @@ export const itemsActions: itemsType[] = [
       {
         label: '刷新页面',
         key: 'reloadPage',
-        describe: '刷新当前页面。',
+        describe: '刷新当前页面。使用window.location.reload()实现',
         render: () => {
           return <ReloadPage />
         },
