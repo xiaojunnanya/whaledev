@@ -2,14 +2,12 @@ import {
   Avatar,
   Button,
   Card,
-  Col,
   Form,
   Input,
   Modal,
   Pagination,
   Popconfirm,
   Radio,
-  Row,
   Select,
   Tag,
 } from 'antd'
@@ -35,6 +33,7 @@ import { gloablErrorMessage } from '@/utils/global'
 import Container from '@/components/ContainerVh'
 import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash-es'
+import Masonry from 'react-masonry-css'
 const { Meta } = Card
 const { Option } = Select
 
@@ -60,12 +59,20 @@ export interface ProjectType {
   project_state: string
 }
 
-const defaultProjectData = [{}, {}, {}, {}, {}, {}, {}, {}] as ProjectType[]
+const defaultProjectData = [{}] as ProjectType[]
 
 const optionsWithScene = [
   { label: '个人', value: 'slef' },
   { label: '分享', value: 'share' },
 ]
+
+const breakpointColumnsObj = {
+  default: 4, // 默认列数
+  1200: 3, // 当宽度小于 1100px 时显示 3 列
+  880: 2, // 当宽度小于 768px 时显示 2 列
+  580: 1, // 当宽度小于 480px 时显示 1 列
+}
+
 // 遗留的问题：分享功能、复制功能、类型部分
 export default memo(() => {
   const navigate = useNavigate()
@@ -230,101 +237,101 @@ export default memo(() => {
       </div>
 
       <Container isLoading={cardLoading} height={150}>
-        <div className="content">
-          <Row gutter={[16, 16]}>
-            {projectData.map((item, index) => {
-              return (
-                <Col span={6} key={item.project_id || index}>
-                  <Card
-                    actions={[
-                      <CopyOutlined
-                        key="copy"
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="content"
+          columnClassName="cardColumn"
+        >
+          {projectData.map((item, index) => {
+            return (
+              <div className="cardItem" key={item.project_id || index}>
+                <Card
+                  actions={[
+                    <CopyOutlined
+                      key="copy"
+                      onClick={e => {
+                        e.stopPropagation()
+                      }}
+                    />,
+                    <EditOutlined
+                      key="edit"
+                      onClick={e => {
+                        editModal(e, item)
+                      }}
+                    />,
+                    <ShareAltOutlined
+                      key="share"
+                      onClick={e => {
+                        e.stopPropagation()
+                      }}
+                    />,
+                    <Popconfirm
+                      title="提示"
+                      description="确定要删除该项目吗"
+                      onConfirm={e => {
+                        deleteOneProject(e, item.project_id)
+                      }}
+                      onCancel={e => {
+                        e?.stopPropagation()
+                      }}
+                      okText="确定"
+                      cancelText="取消"
+                    >
+                      <DeleteOutlined
+                        key="delete"
                         onClick={e => {
                           e.stopPropagation()
                         }}
-                      />,
-                      <EditOutlined
-                        key="edit"
-                        onClick={e => {
-                          editModal(e, item)
-                        }}
-                      />,
-                      <ShareAltOutlined
-                        key="share"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                      />,
-                      <Popconfirm
-                        title="提示"
-                        description="确定要删除该项目吗"
-                        onConfirm={e => {
-                          deleteOneProject(e, item.project_id)
-                        }}
-                        onCancel={e => {
-                          e?.stopPropagation()
-                        }}
-                        okText="确定"
-                        cancelText="取消"
-                      >
-                        <DeleteOutlined
-                          key="delete"
-                          onClick={e => {
-                            e.stopPropagation()
-                          }}
-                        />
-                      </Popconfirm>,
-                    ]}
-                    hoverable
-                    // onClick={() =>{ goProjectDetail(item.projectId)}}
-                    loading={cardLoading}
-                    onClick={() => {
-                      handleClickCard(item.project_id)
-                    }}
-                  >
-                    <Meta
-                      avatar={
-                        <Avatar
-                          src={'http://www.xiaojunnan.cn/img/logo.webp'}
-                        />
-                      }
-                      title={item.project_name}
-                      description={
-                        <div className="otherinfo">
-                          <div>{item.project_desc}</div>
-                          <div className="typestate">
-                            <>
-                              {projectTypeData.map(i => {
-                                if (i.value === item.project_type) {
-                                  return (
-                                    <span className="type" key={i.value}>
-                                      {i.lable}
-                                    </span>
-                                  )
-                                }
-                              })}
-                            </>
-                            <>
-                              {projectStateData.map(i => {
-                                if (i.value === item.project_state) {
-                                  return (
-                                    <Tag color={i.color} key={i.value}>
-                                      {i.lable}
-                                    </Tag>
-                                  )
-                                }
-                              })}
-                            </>
-                          </div>
+                      />
+                    </Popconfirm>,
+                  ]}
+                  hoverable
+                  // onClick={() =>{ goProjectDetail(item.projectId)}}
+                  loading={cardLoading}
+                  onClick={() => {
+                    handleClickCard(item.project_id)
+                  }}
+                >
+                  <Meta
+                    avatar={
+                      <Avatar src={'http://www.xiaojunnan.cn/img/logo.webp'} />
+                    }
+                    title={item.project_name}
+                    description={
+                      <div className="otherinfo">
+                        <div>{item.project_desc}</div>
+                        <div className="typestate">
+                          <>
+                            {projectTypeData.map(i => {
+                              if (i.value === item.project_type) {
+                                return (
+                                  <span className="type" key={i.value}>
+                                    {i.lable}
+                                  </span>
+                                )
+                              }
+                            })}
+                          </>
+                          <>
+                            {projectStateData.map(i => {
+                              if (i.value === item.project_state) {
+                                return (
+                                  <Tag color={i.color} key={i.value}>
+                                    {i.lable}
+                                  </Tag>
+                                )
+                              }
+                            })}
+                          </>
                         </div>
-                      }
-                    />
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
-        </div>
+                      </div>
+                    }
+                  />
+                </Card>
+              </div>
+            )
+          })}
+        </Masonry>
       </Container>
 
       <Pagination

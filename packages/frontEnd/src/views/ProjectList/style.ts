@@ -8,7 +8,14 @@ export const ProjectListStyled = styled.div`
   }
 
   .content {
-    padding: 10px 30px;
+    display: flex;
+    margin-left: -16px; /* 与列间距一致 */
+    width: auto;
+    margin: 16px;
+
+    .cardItem {
+      margin: 16px;
+    }
 
     .otherinfo {
       .typestate {
