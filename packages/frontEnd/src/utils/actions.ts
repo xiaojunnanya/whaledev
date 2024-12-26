@@ -14,6 +14,7 @@ export function handleActionFlow(actions: NodeType[]) {
   arr.shift()
   // 遗留的问题：不使用链表，就使用数组进行遍历的方式来执行编排
   const nodes = convertArrayToLinkedList(arr)
+
   if (nodes?.action) {
     execAction(nodes)
   }
@@ -49,6 +50,8 @@ const execAction = (node: any) => {
       default:
         break
     }
+
+    execAction(node.next)
   } catch (error) {
     console.error(`服务编排[${node.actionType}执行异常]`, error)
   }
