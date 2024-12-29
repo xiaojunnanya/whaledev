@@ -32,6 +32,18 @@ export default memo((props: IProps) => {
       label: (
         <div
           onClick={() => {
+            naviage('/userinfo')
+          }}
+        >
+          个人中心
+        </div>
+      ),
+    },
+    {
+      key: '-1',
+      label: (
+        <div
+          onClick={() => {
             localStorage.clear()
             setUserInfo({} as IUserInfo)
             naviage('/')

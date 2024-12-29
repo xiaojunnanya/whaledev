@@ -9,6 +9,7 @@ const ReactPlay = lazy(() => import('@/views/ReactPlay'))
 const Project = lazy(() => import('@/views/Project'))
 const Pages = lazy(() => import('@/views/Pages'))
 const PreviewPages = lazy(() => import('@/views/Pages/Preview'))
+const UserInfo = lazy(() => import('@/views/UserInfo'))
 
 const routes: RouteObject[] = [
   {
@@ -70,6 +71,10 @@ const routes: RouteObject[] = [
   {
     path: '/404',
     element: <NotFound></NotFound>,
+  },
+  {
+    path: '/userinfo',
+    element: <UserInfo></UserInfo>,
   },
   {
     path: '*',
