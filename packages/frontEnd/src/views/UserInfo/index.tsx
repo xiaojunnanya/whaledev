@@ -11,10 +11,16 @@ import {
   PhoneOutlined,
 } from '@ant-design/icons'
 import { Button, Input } from 'antd'
+import ImageUpload from '@/components/ImageUpload'
 
 export default memo(() => {
   const [editNickname, setEditNickname] = useState(false)
   const [nickName, setNickName] = useState('鲸灵开发用户')
+
+  const handleChangeNickName = (value: string) => {
+    if (!value) return
+    setNickName(value)
+  }
 
   return (
     <>
@@ -26,7 +32,7 @@ export default memo(() => {
             {/* 头像昵称 */}
             <div className="avatar">
               <div className="image">
-                <img src="http://www.xiaojunnan.cn/img/logo.webp" alt="" />
+                <ImageUpload />
               </div>
               <div className="userinfo">
                 <div className="nickname">
@@ -35,7 +41,9 @@ export default memo(() => {
                       type="text"
                       placeholder="请输入昵称"
                       value={nickName}
-                      onChange={e => setNickName(e.target.value)}
+                      maxLength={9}
+                      showCount
+                      onChange={e => handleChangeNickName(e.target.value)}
                     />
                   ) : (
                     <span className="name">{nickName}</span>

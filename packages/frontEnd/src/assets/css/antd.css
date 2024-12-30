@@ -103,3 +103,31 @@
     height: 100%;
   }
 }
+
+/* -----为相应的div添加class进行重置 */
+.resetUploadStyle {
+  .ant-upload-wrapper,
+  .ant-upload-list,
+  .ant-upload-list-item-container,
+  .ant-upload {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .ant-upload-wrapper {
+    .ant-upload-list-item-container {
+      .ant-upload-list-item {
+        border: none;
+        padding: 0;
+        justify-content: center;
+
+        &::before,
+        &:hover::before {
+          width: calc(100% - 6px) !important;
+          height: calc(100% - 6px) !important;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+}
