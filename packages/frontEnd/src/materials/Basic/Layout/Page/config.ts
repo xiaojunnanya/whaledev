@@ -1,6 +1,6 @@
+import { ComponentConfig } from '@/materials/interface'
 import PageDev from './dev'
 import PageProd from './prod'
-import { ComponentConfig } from '../interface'
 
 export const PageConfig: ComponentConfig = {
   firstTitle: '基础组件',

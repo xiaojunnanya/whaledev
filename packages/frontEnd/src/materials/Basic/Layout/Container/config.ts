@@ -1,6 +1,6 @@
+import { ComponentConfig } from '@/materials/interface'
 import ContainerDev from './dev'
 import ContainerProd from './prod'
-import { ComponentConfig } from '../interface'
 
 export const ContainerConfig: ComponentConfig = {
   firstTitle: '基础组件',
