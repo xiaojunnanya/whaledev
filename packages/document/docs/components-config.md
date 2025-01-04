@@ -1,8 +1,6 @@
-## 属性配置项
+## 文本输入框
 
-### 文本输入框
-
-![image-20250104140644629](com-config.assets/image-20250104140644629.png)
+![image-20250104140644629](components-config.assets/image-20250104140644629.png)
 
 ```
 {
@@ -12,11 +10,9 @@
 },
 ```
 
+## 下拉选择器
 
-
-### 下拉选择器
-
-![image-20250104140939518](com-config.assets/image-20250104140939518.png)
+![image-20250104140939518](components-config.assets/image-20250104140939518.png)
 
 ```
 {
@@ -33,11 +29,9 @@
 },
 ```
 
+## switch 选择
 
-
-### switch选择
-
-![image-20250104141025878](com-config.assets/image-20250104141025878.png)
+![image-20250104141025878](components-config.assets/image-20250104141025878.png)
 
 ```
 {
@@ -48,11 +42,9 @@
 },
 ```
 
+## 分段控制器
 
-
-### 分段控制器
-
-![image-20250104141122715](com-config.assets/image-20250104141122715.png)
+![image-20250104141122715](components-config.assets/image-20250104141122715.png)
 
 ```
 {
@@ -72,11 +64,9 @@
 },
 ```
 
+## Icon上传
 
-
-### Icon
-
-![image-20250104141157909](com-config.assets/image-20250104141157909.png)
+![image-20250104141157909](components-config.assets/image-20250104141157909.png)
 
 ```
 {
@@ -85,8 +75,3 @@
     type: 'selectIcon',
 },
 ```
-
-
-
-
-

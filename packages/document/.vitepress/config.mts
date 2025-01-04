@@ -28,7 +28,7 @@ export default defineConfig({
         text: '平台开发',
         items: [
           { text: '开发纪录', link: '/docs/develop-record' },
-          { text: '组件配置项', link: '/docs/com-config' },
+          { text: '组件配置项', link: '/docs/components-config' },
         ],
       },
     ],
