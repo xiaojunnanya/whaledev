@@ -13,7 +13,6 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '平台', link: '/docs/whale' },
       { text: '项目规划', link: '/docs/whale-plan' },
-      { text: '开发纪录', link: '/docs/develop-record' },
     ],
 
     sidebar: [
@@ -23,6 +22,13 @@ export default defineConfig({
           { text: '介绍', link: '/docs/whale' },
           { text: 'React Playground 使用指南', link: '/docs/reactplay' },
           { text: '鸣谢', link: '/docs/acknowledgement' },
+        ],
+      },
+      {
+        text: '平台开发',
+        items: [
+          { text: '开发纪录', link: '/docs/develop-record' },
+          { text: '组件配置项', link: '/docs/com-config' },
         ],
       },
     ],
