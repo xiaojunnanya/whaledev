@@ -7,7 +7,7 @@ import { CommonComponentProps } from '@/materials/interface'
 const iconsList: { [key: string]: any } = WhaleIcons
 
 const Button = (props: CommonComponentProps) => {
-  const { text, type, styles, icon, ...otherProps } = props
+  const { text, type, styles, children, icon, ...otherProps } = props
   return (
     <AntdButton
       {...otherProps}

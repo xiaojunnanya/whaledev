@@ -1,16 +1,16 @@
 import { CommonComponentProps } from '@/materials/interface'
-import { Divider } from 'antd'
 import { memo } from 'react'
+import styleLess from './index.module.less'
+import { Input } from 'antd'
 
 export default memo((props: CommonComponentProps) => {
-  const { id, styles, text, children, ...otherProps } = props
+  const { styles, children, ...otherProps } = props
 
   return (
-    <Divider
+    <Input
       {...otherProps}
+      className={styleLess['whale-input']}
       style={styles}
-      data-component-id={id}
-      children={text}
     />
   )
 })

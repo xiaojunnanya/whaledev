@@ -21,7 +21,7 @@ interface IProps {
 
 export default memo((props: IProps) => {
   const { setting, form, valueChange } = props
-  const { type, options, name, label, prompt } = setting
+  const { type, options, name, label, prompt, placeholder, max, min } = setting
 
   return (
     <Form.Item
@@ -45,8 +45,15 @@ export default memo((props: IProps) => {
       }
     >
       {type === 'select' && <Select options={options} />}
-      {type === 'input' && <Input />}
-      {type === 'inputNumber' && <InputNumber style={{ width: '100%' }} />}
+      {type === 'input' && <Input placeholder={placeholder} />}
+      {type === 'inputNumber' && (
+        <InputNumber
+          style={{ width: '100%' }}
+          placeholder={placeholder}
+          max={max}
+          min={min}
+        />
+      )}
       {type === 'switch' && <Switch />}
       {type == 'segmented' && <Segmented options={options || []} />}
       {type == 'selectIcon' && (

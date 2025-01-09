@@ -31,8 +31,8 @@ export const SelectIconStyled = styled.div`
   .plusOutlined,
   .whale-icon {
     border: 1px dotted ${props => props.theme.defaultColor.grey2};
-    height: 20px;
-    width: 20px;
+    height: 32px;
+    width: 32px;
     font-size: 20px;
     padding: 5px;
   }

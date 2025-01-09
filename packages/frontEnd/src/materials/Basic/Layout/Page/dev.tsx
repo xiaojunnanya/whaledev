@@ -4,7 +4,10 @@ import { CommonComponentProps } from '@/materials/interface'
 
 const Page = (props: CommonComponentProps) => {
   const { children, id, styles } = props
-  const { drop } = useMaterailDrop(['Button', 'Container', 'Divider'], id)
+  const { drop } = useMaterailDrop(
+    ['Button', 'Container', 'Divider', 'Input'],
+    id,
+  )
 
   return (
     <div

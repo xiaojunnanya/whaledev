@@ -1,14 +1,40 @@
+## 通用
+
+- `prompt`: 配置 prompt 可展示提示词
+
 ## 文本输入框
 
 ![image-20250104140644629](components-config.assets/image-20250104140644629.png)
 
 ```
 {
-    name: 'text',
+    name: 'defaultValue',
     label: '文本',
     type: 'input',
+    placeholder: '请输入文本',
 },
 ```
+
+
+
+## 数字文本输入框
+
+![image-20250109105135327](components-config.assets/image-20250109105135327.png)
+
+```
+{
+    name: 'maxLength',
+    label: '最大长度',
+    type: 'inputNumber',
+    max: 100,
+    min: 0,
+    placeholder: '请输入最大长度',
+},
+```
+
+
+
+
 
 ## 下拉选择器
 
@@ -38,7 +64,6 @@
     name: 'autoInsertSpace',
     label: '添加空格',
     type: 'switch',
-    prompt: '两个汉字之间默认显示一个空格',
 },
 ```
 
@@ -64,7 +89,7 @@
 },
 ```
 
-## Icon上传
+## Icon 上传
 
 ![image-20250104141157909](components-config.assets/image-20250104141157909.png)
 
