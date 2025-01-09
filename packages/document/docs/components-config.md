@@ -2,6 +2,18 @@
 
 - `prompt`: 配置 prompt 可展示提示词
 
+- ```
+  // 当inputMode 的值等于 XXX 的时候不显示
+  ignoreConfig: [
+      'inputMode === Input.TextArea',
+      'inputMode === Input.OTP',
+  ],
+  ```
+
+- 
+
+
+
 ## 文本输入框
 
 ![image-20250104140644629](components-config.assets/image-20250104140644629.png)
@@ -14,8 +26,6 @@
     placeholder: '请输入文本',
 },
 ```
-
-
 
 ## 数字文本输入框
 
@@ -31,10 +41,6 @@
     placeholder: '请输入最大长度',
 },
 ```
-
-
-
-
 
 ## 下拉选择器
 

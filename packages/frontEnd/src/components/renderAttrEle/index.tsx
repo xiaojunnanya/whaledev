@@ -17,10 +17,12 @@ interface IProps {
   setting: ComponentSetter
   form: FormInstance
   valueChange: any
+  isIgnore: boolean
 }
 
 export default memo((props: IProps) => {
-  const { setting, form, valueChange } = props
+  const { setting, form, valueChange, isIgnore } = props
+
   const { type, options, name, label, prompt, placeholder, max, min } = setting
 
   return (
@@ -43,6 +45,9 @@ export default memo((props: IProps) => {
           )}
         </span>
       }
+      style={{
+        display: isIgnore ? 'none' : 'block',
+      }}
     >
       {type === 'select' && <Select options={options} />}
       {type === 'input' && <Input placeholder={placeholder} />}

@@ -44,11 +44,19 @@ export const InputConfig: ComponentConfig = {
           name: 'addonBefore',
           label: '前置图标',
           type: 'selectIcon',
+          ignoreConfig: [
+            'inputMode === Input.TextArea',
+            'inputMode === Input.OTP',
+          ],
         },
         {
           name: 'addonAfter',
           label: '后置图标',
           type: 'selectIcon',
+          ignoreConfig: [
+            'inputMode === Input.TextArea',
+            'inputMode === Input.OTP',
+          ],
         },
         {
           name: 'prefix',
@@ -59,6 +67,10 @@ export const InputConfig: ComponentConfig = {
           name: 'suffix',
           label: '后缀图标',
           type: 'selectIcon',
+          ignoreConfig: [
+            'inputMode === Input.TextArea',
+            'inputMode === Input.OTP',
+          ],
         },
         {
           name: 'allowClear',
