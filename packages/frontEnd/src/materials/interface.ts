@@ -30,11 +30,15 @@ export interface ComponentEvent {
   action?: any[]
 }
 
+// 遗留的问题：ignoredProps并没有限制
 export interface ComponentConfig {
   name: string // 组件名
   defaultProps: {
     [key: string]: any // defaultProps 的键名与 setter 的 name 一一对应
   } // 默认属性
+  ignoredProps?: {
+    [key in keyof ComponentConfig['defaultProps']]: any // 忽略的属性
+  }
   desc: string // 组件描述
   firstTitle: string // 一级标题
   secondaryTitle: string // 二级标题

@@ -71,13 +71,12 @@ export default memo(() => {
                     })
                   }
 
-                  return (
+                  return isIgnore ? null : (
                     <RenderFormEle
                       setting={setter}
                       key={setter.name}
                       form={form}
                       valueChange={valueChange}
-                      isIgnore={isIgnore}
                     />
                   )
                 })}
