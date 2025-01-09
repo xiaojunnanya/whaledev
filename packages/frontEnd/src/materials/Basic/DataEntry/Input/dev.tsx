@@ -19,15 +19,16 @@ export default memo((props: CommonComponentProps) => {
   } = props
 
   return (
-    <Input
-      {...otherProps}
-      className={styleLess['whale-input']}
-      style={styles}
-      addonBefore={addonBefore && createElement(iconsList[addonBefore])}
-      addonAfter={addonAfter && createElement(iconsList[addonAfter])}
-      prefix={prefix && createElement(iconsList[prefix])}
-      suffix={suffix && createElement(iconsList[suffix])}
-      data-component-id={id}
-    />
+    <div data-component-id={id}>
+      <Input
+        {...otherProps}
+        className={styleLess['whale-input']}
+        style={styles}
+        addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+        addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+        prefix={prefix && createElement(iconsList[prefix])}
+        suffix={suffix && createElement(iconsList[suffix])}
+      />
+    </div>
   )
 })
