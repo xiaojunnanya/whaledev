@@ -12,6 +12,7 @@ export const InputConfig: ComponentConfig = {
     disabled: false,
     status: 'default',
     size: 'middle',
+    inputMode: 'Input',
   },
   desc: '输入框',
   component: {
@@ -19,6 +20,23 @@ export const InputConfig: ComponentConfig = {
     prod: prod,
   },
   setter: [
+    {
+      title: '输入框模式',
+      propsList: [
+        {
+          name: 'inputMode',
+          label: '输入框模式',
+          type: 'select',
+          options: [
+            { label: '文本框', value: 'Input' },
+            { label: '文本域', value: 'Input.TextArea' },
+            { label: '搜索框', value: 'Input.Search' },
+            { label: '密码框', value: 'Input.Password' },
+            { label: '一次性密码框', value: 'Input.OTP' },
+          ],
+        },
+      ],
+    },
     {
       title: '输入框属性',
       propsList: [

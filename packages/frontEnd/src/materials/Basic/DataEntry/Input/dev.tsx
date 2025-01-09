@@ -15,20 +15,75 @@ export default memo((props: CommonComponentProps) => {
     addonAfter,
     prefix,
     suffix,
+    inputMode,
     ...otherProps
   } = props
 
-  return (
-    <div data-component-id={id}>
-      <Input
-        {...otherProps}
-        className={styleLess['whale-input']}
-        style={styles}
-        addonBefore={addonBefore && createElement(iconsList[addonBefore])}
-        addonAfter={addonAfter && createElement(iconsList[addonAfter])}
-        prefix={prefix && createElement(iconsList[prefix])}
-        suffix={suffix && createElement(iconsList[suffix])}
-      />
-    </div>
-  )
+  // TODO: 根据inputMode渲染不同的组件
+  const showInput = () => {
+    switch (inputMode) {
+      case 'Input':
+        return (
+          <Input
+            {...otherProps}
+            className={styleLess['whale-input']}
+            style={styles}
+            addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+            addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+            prefix={prefix && createElement(iconsList[prefix])}
+            suffix={suffix && createElement(iconsList[suffix])}
+          />
+        )
+      case 'Input.TextArea':
+        return (
+          <Input.TextArea
+            {...otherProps}
+            className={styleLess['whale-input']}
+            style={styles}
+            // addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+            // addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+            prefix={prefix && createElement(iconsList[prefix])}
+            // suffix={suffix && createElement(iconsList[suffix])}
+          />
+        )
+      case 'Input.Search':
+        return (
+          <Input.Search
+            {...otherProps}
+            className={styleLess['whale-input']}
+            style={styles}
+            addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+            addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+            prefix={prefix && createElement(iconsList[prefix])}
+            suffix={suffix && createElement(iconsList[suffix])}
+          />
+        )
+      case 'Input.Password':
+        return (
+          <Input.Password
+            {...otherProps}
+            className={styleLess['whale-input']}
+            style={styles}
+            addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+            addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+            prefix={prefix && createElement(iconsList[prefix])}
+            suffix={suffix && createElement(iconsList[suffix])}
+          />
+        )
+      case 'Input.OTP':
+        return (
+          <Input.OTP
+            {...otherProps}
+            className={styleLess['whale-input']}
+            style={styles}
+            // addonBefore={addonBefore && createElement(iconsList[addonBefore])}
+            // addonAfter={addonAfter && createElement(iconsList[addonAfter])}
+            prefix={prefix && createElement(iconsList[prefix])}
+            // suffix={suffix && createElement(iconsList[suffix])}
+          />
+        )
+    }
+  }
+
+  return <div data-component-id={id}>{showInput()}</div>
 })
