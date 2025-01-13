@@ -37,20 +37,22 @@ export function useMaterailDrop(accept: string[], id: string) {
           const config = componentMap[item.type]
 
           const defaultProps = config?.defaultProps || {}
-          const ignoredProps = config?.ignoredProps || {}
 
-          for (const key in ignoredProps) {
-            const propsValue = ignoredProps[key]
+          // 遗留的问题：去除不需要的props
+          // const ignoredProps = config?.ignoredProps || {}
 
-            if (propsValue.length > 0) {
-              propsValue.forEach((propsItem: string) => {
-                const [k, value] = propsItem.replace(/\s+/g, '').split('===')
-                if (defaultProps[k] === value) {
-                  delete defaultProps[key]
-                }
-              })
-            }
-          }
+          // for (const key in ignoredProps) {
+          //   const propsValue = ignoredProps[key]
+
+          //   if (propsValue.length > 0) {
+          //     propsValue.forEach((propsItem: string) => {
+          //       const [k, value] = propsItem.replace(/\s+/g, '').split('===')
+          //       if (defaultProps[k] === value) {
+          //         delete defaultProps[key]
+          //       }
+          //     })
+          //   }
+          // }
 
           addComponent(
             {
