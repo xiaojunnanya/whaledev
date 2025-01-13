@@ -3,6 +3,7 @@ import { getPageJsonByPageId } from '@/service/request/page_json'
 import { useComponentMapStore } from '@/stores/componentMap'
 import { Component, initComponents } from '@/stores/components'
 import { handleActionFlow } from '@/utils/actions'
+import { Empty } from 'antd'
 import { createElement, memo, ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -80,9 +81,7 @@ export default memo((props: IProps) => {
   return (
     <>
       {pageJson.length === 0 ? (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          该页面暂无组件
-        </div>
+        <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
       ) : (
         <Container isLoading={loading} height={height ? height : 0}>
           {renderComponents(pageJson)}

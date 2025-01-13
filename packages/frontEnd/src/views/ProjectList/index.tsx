@@ -34,6 +34,7 @@ import Container from '@/components/ContainerVh'
 import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash-es'
 import Masonry from 'react-masonry-css'
+import { SELFWEBURL } from '@/assets/defaultData'
 const { Meta } = Card
 const { Option } = Select
 
@@ -293,9 +294,7 @@ export default memo(() => {
                   }}
                 >
                   <Meta
-                    avatar={
-                      <Avatar src={'http://www.xiaojunnan.cn/img/logo.webp'} />
-                    }
+                    avatar={<Avatar src={SELFWEBURL.profile} />}
                     title={item.project_name}
                     description={
                       <div className="otherinfo">
