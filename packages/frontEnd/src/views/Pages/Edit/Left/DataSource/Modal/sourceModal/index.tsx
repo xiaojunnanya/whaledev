@@ -1,7 +1,7 @@
 import { memo, useState } from 'react'
 
 import { SourceModalStyled } from './style'
-import { Button, Steps } from 'antd'
+import { Button, Form, Input, Radio, Steps } from 'antd'
 
 const steps = [
   {
@@ -34,7 +34,32 @@ export default memo(() => {
   return (
     <SourceModalStyled>
       <Steps current={current} items={items} />
-      <div className="content">123content</div>
+      <div className="content">
+        <Form labelCol={{ span: 4 }} wrapperCol={{ span: 19 }}>
+          {current === 0 && (
+            <>
+              <Form.Item label="接口名称" name="name" required>
+                <Input
+                  placeholder="请输入接口中文名称"
+                  maxLength={20}
+                  showCount
+                />
+              </Form.Item>
+              <Form.Item label="请求方式" name="method">
+                <Radio.Group buttonStyle="solid">
+                  <Radio.Button value="GET">GET</Radio.Button>
+                  <Radio.Button value="POST">POST</Radio.Button>
+                  <Radio.Button value="PUT">PUT</Radio.Button>
+                  <Radio.Button value="PATCH">PATCH</Radio.Button>
+                  <Radio.Button value="DELETE">DELETE</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+            </>
+          )}
+          {current === 1 && <>Last-content</>}
+          {current === 2 && <>First-content</>}
+        </Form>
+      </div>
       <div className="operateBtn">
         {current > 0 && (
           <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
