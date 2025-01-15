@@ -5,6 +5,7 @@ import { Button } from 'antd'
 import { downloadFiles } from '@/utils'
 import { useReactPlay } from '@/stores/reactplay'
 import { useNavigate } from 'react-router-dom'
+import { SELFWEBURL } from '@/assets/defaultData'
 
 export default memo(() => {
   const { files } = useReactPlay()
@@ -32,7 +33,7 @@ export default memo(() => {
         </Button>
         <QuestionCircleOutlined
           onClick={() => {
-            window.open('http://localhost:4173/docs/reactplay.html')
+            window.open(SELFWEBURL.whaleDocs + 'docs/reactplay.html')
           }}
         />
       </div>

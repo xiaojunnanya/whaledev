@@ -56,7 +56,7 @@ class WhaleRequest {
         if (messageText) {
           // 跳转到登录页面
           window.location.href = '/login'
-          localStorage.removeItem('token')
+          // localStorage.removeItem('token')
           message.destroy()
           message.error(messageText)
           return

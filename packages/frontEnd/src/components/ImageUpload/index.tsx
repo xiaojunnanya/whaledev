@@ -3,6 +3,7 @@ import { Upload } from 'antd'
 import type { UploadFile, UploadProps } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { ImageUploadStyled } from './style'
+import { SELFWEBURL } from '@/assets/defaultData'
 
 export default memo(() => {
   const [fileList, setFileList] = useState<UploadFile[]>([
@@ -10,7 +11,7 @@ export default memo(() => {
       uid: '-1',
       name: 'image.png',
       status: 'done',
-      url: 'http://www.xiaojunnan.cn/img/logo.webp',
+      url: SELFWEBURL.profile,
     },
   ])
 
@@ -22,7 +23,7 @@ export default memo(() => {
     <ImageUploadStyled className="resetUploadStyle">
       <ImgCrop rotationSlider>
         <Upload
-          action="https://www.marsview.com.cn/api/upload/files"
+          action=""
           listType="picture-card"
           fileList={fileList}
           onChange={onChange}

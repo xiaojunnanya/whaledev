@@ -53,8 +53,25 @@ export default memo(() => {
             return (
               <div className="whale-attr" key={index}>
                 <div className="whale-right-title">{item.title}</div>
+
                 {item.propsList.map(setter => {
-                  return (
+                  const ignoreConfig = setter?.ignoreConfig || []
+                  const props = curComponent.props
+                  let isIgnore = false
+
+                  if (ignoreConfig.length > 0) {
+                    ignoreConfig.forEach((ignoreItem: string) => {
+                      const [key, value] = ignoreItem
+                        .replace(/\s+/g, '')
+                        .split('===')
+
+                      if (props[key] === value) {
+                        isIgnore = true
+                      }
+                    })
+                  }
+
+                  return isIgnore ? null : (
                     <RenderFormEle
                       setting={setter}
                       key={setter.name}

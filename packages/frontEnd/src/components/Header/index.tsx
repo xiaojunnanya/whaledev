@@ -6,6 +6,7 @@ import { GithubOutlined } from '@ant-design/icons'
 import { getUserInfoData } from '@/service/request/user'
 import { getShowImg } from '@/service/request/config'
 import { Avatar, Button, Dropdown, MenuProps } from 'antd'
+import { SELFWEBURL } from '@/assets/defaultData'
 
 interface IProps {
   children?: React.ReactNode
@@ -86,7 +87,7 @@ export default memo((props: IProps) => {
         <div className="head-right">
           <div
             onClick={() => {
-              window.open('http://localhost:4173/')
+              window.open(SELFWEBURL.whaleDocs)
             }}
             className="docs"
           >
@@ -95,7 +96,7 @@ export default memo((props: IProps) => {
           <div>|</div>
           <div
             onClick={() => {
-              window.open('https://github.com/xiaojunnanya/whaledev')
+              window.open(SELFWEBURL.github)
             }}
             className="github"
           >

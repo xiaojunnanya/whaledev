@@ -21,6 +21,7 @@ interface IProps {
 
 export default memo((props: IProps) => {
   const { setting, form, valueChange } = props
+
   const { type, options, name, label, prompt, placeholder, max, min } = setting
 
   return (

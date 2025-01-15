@@ -2,18 +2,49 @@ import { ComponentConfig } from '@/materials/interface'
 import dev from './dev'
 import prod from './prod'
 
+const defaultProps = {
+  allowClear: false,
+  showCount: false,
+  disabled: false,
+  status: 'default',
+  size: 'middle',
+  inputMode: 'Input',
+  autoSize: false,
+  length: 6,
+}
+
+const ignoredProps = {
+  inputTextArea: [
+    'inputMode === Input',
+    'inputMode === Input.Search',
+    'inputMode === Input.Password',
+    'inputMode === Input.OTP',
+  ],
+  inputSearch: [
+    'inputMode === Input',
+    'inputMode === Input.TextArea',
+    'inputMode === Input.Password',
+    'inputMode === Input.OTP',
+  ],
+  inputOTP: [
+    'inputMode === Input',
+    'inputMode === Input.TextArea',
+    'inputMode === Input.Search',
+    'inputMode === Input.Password',
+  ],
+  inputFilterOTP: ['inputMode === Input.OTP'],
+  inputFilterAreaOTP: [
+    'inputMode === Input.TextArea',
+    'inputMode === Input.OTP',
+  ],
+}
+
 export const InputConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '数据录入',
   name: 'Input',
-  defaultProps: {
-    allowClear: false,
-    showCount: false,
-    disabled: false,
-    status: 'default',
-    size: 'middle',
-    inputMode: 'Input',
-  },
+  defaultProps: defaultProps,
+  ignoredProps: ignoredProps,
   desc: '输入框',
   component: {
     dev: dev,
@@ -44,31 +75,58 @@ export const InputConfig: ComponentConfig = {
           name: 'addonBefore',
           label: '前置图标',
           type: 'selectIcon',
+          ignoreConfig: [
+            'inputMode === Input.TextArea',
+            'inputMode === Input.OTP',
+          ],
         },
         {
           name: 'addonAfter',
           label: '后置图标',
           type: 'selectIcon',
+          ignoreConfig: ignoredProps['inputFilterAreaOTP'],
         },
         {
           name: 'prefix',
           label: '前缀图标',
           type: 'selectIcon',
+          ignoreConfig: ignoredProps['inputFilterAreaOTP'],
         },
         {
           name: 'suffix',
           label: '后缀图标',
           type: 'selectIcon',
+          ignoreConfig: ignoredProps['inputFilterAreaOTP'],
         },
         {
           name: 'allowClear',
           label: '清空内容',
           type: 'switch',
+          ignoreConfig: ignoredProps['inputFilterOTP'],
         },
         {
           name: 'showCount',
           label: '显示计数',
           type: 'switch',
+          ignoreConfig: ignoredProps['inputFilterOTP'],
+        },
+        {
+          name: 'autoSize',
+          label: '自适应高度',
+          type: 'switch',
+          ignoreConfig: ignoredProps['inputTextArea'],
+        },
+        {
+          name: 'enterButton',
+          label: '确认按钮',
+          type: 'switch',
+          ignoreConfig: ignoredProps['inputSearch'],
+        },
+        {
+          name: 'loading',
+          label: '搜索加载',
+          type: 'switch',
+          ignoreConfig: ignoredProps['inputSearch'],
         },
         {
           name: 'defaultValue',
@@ -81,6 +139,7 @@ export const InputConfig: ComponentConfig = {
           label: '占位符',
           type: 'input',
           placeholder: '请输入占位符',
+          ignoreConfig: ignoredProps['inputFilterOTP'],
         },
         {
           name: 'disabled',
@@ -91,9 +150,17 @@ export const InputConfig: ComponentConfig = {
           name: 'maxLength',
           label: '最大长度',
           type: 'inputNumber',
-          max: 100,
           min: 0,
           placeholder: '请输入最大长度',
+          ignoreConfig: ignoredProps['inputFilterOTP'],
+        },
+        {
+          name: 'length',
+          label: '元素数量',
+          type: 'inputNumber',
+          min: 0,
+          placeholder: '请输入元素数量',
+          ignoreConfig: ignoredProps['inputOTP'],
         },
         {
           name: 'status',
