@@ -12,15 +12,18 @@ import { LoginGuard } from './guards/auth.guard'
 import { PrismaModule } from './global/mysql/prisma.module'
 import { RedisModule } from './global/redis/redis.module'
 import { StoreModule } from './global/store/store.module'
-import { UserModule } from './api/user/user.module';
-import { PagesModule } from './api/pages/pages.module';
-import { PageJsonModule } from './api/page_json/page_json.module';
+import { UserModule } from './api/user/user.module'
+import { PagesModule } from './api/pages/pages.module'
+import { PageJsonModule } from './api/page_json/page_json.module'
+import { LoggerModule } from './global/logger/logger.module'
 @Module({
   imports: [
-    AuthModule,
+    LoggerModule,
     PrismaModule,
     RedisModule,
     StoreModule,
+    // api
+    AuthModule,
     StaticonfigModule,
     ProjectModule,
     UserModule,

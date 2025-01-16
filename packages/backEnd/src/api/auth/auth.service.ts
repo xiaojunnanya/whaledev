@@ -11,6 +11,7 @@ import { customResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/global/mysql/prisma.service'
+import { RedisService } from '@/global/redis/redis.service'
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-    @Inject('RedisService') private readonly redis: Redis,
+    private readonly redisService: RedisService<string>,
   ) {
     this.transporter = createTransport({
       host: 'smtp.qq.com', // smtp服务的域名
@@ -91,7 +92,7 @@ export class AuthService {
 
     if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
       await this.sendEmailCodeFun(emailCode, code)
-      await this.redis.setex(email, this.validity * 60, code)
+      await this.redisService.setex(email, code, this.validity * 60)
     } else {
       isSuccess = false
       returnMsg =
@@ -120,7 +121,7 @@ export class AuthService {
     if (password !== confirmPassword)
       return customResponse(0, '两次密码不一致，请确认密码后重试', 'error')
 
-    const redisCode = await this.redis.get(email)
+    const redisCode = await this.redisService.get(email)
     if (!redisCode)
       return customResponse(0, '验证码不存在或已过期，请重新发送', 'error')
 
@@ -152,7 +153,7 @@ export class AuthService {
     }
 
     // 删除图形验证码
-    await this.redis.del(email)
+    await this.redisService.delete(email)
 
     return customResponse(0, returnMsg, 'success')
   }
