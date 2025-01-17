@@ -1,25 +1,12 @@
-export const customCode = {
-  0: '执行成功',
-  1: '参数错误',
-  2: '参数校验错误',
-  99: '未知错误',
-  98: '系统错误',
-  97: '提示错误',
-}
-
-// 提取 customCode 对象的 key 值类型
-export type CustomCodeKeys = keyof typeof customCode
+export type MessageType = 'success' | 'error' | 'warning' | 'info'
 
 export interface responseType {
-  code: CustomCodeKeys
+  code: any
   timestamp: string
-  message: string // 确保 message 字段是必需的
-  msgType: 'success' | 'error' | 'warning' | 'info'
-  data?: any
+  data: null | {
+    data: any
+    message: string // 确保 message 字段是必需的
+    msgType: MessageType
+  }
   type: 'custom' | 'system'
 }
-
-export type returnType = Pick<
-  responseType,
-  'code' | 'message' | 'msgType' | 'data'
->

@@ -1,4 +1,4 @@
-import { responseType, returnType } from '@/type'
+import { responseType } from '@/type'
 import { formatDate } from '@/utils'
 import { Response } from 'express'
 import {
@@ -7,8 +7,8 @@ import {
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
@@ -26,14 +26,9 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
           return response
 
         // 默认错误处理
-        const {
-          code = 98,
-          message = 'Internal Server Error',
-          msgType,
-          data = null,
-        } = response as returnType
+        const { code, message, msgType, data = null } = response
 
-        if (data && data.token) {
+        if (data?.token) {
           res.setHeader('authorization', data.token)
           delete data.token
         }
@@ -41,24 +36,30 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         const returnMsg: responseType = {
           code,
           timestamp: formatDate(),
-          message,
-          msgType,
-          data,
+          data: {
+            data,
+            message,
+            msgType,
+          },
           type: 'custom',
         }
 
         res.send(returnMsg)
+      }),
+      catchError(err => {
+        // 系统级的错误，在这里抛出，异常那边捕获
+        return throwError(() => new Error(err)) // 你可以自定义错误信息
       }),
     )
   }
 }
 
 export const customResponse = (
-  code: returnType['code'],
-  message: returnType['message'],
-  msgType: returnType['msgType'],
-  data: returnType['data'] = null,
-): returnType => ({
+  code: any,
+  message: any,
+  msgType: any,
+  data: any = null,
+) => ({
   code,
   message,
   data,

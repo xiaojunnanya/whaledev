@@ -3,10 +3,11 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
+  Logger,
 } from '@nestjs/common'
 import { Response } from 'express'
 import { formatDate } from '@/utils'
-import { customCode, responseType } from '@/type'
+import { responseType } from '@/type'
 
 // 捕获异常
 @Catch()
@@ -14,7 +15,9 @@ export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
-    console.log(exception, 'exception')
+
+    Logger.error(exception, 'exception')
+
     // 处理 class-validator 的异常兼容
     const validatorErr =
       exception instanceof HttpException &&
@@ -24,12 +27,12 @@ export default class AllExceptionsFilter implements ExceptionFilter {
 
     const message = validatorErr?.join
       ? validatorErr.join(',')
-      : exception.message || customCode[98]
+      : exception.message || '未知错误，请稍后重试'
 
     const code =
       exception instanceof HttpException ? exception.getStatus() : 500 // 非 HttpException，默认为 500
 
-    const errorResponse = {
+    const errorResponse: responseType = {
       code: code,
       timestamp: formatDate(),
       data: {

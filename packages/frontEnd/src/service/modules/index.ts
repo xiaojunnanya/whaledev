@@ -38,10 +38,8 @@ class WhaleRequest {
         return data
       },
       error => {
-        // 遗留的问题：对status进行处理(http状态码)
+        // 对http状态码进行处理
         const { status } = error
-        console.log(status, 'errstatus')
-
         let messageText = ''
 
         switch (status) {
@@ -49,14 +47,11 @@ class WhaleRequest {
             messageText = '登录过期，请重新登录'
             break
           case 500:
-            messageText = '服务器内部错误'
+            messageText = '服务器内部错误，请稍后重试'
             break
         }
 
         if (messageText) {
-          // 跳转到登录页面
-          window.location.href = '/login'
-          // localStorage.removeItem('token')
           message.destroy()
           message.error(messageText)
           return
