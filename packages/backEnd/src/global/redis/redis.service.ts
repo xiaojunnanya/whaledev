@@ -58,6 +58,7 @@ export class RedisService<V> {
   async setex(key: string, value: V, time: number): Promise<boolean> {
     try {
       if (time > 0) {
+        // 'EX'：表示设置过期时间（单位是秒）
         await this.redisClient.set(key, JSON.stringify(value), 'EX', time)
       } else {
         await this.set(key, value)
