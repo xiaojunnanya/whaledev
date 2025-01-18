@@ -124,7 +124,7 @@ export class AuthService {
       return ReturnResult.error('验证码不存在或已过期，请重新发送')
 
     if (redisCode !== emailCode)
-      return ReturnResult.error('验证码错误，请重新输入')
+      return ReturnResult.error('邮箱验证码错误，请重新输入')
 
     // 遗留的问题：图形验证码 code 的验证
 
@@ -147,7 +147,7 @@ export class AuthService {
           password,
         },
       })
-      returnMsg = '修改密码成功，请返回重新登录'
+      returnMsg = '修改密码成功，请重新登录'
     }
 
     // 删除图形验证码

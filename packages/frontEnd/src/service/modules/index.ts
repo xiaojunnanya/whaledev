@@ -35,7 +35,17 @@ class WhaleRequest {
         const token = headers['authorization']
         if (token) localStorage.setItem('token', token)
 
-        return data
+        const { data: result, code } = data
+
+        // 这边需要对自定义状态码进行处理
+
+        if (code === 0) {
+          return {
+            ...result,
+          }
+        } else {
+          console.log('自定义状态码不为0')
+        }
       },
       error => {
         // 对http状态码进行处理

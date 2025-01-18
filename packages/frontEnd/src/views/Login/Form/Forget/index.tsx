@@ -26,9 +26,9 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
       confirmPassword: SparkMD5.hash(values.confirmPassword),
     }
-    const { code, msgType, message } = await forgetPassword(valuesData)
+    const { msgType, message } = await forgetPassword(valuesData)
 
-    if (code === 0 && msgType === 'success') {
+    if (msgType === 'success') {
       setMessage({ type: 'success', text: message })
       setMode('login')
     } else {
