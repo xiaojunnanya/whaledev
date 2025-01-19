@@ -26,14 +26,17 @@ export class ProjectController {
     return this.projectService.getProjectList(page)
   }
 
-  @Delete('/delete/:id')
-  deleteProject(@Param('id') id: string) {
-    return this.projectService.deleteProject(id)
+  @Delete('/delete/:project_id')
+  deleteProject(@Param('project_id') project_id: string) {
+    return this.projectService.deleteProject(project_id)
   }
 
-  @Put('/update/:id')
-  updateProject(@Param('id') id: string, @Body() data: createProjectDto) {
-    return this.projectService.updateProject(id, data)
+  @Put('/update/:project_id')
+  updateProject(
+    @Param('project_id') project_id: string,
+    @Body() data: createProjectDto,
+  ) {
+    return this.projectService.updateProject(project_id, data)
   }
 
   @Get('/search')
@@ -44,8 +47,8 @@ export class ProjectController {
     return this.projectService.searchProject(keyword, page)
   }
 
-  @Get('/detail/:id')
-  getProjectDetail(@Param('id') id: string) {
-    return this.projectService.getProjectDetail(id)
+  @Get('/detail/:project_id')
+  getProjectDetail(@Param('project_id') project_id: string) {
+    return this.projectService.getProjectDetail(project_id)
   }
 }

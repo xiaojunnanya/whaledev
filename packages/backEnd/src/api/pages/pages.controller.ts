@@ -29,13 +29,16 @@ export class PagesController {
     return this.pagesService.updatePage(data)
   }
 
-  @Delete('delete/:id')
-  async deletePage(@Param('id') id: string) {
-    return this.pagesService.deletePage(id)
+  @Delete('delete/:page_id')
+  async deletePage(@Param('page_id') page_id: string) {
+    return this.pagesService.deletePage(page_id)
   }
 
-  @Get('/detail/:id')
-  getPageDetail(@Param('id') id: string) {
-    return this.pagesService.getPageDetail(id)
+  @Get('/detail/:project_id/:page_id')
+  getPageDetail(
+    @Param('project_id') project_id: string,
+    @Param('page_id') page_id: string,
+  ) {
+    return this.pagesService.getPageDetail(project_id, page_id)
   }
 }

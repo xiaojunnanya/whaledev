@@ -53,15 +53,3 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
     )
   }
 }
-
-export const customResponse = (
-  code: any,
-  message: any,
-  msgType: any,
-  data: any = null,
-) => ({
-  code,
-  message,
-  data,
-  msgType,
-})

@@ -44,7 +44,7 @@ class WhaleRequest {
             ...result,
           }
         } else {
-          console.log('自定义状态码不为0')
+          message.error('自定义状态码不为0')
         }
       },
       error => {
@@ -64,6 +64,13 @@ class WhaleRequest {
         if (messageText) {
           message.destroy()
           message.error(messageText)
+
+          setTimeout(() => {
+            if (window.location.pathname !== '/login') {
+              window.location.href = '/login'
+            }
+          }, 1000)
+
           return
         }
 

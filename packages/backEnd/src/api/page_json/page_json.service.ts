@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { savePageJsonDto } from './dto/page_json.dtp'
 import { PrismaService } from '@/global/mysql/prisma.service'
-import { customResponse } from '@/interceptor/response.interceptor'
 import { StoreService } from '@/global/store/store.service'
+import { ReturnResult } from '@/common/returnResult'
 
 @Injectable()
 export class PageJsonService {
@@ -28,21 +28,16 @@ export class PageJsonService {
       },
     })
 
-    return customResponse(0, '保存成功', 'success')
+    return ReturnResult.success('保存成功')
   }
 
   async getPageJson(page_id: string) {
     const data = await this.prisma.page_json.findUnique({
       where: {
         page_id,
-        pages: {
-          project: {
-            user_id: this.store.get('user_id'),
-          },
-        },
       },
     })
 
-    return customResponse(0, '查询成功', 'success', data)
+    return ReturnResult.success('查询成功', data)
   }
 }

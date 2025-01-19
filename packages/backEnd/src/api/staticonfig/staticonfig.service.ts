@@ -1,4 +1,4 @@
-import { customResponse } from '@/interceptor/response.interceptor'
+import { ReturnResult } from '@/common/returnResult'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -15,7 +15,7 @@ export class StaticonfigService {
       },
     ]
 
-    return customResponse(0, 'ok', 'success', data)
+    return ReturnResult.success('ok', data)
   }
 
   getProjectStatus() {
@@ -42,6 +42,6 @@ export class StaticonfigService {
       },
     ]
 
-    return customResponse(0, 'ok', 'success', data)
+    return ReturnResult.success('ok', data)
   }
 }

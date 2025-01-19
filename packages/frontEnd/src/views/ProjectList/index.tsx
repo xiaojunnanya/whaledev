@@ -139,11 +139,11 @@ export default memo(() => {
         ...res,
         project_state: 'inProgress',
       }
-      const { code, msgType, message } =
+      const { msgType, message } =
         modalType === 'create'
           ? await createProject(obj)
           : await updateProject(editId, res)
-      if (code === 0 && msgType === 'success') {
+      if (msgType === 'success') {
         getProjectData(currentPage)
         setMessage({ type: 'success', text: message })
         setIsModalOpen(false)
@@ -172,8 +172,8 @@ export default memo(() => {
 
   const deleteOneProject = async (e: any, id: string) => {
     e.stopPropagation()
-    const { code, msgType, message } = await deleteProject(id)
-    if (code === 0 && msgType === 'success') {
+    const { msgType, message } = await deleteProject(id)
+    if (msgType === 'success') {
       getProjectData(currentPage)
       setMessage({ type: 'success', text: message })
     } else {
@@ -214,7 +214,6 @@ export default memo(() => {
           prefix={<SearchOutlined />}
           placeholder="请输入应用名称"
           allowClear
-          // value={searchValue}
           onChange={e => {
             searchChange(e.target.value)
           }}

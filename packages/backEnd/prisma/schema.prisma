@@ -79,9 +79,6 @@ model project {
   project_state ProjectState
 
   @@index([user_id, project_id])
-
-  // 添加的关系字段
-  pages pages[] @relation("project_pages") // 定义一对多关系
 }
 
 model pages {
@@ -97,10 +94,6 @@ model pages {
   page_type PageType
 
   @@index([page_id, project_id])
-
-  // 添加的关系字段
-  project project @relation("project_pages", fields: [project_id], references: [project_id])
-  page_json page_json? @relation("page_json_pages")
 }
 
 model page_json {
@@ -113,7 +106,4 @@ model page_json {
   page_json String @db.MediumText
 
   @@index([page_id])
-
-  // 反向关系，page_id 为外键，指向 pages 表的 page_id
-  pages pages @relation("page_json_pages", fields: [page_id], references: [page_id])
 }
