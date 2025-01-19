@@ -56,14 +56,6 @@ npm run start:db
 运行需要 node 环境，建议`node:18`以上版本。使用`npm`作为依赖管理工具，仓库开源者使用 node 版本为`20.8.1`。
 文件以 xxx-gitignore 命名的则本身文件未提交，请自行添加重命名 xxx-gitignore 文件名为 xxx，并修改内容为自己的信息
 
-## 参与贡献
-
-这个项目的存在感谢项目中所有的贡献者。
-<br/>
-<a href="https://github.com/xiaojunnanya/whaledev/graphs/contributors" target="_blank">
-<img src="https://contrib.rocks/image?repo=xiaojunnanya/whaledev">
-</a>
-
 ## Star History
 
 如果你发现此项目对你有所帮助，请考虑在 [GitHub](https://github.com/xiaojunnanya/whaledev) 上给它一个 ⭐️ !

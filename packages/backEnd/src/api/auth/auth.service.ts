@@ -107,7 +107,7 @@ export class AuthService {
 
   // 注册和忘记密码
   async registerOrForget(registerDto: RegisterOrForgetDto, type: codeType) {
-    const { email, emailCode, password, code } = registerDto
+    const { email, emailCode, password } = registerDto
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
@@ -125,8 +125,6 @@ export class AuthService {
 
     if (redisCode !== emailCode)
       return ReturnResult.error('邮箱验证码错误，请重新输入')
-
-    // 遗留的问题：图形验证码 code 的验证
 
     let returnMsg = ''
     if (type === 'register') {
@@ -158,7 +156,7 @@ export class AuthService {
 
   // 登录
   async login(loginDto: LoginDto) {
-    const { email, password, code } = loginDto
+    const { email, password } = loginDto
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
@@ -168,8 +166,6 @@ export class AuthService {
       return ReturnResult.error('密码错误，请确定密码后重新输入')
 
     // 遗留的问题：token无感刷新
-
-    // 遗留的问题：图形验证码 code 的验证
 
     return ReturnResult.success('登陆成功', {
       token: this.jwtService.sign({
@@ -191,6 +187,12 @@ export class AuthService {
       height: 44, //高度
       background: '#0099FF', //背景颜色
     })
+
+    await this.redisService.setex(
+      captcha.text.toLowerCase(),
+      captcha.text.toLowerCase(),
+      60,
+    )
 
     res.type('image/svg+xml')
     res.status(200).send(captcha.data)

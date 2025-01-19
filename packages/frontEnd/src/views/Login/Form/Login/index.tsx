@@ -39,7 +39,7 @@ export default memo(() => {
         text: message || gloablErrorMessage,
       })
       updateCode()
-      form.resetFields(['checkCode'])
+      form.resetFields(['code'])
     }
   }
 
@@ -64,11 +64,11 @@ export default memo(() => {
         className="login-form"
         onFinish={onFinish}
         form={form}
-        initialValues={{
-          email: '2376974436@qq.com',
-          password: 'qwer1234',
-          code: '1234',
-        }}
+        // initialValues={{
+        //   email: '2376974436@qq.com',
+        //   password: 'qwer1234',
+        //   code: '1234',
+        // }}
       >
         <Form.Item
           name="email"

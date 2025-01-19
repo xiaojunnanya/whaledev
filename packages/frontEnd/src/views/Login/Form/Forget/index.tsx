@@ -37,7 +37,7 @@ export default memo(() => {
         text: message || gloablErrorMessage,
       })
       updateCode()
-      form.resetFields(['checkCode'])
+      form.resetFields(['code'])
     }
   }
 
