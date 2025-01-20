@@ -43,7 +43,7 @@ const App = memo(() => {
     if (reason && reason?.errorFields) {
       console.error('react form 表单验证错误')
     } else if (!target || (target && !target?.localName)) {
-      console.error('JS运行错误')
+      console.error('JS运行错误', reason)
     } else if (target?.localName) {
       console.error('资源加载错误')
     } else {

@@ -24,7 +24,7 @@ export class RegisterOrForgetDto {
   @IsNotEmpty({ message: '密码不能为空' })
   @MinLength(8, { message: '密码长度不能小于8位' })
   @Validate(PasswordStrengthValidator, {
-    message: '密码强度不够，密码必须由数字和字母组成',
+    message: '密码必须由数字和字母组成',
   })
   password: string
 

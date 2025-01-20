@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { HttpException, HttpStatus } from '@nestjs/common'
+import { ErrorException } from '@/config'
 
 export function prismaErrorMiddleware() {
   return async (
@@ -34,21 +35,21 @@ export function prismaErrorMiddleware() {
             )
           default:
             throw new HttpException(
-              { message: '数据库错误，请稍后重试', type: 'PrismaError' },
+              { message: ErrorException.PrismaError, type: 'PrismaError' },
               HttpStatus.OK,
             )
         }
       } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
         // 未知 Prisma 错误
         throw new HttpException(
-          { message: '数据库异常，请稍后重试', type: 'PrismaError' },
+          { message: ErrorException.PrismaError, type: 'PrismaError' },
           HttpStatus.OK,
         )
       } else {
         // 捕获其他错误并抛出
         throw new HttpException(
           {
-            message: error.message || '数据库异常，请稍后重试',
+            message: error.message || ErrorException.PrismaError,
             type: 'PrismaError',
           },
           HttpStatus.INTERNAL_SERVER_ERROR,

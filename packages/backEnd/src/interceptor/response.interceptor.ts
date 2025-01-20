@@ -47,7 +47,6 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         res.send(returnMsg)
       }),
       catchError(err => {
-        // 系统级的错误/class-validator的异常，在这里抛出，异常那边捕获
         throw err
       }),
     )

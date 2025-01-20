@@ -4,6 +4,7 @@ import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
 import { WhaleSkipAuth } from '@/decorator/router.decorator'
 import { ReturnResult } from '@/common/returnResult'
 import { RedisService } from '@/global/redis/redis.service'
+import { ErrorCode } from '@/common/errorCode'
 
 @WhaleSkipAuth()
 @Controller('auth')
@@ -23,11 +24,17 @@ export class AuthController {
     const { password, confirmPassword, code } = registerDto
 
     if (await this.getRedisCode(code)) {
-      return ReturnResult.error('验证码错误')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '验证码错误',
+      )
     }
 
     if (password !== confirmPassword) {
-      return ReturnResult.error('两次密码不一致')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '两次密码不一致',
+      )
     }
     return this.authService.registerOrForget(registerDto, 'register')
   }
@@ -37,11 +44,17 @@ export class AuthController {
     const { password, confirmPassword, code } = forgetDto
 
     if (await this.getRedisCode(code)) {
-      return ReturnResult.error('验证码错误')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '验证码错误',
+      )
     }
 
     if (password !== confirmPassword) {
-      return ReturnResult.error('两次密码不一致')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '两次密码不一致',
+      )
     }
     return this.authService.registerOrForget(forgetDto, 'forget')
   }
@@ -50,7 +63,10 @@ export class AuthController {
   async login(@Body() loginDto: LoginDto) {
     const { code } = loginDto
     if (await this.getRedisCode(code)) {
-      return ReturnResult.error('验证码错误')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '验证码错误',
+      )
     }
     return this.authService.login(loginDto)
   }

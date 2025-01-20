@@ -36,15 +36,17 @@ class WhaleRequest {
         if (token) localStorage.setItem('token', token)
 
         const { data: result, code } = data
+        const { message: msg } = result
 
         // 这边需要对自定义状态码进行处理
 
-        if (code === 0) {
-          return {
-            ...result,
-          }
-        } else {
-          message.error('自定义状态码不为0')
+        if (code !== 0) {
+          message.error(msg)
+          return Promise.reject(new Error(msg))
+        }
+
+        return {
+          ...result,
         }
       },
       error => {

@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/global/mysql/prisma.service'
 import { RedisService } from '@/global/redis/redis.service'
 import { ReturnResult } from '@/common/returnResult'
+import { ErrorCode } from '@/common/errorCode'
 
 @Injectable()
 export class AuthService {
@@ -62,7 +63,10 @@ export class AuthService {
         html: emailHtml,
       })
     } catch (error) {
-      return ReturnResult.error('发送邮件失败，请稍后再试')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.SYSTEM_ERROR,
+        '发送邮件失败，请稍后再试',
+      )
     }
   }
 
@@ -121,10 +125,16 @@ export class AuthService {
 
     const redisCode = await this.redisService.get(email)
     if (!redisCode)
-      return ReturnResult.error('验证码不存在或已过期，请重新发送')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '验证码不存在或已过期，请重新发送',
+      )
 
     if (redisCode !== emailCode)
-      return ReturnResult.error('邮箱验证码错误，请重新输入')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '邮箱验证码错误，请重新输入',
+      )
 
     let returnMsg = ''
     if (type === 'register') {
@@ -163,7 +173,10 @@ export class AuthService {
     if (!userRes) return ReturnResult.error('当前邮箱未注册，请先注册')
 
     if (userRes.password !== password)
-      return ReturnResult.error('密码错误，请确定密码后重新输入')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '密码错误，请确定密码后重新输入',
+      )
 
     // 遗留的问题：token无感刷新
 
