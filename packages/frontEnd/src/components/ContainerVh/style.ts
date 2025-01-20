@@ -6,5 +6,5 @@ interface IContainer {
 
 export const ContainerStyled = styled.div<IContainer>`
   overflow-y: auto;
-  height: ${props => `calc(100vh - ${props.height}px)`};
+  max-height: ${props => `calc(100vh - ${props.height}px)`};
 `

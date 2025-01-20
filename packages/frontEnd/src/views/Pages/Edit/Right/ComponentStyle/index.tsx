@@ -5,7 +5,7 @@ import { debounce } from 'lodash-es'
 import styleToObject from 'style-to-object'
 import Editor from '@/components/Editor'
 import { Form } from 'antd'
-import Container from '@/components/ContainerVh'
+import ContainerVh from '@/components/ContainerVh'
 import Base from './Items/Base'
 import Layout from './Items/Layout'
 import Char from './Items/Char'
@@ -105,7 +105,7 @@ export default memo(() => {
   }, 500)
 
   return (
-    <Container height={132}>
+    <ContainerVh height={132}>
       <ComponentStyleStyled>
         <div className="whale-style">
           <div className="whale-right-title">自定义样式</div>
@@ -141,7 +141,7 @@ export default memo(() => {
           <Border />
         </Form>
       </ComponentStyleStyled>
-    </Container>
+    </ContainerVh>
   )
 })
 

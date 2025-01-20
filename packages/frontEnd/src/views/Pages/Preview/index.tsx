@@ -1,4 +1,4 @@
-import Container from '@/components/ContainerVh'
+import ContainerVh from '@/components/ContainerVh'
 import { getPageJsonByPageId } from '@/service/request/page_json'
 import { useComponentMapStore } from '@/stores/componentMap'
 import { Component, initComponents } from '@/stores/components'
@@ -83,9 +83,9 @@ export default memo((props: IProps) => {
       {pageJson.length === 0 ? (
         <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
       ) : (
-        <Container isLoading={loading} height={height ? height : 0}>
+        <ContainerVh isLoading={loading} height={height ? height : 0}>
           {renderComponents(pageJson)}
-        </Container>
+        </ContainerVh>
       )}
     </>
   )

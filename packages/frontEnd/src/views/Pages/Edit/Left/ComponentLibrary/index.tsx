@@ -5,7 +5,7 @@ import { Collapse, CollapseProps, Input, Tabs, TabsProps } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import { debounce } from 'lodash-es'
 import { useComponentMapStore } from '@/stores/componentMap'
-import Container from '@/components/ContainerVh'
+import ContainerVh from '@/components/ContainerVh'
 
 export default memo(() => {
   const [inputValue, setInputValue] = useState('')
@@ -81,7 +81,7 @@ export default memo(() => {
         key: comItem.label,
         label: comItem.label,
         children: (
-          <Container height={216} key={index}>
+          <ContainerVh height={216} key={index}>
             <Collapse
               ghost
               defaultActiveKey={new Array(comItem.children.length)
@@ -92,7 +92,7 @@ export default memo(() => {
               )}
               items={collapseItems(comItem.children)}
             ></Collapse>
-          </Container>
+          </ContainerVh>
         ),
       }
     })

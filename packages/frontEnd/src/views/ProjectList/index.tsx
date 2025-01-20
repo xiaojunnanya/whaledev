@@ -30,7 +30,7 @@ import {
 } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
-import Container from '@/components/ContainerVh'
+import ContainerVh from '@/components/ContainerVh'
 import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash-es'
 import Masonry from 'react-masonry-css'
@@ -236,7 +236,7 @@ export default memo(() => {
         </Button>
       </div>
 
-      <Container isLoading={cardLoading} height={150}>
+      <ContainerVh isLoading={cardLoading} height={150}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="content"
@@ -330,7 +330,7 @@ export default memo(() => {
             )
           })}
         </Masonry>
-      </Container>
+      </ContainerVh>
 
       <Pagination
         total={totalPage}
