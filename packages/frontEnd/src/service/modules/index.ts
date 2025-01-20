@@ -58,6 +58,9 @@ class WhaleRequest {
           case 401:
             messageText = '登录过期，请重新登录'
             break
+          // case 404:
+          //   messageText = '404'
+          //   break
           case 500:
             messageText = '服务器内部错误，请稍后重试'
             break
