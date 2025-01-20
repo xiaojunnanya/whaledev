@@ -14,40 +14,43 @@ export function prismaErrorMiddleware() {
         switch (error.code) {
           case 'P2025': // 表示尝试更新或删除的记录未找到
             throw new HttpException(
-              { message: '记录未找到' },
-              HttpStatus.NOT_FOUND,
+              { message: '未找到当前数据', type: 'PrismaError' },
+              HttpStatus.OK,
             )
           case 'P2002': // 唯一约束冲突
             throw new HttpException(
-              { message: '唯一约束冲突，请检查数据' },
-              HttpStatus.BAD_REQUEST,
+              { message: '唯一约束冲突，请检查数据', type: 'PrismaError' },
+              HttpStatus.OK,
             )
           case 'P2003': // 外键约束错误
             throw new HttpException(
-              { message: '外键约束错误' },
-              HttpStatus.BAD_REQUEST,
+              { message: '外键约束错误', type: 'PrismaError' },
+              HttpStatus.OK,
             )
           case 'P2023': // 无效的关系
             throw new HttpException(
-              { message: '无效的关系，数据不匹配' },
-              HttpStatus.BAD_REQUEST,
+              { message: '无效的关系，数据不匹配', type: 'PrismaError' },
+              HttpStatus.OK,
             )
           default:
             throw new HttpException(
-              { message: '数据库错误，请稍后重试' },
-              HttpStatus.INTERNAL_SERVER_ERROR,
+              { message: '数据库错误，请稍后重试', type: 'PrismaError' },
+              HttpStatus.OK,
             )
         }
       } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
         // 未知 Prisma 错误
         throw new HttpException(
-          { message: '数据库异常，请稍后重试' },
-          HttpStatus.INTERNAL_SERVER_ERROR,
+          { message: '数据库异常，请稍后重试', type: 'PrismaError' },
+          HttpStatus.OK,
         )
       } else {
         // 捕获其他错误并抛出
         throw new HttpException(
-          { message: error.message || '未知错误' },
+          {
+            message: error.message || '数据库异常，请稍后重试',
+            type: 'PrismaError',
+          },
           HttpStatus.INTERNAL_SERVER_ERROR,
         )
       }

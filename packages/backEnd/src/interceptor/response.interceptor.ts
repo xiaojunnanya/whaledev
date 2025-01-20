@@ -7,7 +7,7 @@ import {
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common'
-import { Observable, throwError } from 'rxjs'
+import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
@@ -47,8 +47,8 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         res.send(returnMsg)
       }),
       catchError(err => {
-        // 系统级的错误，在这里抛出，异常那边捕获
-        return throwError(() => new Error(err)) // 你可以自定义错误信息
+        // 系统级的错误/class-validator的异常，在这里抛出，异常那边捕获
+        throw err
       }),
     )
   }

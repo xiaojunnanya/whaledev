@@ -41,13 +41,13 @@ const App = memo(() => {
     const reason = e.reason
 
     if (reason && reason?.errorFields) {
-      console.log('react form 表单验证错误')
+      console.error('react form 表单验证错误')
     } else if (!target || (target && !target?.localName)) {
-      console.log('JS运行错误')
+      console.error('JS运行错误')
     } else if (target?.localName) {
-      console.log('资源加载错误')
+      console.error('资源加载错误')
     } else {
-      console.log('未知错误')
+      console.error('未知错误')
     }
   }
 
