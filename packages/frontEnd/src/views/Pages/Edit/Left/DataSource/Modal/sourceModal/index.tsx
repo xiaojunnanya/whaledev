@@ -4,6 +4,7 @@ import { SourceModalStyled } from './style'
 import { Button, Form, Input, Radio, Steps, Switch } from 'antd'
 import ParamInOrDec from '@/components/ParamInOrDec'
 import ContainerVh from '@/components/ContainerVh'
+import { debounce } from 'lodash-es'
 
 const initValue = {
   name: '',
@@ -38,13 +39,47 @@ export default memo(() => {
     if (current === 0) {
       form.validateFields(['name', 'url']).then(() => {
         setCurrent(current + 1)
-        // console.log(form.getFieldsValue())
       })
+    } else {
+      setCurrent(current + 1)
     }
   }
 
   const prev = () => {
     setCurrent(current - 1)
+  }
+
+  const handleValuesChange = (changedValues: { [key: string]: any }) => {
+    if (changedValues.url) {
+      console.log('URL字段值变化了:', changedValues.url)
+      // url 发生变化，解析，放到 params 中
+      try {
+        const url = new URL(changedValues.url)
+
+        const { search, origin, pathname } = url
+        const params = Array.from(new URLSearchParams(search).entries()).map(
+          ([key, value]) => ({
+            key,
+            value,
+          }),
+        )
+
+        if (params.length === 0) {
+          form.setFieldValue('params', initValue.params)
+        } else {
+          form.setFieldValue('params', params)
+        }
+
+        form.setFieldValue('url', `${origin}${pathname}`)
+      } catch (error) {
+        form.setFields([
+          {
+            name: 'url',
+            errors: ['URL输入格式错误，请确保URL正确'],
+          },
+        ])
+      }
+    }
   }
 
   const items = steps.map(item => ({ key: item.title, title: item.title }))
@@ -58,6 +93,7 @@ export default memo(() => {
           wrapperCol={{ span: 19 }}
           initialValues={initValue}
           form={form}
+          onValuesChange={debounce(handleValuesChange, 500)}
         >
           {current === 0 && (
             <>
@@ -83,9 +119,14 @@ export default memo(() => {
               <Form.Item
                 label="接口地址"
                 name="url"
-                rules={[{ required: true, message: '请输入接口地址' }]}
+                rules={[
+                  {
+                    required: true,
+                    message: '请输入接口地址',
+                  },
+                ]}
               >
-                <Input placeholder="请输入接口URL" />
+                <Input placeholder="请输入接口地址，需携带http/https" />
               </Form.Item>
               <ParamInOrDec
                 formData={{
@@ -115,7 +156,7 @@ export default memo(() => {
               <Form.Item
                 label="开启代理"
                 name="isCors"
-                extra="开启接口代理对解决跨域问题很有用"
+                extra="开启接口代理可帮助解决跨域问题"
               >
                 <Switch />
               </Form.Item>
