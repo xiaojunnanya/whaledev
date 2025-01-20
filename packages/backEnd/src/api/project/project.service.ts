@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { createProjectDto } from './dto/project.dto'
 import { v4 as uuidv4 } from 'uuid'
-import { customResponse } from '@/interceptor/response.interceptor'
 import { PrismaService } from '@/global/mysql/prisma.service'
 import { StoreService } from '@/global/store/store.service'
+import { ReturnResult } from '@/common/returnResult'
+
 // 遗留的问题：权限控制，其他用户不能获取用删除处理，这里目前用的user_id做的判断，需要优化，只是返回了报错
+
 @Injectable()
 export class ProjectService {
   constructor(
@@ -35,7 +37,7 @@ export class ProjectService {
       },
     })
 
-    return customResponse(0, '创建成功', 'success')
+    return ReturnResult.success('创建成功')
   }
 
   async getProjectList(page: number) {
@@ -60,7 +62,7 @@ export class ProjectService {
       }),
     ])
 
-    return customResponse(0, '获取成功', 'success', {
+    return ReturnResult.success('获取成功', {
       data,
       total,
     })
@@ -93,7 +95,7 @@ export class ProjectService {
       }),
     ])
 
-    return customResponse(0, '获取成功', 'success', {
+    return ReturnResult.success('获取成功', {
       data,
       total,
     })
@@ -123,7 +125,7 @@ export class ProjectService {
       }),
     ])
 
-    return customResponse(0, '删除成功', 'success')
+    return ReturnResult.success('删除成功')
   }
 
   async updateProject(project_id: string, data: createProjectDto) {
@@ -142,20 +144,20 @@ export class ProjectService {
       },
     })
 
-    return customResponse(0, '更新成功', 'success')
+    return ReturnResult.success('更新成功')
   }
 
-  async getProjectDetail(id: string) {
+  async getProjectDetail(project_id: string) {
     const user_id = this.store.get('user_id')
     const data = await this.prisma.project.findUnique({
       where: {
-        project_id: id,
+        project_id,
         user_id,
         status: 0,
       },
       select: this.selectData,
     })
 
-    return customResponse(0, '查询成功', 'success', data)
+    return ReturnResult.success('查询成功', data)
   }
 }

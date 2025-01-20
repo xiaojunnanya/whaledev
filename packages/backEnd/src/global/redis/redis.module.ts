@@ -1,11 +1,13 @@
 import { Module, Global } from '@nestjs/common'
 import Redis from 'ioredis'
+import { RedisService } from './redis.service'
+import { RedisComment } from './redis.comment'
 
 @Global()
 @Module({
   providers: [
     {
-      provide: 'RedisService',
+      provide: 'RedisClientConnect',
       useFactory: () => {
         return new Redis({
           host: 'localhost',
@@ -20,7 +22,9 @@ import Redis from 'ioredis'
         })
       },
     },
+    RedisService,
+    RedisComment,
   ],
-  exports: ['RedisService'],
+  exports: ['RedisClientConnect', RedisService, RedisComment],
 })
 export class RedisModule {}

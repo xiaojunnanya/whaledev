@@ -3,7 +3,7 @@ import { StoreService } from '@/global/store/store.service'
 import { Injectable } from '@nestjs/common'
 import { createPageDto, updatePageDto } from './dto/pages.dto'
 import { v4 as uuidv4 } from 'uuid'
-import { customResponse } from '@/interceptor/response.interceptor'
+import { ReturnResult } from '@/common/returnResult'
 
 @Injectable()
 export class PagesService {
@@ -32,64 +32,105 @@ export class PagesService {
       },
     })
 
-    return customResponse(0, '创建成功', 'success')
+    return ReturnResult.success('创建成功')
   }
 
   async getPageList(project_id: string) {
     const list = await this.prisma.pages.findMany({
       where: {
-        project: {
-          user_id: this.store.get('user_id'),
+        project_id: {
+          in: await this.prisma.project
+            .findMany({
+              where: {
+                user_id: this.store.get('user_id'),
+                project_id,
+                status: 0,
+              },
+              select: {
+                project_id: true,
+              },
+            })
+            .then(projects => projects.map(project => project.project_id)),
         },
-        project_id,
         status: 0,
       },
       select: this.selectData,
     })
 
-    return customResponse(0, '获取成功', 'success', list)
+    return ReturnResult.success('获取成功', list)
   }
 
   async updatePage(data: updatePageDto) {
     const { page_id, page_name } = data
     await this.prisma.pages.update({
       where: {
-        project: {
-          user_id: this.store.get('user_id'),
-        },
         status: 0,
         page_id,
+        project_id: {
+          in: await this.prisma.project
+            .findMany({
+              where: {
+                user_id: this.store.get('user_id'),
+                status: 0,
+              },
+              select: {
+                project_id: true,
+              },
+            })
+            .then(projects => projects.map(project => project.project_id)),
+        },
       },
       data: {
         page_name,
       },
     })
 
-    return customResponse(0, '更新成功', 'success')
+    return ReturnResult.success('更新成功')
   }
 
   async deletePage(page_id: string) {
     await this.prisma.pages.update({
       where: {
-        project: {
-          user_id: this.store.get('user_id'),
-        },
         page_id,
         status: 0,
+        project_id: {
+          in: await this.prisma.project
+            .findMany({
+              where: {
+                user_id: this.store.get('user_id'),
+                status: 0,
+              },
+              select: {
+                project_id: true,
+              },
+            })
+            .then(projects => projects.map(project => project.project_id)),
+        },
       },
       data: {
         status: 1,
       },
     })
 
-    return customResponse(0, '删除成功', 'success')
+    return ReturnResult.success('删除成功')
   }
 
-  async getPageDetail(page_id: string) {
+  async getPageDetail(project_id: string, page_id: string) {
     const detail = await this.prisma.pages.findUnique({
       where: {
-        project: {
-          user_id: this.store.get('user_id'),
+        project_id: {
+          in: await this.prisma.project
+            .findMany({
+              where: {
+                user_id: this.store.get('user_id'),
+                project_id,
+                status: 0,
+              },
+              select: {
+                project_id: true,
+              },
+            })
+            .then(projects => projects.map(project => project.project_id)),
         },
         page_id,
         status: 0,
@@ -97,6 +138,6 @@ export class PagesService {
       select: this.selectData,
     })
 
-    return customResponse(0, '获取成功', 'success', detail)
+    return ReturnResult.success('获取成功', detail)
   }
 }

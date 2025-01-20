@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
   </BrowserRouter>,
 )
 
-console.log(`
+console.info(`
           _____                                     _____                    _____                    _____
           /\\    \\                 ______            |\\    \\                  /\\    \\                  /\\    \\
         /::\\    \\               |::|   |           |:\\____\\                /::\\    \\                /::\\____\\

@@ -1,16 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { EmailCodeDto, LoginDto, RegisterOrForgetDto } from './dto/auth.dto'
 import { createTransport, Transporter } from 'nodemailer'
 import * as fs from 'fs'
 import * as ejs from 'ejs'
 import * as svgCaptcha from 'svg-captcha'
 import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config'
-import Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
-import { customResponse } from '@/interceptor/response.interceptor'
 import { codeType } from './type/index.type'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/global/mysql/prisma.service'
+import { RedisService } from '@/global/redis/redis.service'
+import { ReturnResult } from '@/common/returnResult'
+import { ErrorCode } from '@/common/errorCode'
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-    @Inject('RedisService') private readonly redis: Redis,
+    private readonly redisService: RedisService<string>,
   ) {
     this.transporter = createTransport({
       host: 'smtp.qq.com', // smtp服务的域名
@@ -62,7 +63,10 @@ export class AuthService {
         html: emailHtml,
       })
     } catch (error) {
-      return customResponse(0, '发送邮件失败，请稍后再试', 'error')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.SYSTEM_ERROR,
+        '发送邮件失败，请稍后再试',
+      )
     }
   }
 
@@ -90,8 +94,8 @@ export class AuthService {
     const msg = await this.prisma.user.findUnique({ where: { email } })
 
     if ((type === 'register' && !msg) || (type === 'forget' && msg)) {
+      await this.redisService.setex(email, code, this.validity * 60)
       await this.sendEmailCodeFun(emailCode, code)
-      await this.redis.setex(email, this.validity * 60, code)
     } else {
       isSuccess = false
       returnMsg =
@@ -100,12 +104,14 @@ export class AuthService {
           : '当前邮箱未注册，请先注册'
     }
 
-    return customResponse(0, returnMsg, isSuccess ? 'success' : 'info')
+    return isSuccess
+      ? ReturnResult.success(returnMsg)
+      : ReturnResult.info(returnMsg)
   }
 
   // 注册和忘记密码
   async registerOrForget(registerDto: RegisterOrForgetDto, type: codeType) {
-    const { email, emailCode, password, confirmPassword, code } = registerDto
+    const { email, emailCode, password } = registerDto
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
@@ -114,20 +120,21 @@ export class AuthService {
         type === 'register'
           ? '当前邮箱已注册，请直接登录'
           : '当前邮箱未注册，请先注册'
-      return customResponse(0, message, 'info')
+      return ReturnResult.info(message)
     }
 
-    if (password !== confirmPassword)
-      return customResponse(0, '两次密码不一致，请确认密码后重试', 'error')
-
-    const redisCode = await this.redis.get(email)
+    const redisCode = await this.redisService.get(email)
     if (!redisCode)
-      return customResponse(0, '验证码不存在或已过期，请重新发送', 'error')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '验证码不存在或已过期，请重新发送',
+      )
 
     if (redisCode !== emailCode)
-      return customResponse(0, '验证码错误，请重新输入', 'error')
-
-    // 遗留的问题：图形验证码 code 的验证
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '邮箱验证码错误，请重新输入',
+      )
 
     let returnMsg = ''
     if (type === 'register') {
@@ -148,31 +155,32 @@ export class AuthService {
           password,
         },
       })
-      returnMsg = '修改密码成功，请返回重新登录'
+      returnMsg = '修改密码成功，请重新登录'
     }
 
     // 删除图形验证码
-    await this.redis.del(email)
+    await this.redisService.delete(email)
 
-    return customResponse(0, returnMsg, 'success')
+    return ReturnResult.success(returnMsg)
   }
 
   // 登录
   async login(loginDto: LoginDto) {
-    const { email, password, code } = loginDto
+    const { email, password } = loginDto
 
     const userRes = await this.prisma.user.findUnique({ where: { email } })
 
-    if (!userRes) return customResponse(0, '当前邮箱未注册，请先注册', 'error')
+    if (!userRes) return ReturnResult.error('当前邮箱未注册，请先注册')
 
     if (userRes.password !== password)
-      return customResponse(0, '密码错误', 'error')
+      return ReturnResult.errByErrCodeAndMsg(
+        ErrorCode.PARAMS_ERROR,
+        '密码错误，请确定密码后重新输入',
+      )
 
     // 遗留的问题：token无感刷新
 
-    // 遗留的问题：图形验证码 code 的验证
-
-    return customResponse(0, '登录成功', 'success', {
+    return ReturnResult.success('登陆成功', {
       token: this.jwtService.sign({
         user_id: userRes.user_id,
       }),
@@ -192,6 +200,12 @@ export class AuthService {
       height: 44, //高度
       background: '#0099FF', //背景颜色
     })
+
+    await this.redisService.setex(
+      captcha.text.toLowerCase(),
+      captcha.text.toLowerCase(),
+      60,
+    )
 
     res.type('image/svg+xml')
     res.status(200).send(captcha.data)

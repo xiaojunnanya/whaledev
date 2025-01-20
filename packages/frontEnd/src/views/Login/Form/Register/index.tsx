@@ -28,9 +28,9 @@ export default memo(() => {
       confirmPassword: SparkMD5.hash(values.confirmPassword),
     }
 
-    const { code, msgType, message } = await register(valuesData)
+    const { msgType, message } = await register(valuesData)
 
-    if (code === 0 && msgType === 'success') {
+    if (msgType === 'success') {
       setMessage({ type: 'success', text: message })
       setMode('login')
     } else {
@@ -39,7 +39,7 @@ export default memo(() => {
         text: message || gloablErrorMessage,
       })
       updateCode()
-      form.resetFields(['checkCode'])
+      form.resetFields(['code'])
     }
   }
 
@@ -51,8 +51,9 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
-        const { code, msgType, message } = await sendEmail(email, 'register')
-        if (code === 0 && msgType === 'success') {
+        const { msgType, message } = await sendEmail(email, 'register')
+        if (msgType === 'success') {
+          downTime()
           setMessage({ type: 'success', text: message })
         } else {
           setMessage({
@@ -68,7 +69,7 @@ export default memo(() => {
 
     const fn = () => {
       time--
-      setBtnName(time + '秒后重新获取')
+      setBtnName(`重新获取(${time}s)`)
       if (time === 0) {
         setBtnName('获取验证码')
         clearInterval(a)
@@ -126,7 +127,11 @@ export default memo(() => {
               placeholder="请邮箱验证码"
             />
           </Form.Item>
-          <Button type="primary" onClick={getEmailCode}>
+          <Button
+            type="primary"
+            onClick={getEmailCode}
+            disabled={btnName !== '获取验证码'}
+          >
             {btnName}
           </Button>
         </div>

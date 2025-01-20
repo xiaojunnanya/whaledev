@@ -26,16 +26,16 @@ export const updatePage = (data: any): any => {
   })
 }
 
-export const deletePage = (id: string): any => {
+export const deletePage = (page_id: string): any => {
   return req.request({
-    url: `/pages/delete/${id}`,
+    url: `/pages/delete/${page_id}`,
     method: 'delete',
   })
 }
 
-export const getPageDetail = (id: string): any => {
+export const getPageDetail = (project_id: string, page_id: string): any => {
   return req.request({
-    url: `/pages/detail/${id}`,
+    url: `/pages/detail/${project_id}/${page_id}`,
     method: 'get',
   })
 }

@@ -28,10 +28,10 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
     }
 
-    const { code, msgType, message } = await login(valuesData)
+    const { msgType, message } = await login(valuesData)
 
-    if (code === 0 && msgType === 'success') {
-      setMessage({ type: 'success', text: message })
+    if (msgType === 'success') {
+      setMessage({ type: msgType, text: message })
       naviage('/engineering/project')
     } else {
       setMessage({
@@ -39,7 +39,7 @@ export default memo(() => {
         text: message || gloablErrorMessage,
       })
       updateCode()
-      form.resetFields(['checkCode'])
+      form.resetFields(['code'])
     }
   }
 

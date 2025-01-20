@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { Logger, ValidationPipe } from '@nestjs/common'
+import { Logger } from '@nestjs/common'
 import AllExceptionsFilter from './expection/exception.filter'
 import { NestExpressApplication } from '@nestjs/platform-express'
+import { CustomValidationPipe } from './validator/index.validator'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   // class-validator异常
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(CustomValidationPipe)
 
   // 捕获所有的错误
   app.useGlobalFilters(new AllExceptionsFilter())

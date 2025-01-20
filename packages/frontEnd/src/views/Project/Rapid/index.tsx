@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { RapidStyled } from './style'
-import { Button, Dropdown, Form, Input, Modal, Select } from 'antd'
+import { Button, Dropdown, Empty, Form, Input, Modal, Select } from 'antd'
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -216,7 +216,11 @@ export default memo(() => {
       </div>
 
       <div className="page-preview">
-        {page_id ? <Preview height={122}></Preview> : <div>请选择页面</div>}
+        {page_id ? (
+          <Preview height={122}></Preview>
+        ) : (
+          <Empty description="请选择页面" style={{ marginTop: 100 }} />
+        )}
       </div>
 
       <Modal

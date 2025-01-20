@@ -1,6 +1,6 @@
+import { ReturnResult } from '@/common/returnResult'
 import { PrismaService } from '@/global/mysql/prisma.service'
 import { StoreService } from '@/global/store/store.service'
-import { customResponse } from '@/interceptor/response.interceptor'
 import { Inject, Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -23,6 +23,6 @@ export class UserService {
       },
     })
 
-    return customResponse(0, 'ok', 'success', res)
+    return ReturnResult.success('ok', res)
   }
 }

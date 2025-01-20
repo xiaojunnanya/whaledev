@@ -41,7 +41,7 @@ export default memo(() => {
   }, [])
 
   const getPageInfo = async () => {
-    const { data } = await getPageDetail(page_id)
+    const { data } = await getPageDetail(project_id, page_id)
 
     if (data) {
       setPageInfo(data)
