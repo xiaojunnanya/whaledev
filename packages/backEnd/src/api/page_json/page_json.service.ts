@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { savePageJsonDto } from './dto/page_json.dtp'
-import { PrismaService } from '@/global/mysql/prisma.service'
+import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dtp'
+import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { ReturnResult } from '@/common/returnResult'
 import { ErrorCode } from '@/common/errorCode'
@@ -78,5 +78,11 @@ export class PageJsonService {
     }
 
     return 'ok'
+  }
+
+  async savePreviewData(data: UrlInfoDto) {
+    console.log(data, '123')
+
+    return ReturnResult.success('保存成功')
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { createProjectDto } from './dto/project.dto'
 import { v4 as uuidv4 } from 'uuid'
-import { PrismaService } from '@/global/mysql/prisma.service'
+import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { ReturnResult } from '@/common/returnResult'
 

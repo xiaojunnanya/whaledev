@@ -1,5 +1,5 @@
 import { ReturnResult } from '@/common/returnResult'
-import { PrismaService } from '@/global/mysql/prisma.service'
+import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { Inject, Injectable } from '@nestjs/common'
 

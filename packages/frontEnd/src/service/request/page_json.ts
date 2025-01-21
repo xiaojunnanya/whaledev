@@ -17,3 +17,11 @@ export const getPageJsonByPageId = (page_id: string): any => {
     },
   })
 }
+
+export const getDataPreview = (data: any): any => {
+  return req.request({
+    url: '/page_json/preview_data',
+    method: 'post',
+    data,
+  })
+}

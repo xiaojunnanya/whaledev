@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { PageJsonService } from './page_json.service'
-import { savePageJsonDto } from './dto/page_json.dtp'
+import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dtp'
 
 @Controller('page_json')
 export class PageJsonController {
@@ -14,5 +14,10 @@ export class PageJsonController {
   @Get('get')
   async getPageJson(@Query('page_id') page_id: string) {
     return this.pageJsonService.getPageJson(page_id)
+  }
+
+  @Post('preview_data')
+  async savePreviewData(@Body() data: UrlInfoDto) {
+    return this.pageJsonService.savePreviewData(data)
   }
 }

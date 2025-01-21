@@ -1,4 +1,4 @@
-import { PrismaService } from '@/global/mysql/prisma.service'
+import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { Injectable } from '@nestjs/common'
 import { createPageDto, updatePageDto } from './dto/pages.dto'

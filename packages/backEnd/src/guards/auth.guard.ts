@@ -11,7 +11,7 @@ import { Observable } from 'rxjs'
 import { WHAKE_Skip_AUTH } from '@/decorator/router.decorator'
 import { Reflector } from '@nestjs/core'
 import { StoreService } from '@/global/store/store.service'
-import { PrismaService } from '@/global/mysql/prisma.service'
+import { PrismaService } from '@/global/prisma/prisma.service'
 import { ErrorException } from '@/config'
 
 // 遗留的问题：待验证

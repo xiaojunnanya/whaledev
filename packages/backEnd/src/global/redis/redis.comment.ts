@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { RedisService } from './redis.service'
 
 // 存放较复杂的redis存储逻辑
