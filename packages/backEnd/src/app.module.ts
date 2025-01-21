@@ -16,6 +16,7 @@ import { UserModule } from './api/user/user.module'
 import { PagesModule } from './api/pages/pages.module'
 import { PageJsonModule } from './api/page_json/page_json.module'
 import { LoggerModule } from './global/logger/logger.module'
+import { AxiosModule } from './global/axios/axios.module'
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { LoggerModule } from './global/logger/logger.module'
     PrismaModule,
     RedisModule,
     StoreModule,
+    AxiosModule,
     // api
     AuthModule,
     StaticonfigModule,

@@ -4,12 +4,14 @@ import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { ReturnResult } from '@/common/returnResult'
 import { ErrorCode } from '@/common/errorCode'
+import { AxiosService } from '@/global/axios/axios.service'
 
 @Injectable()
 export class PageJsonService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly store: StoreService,
+    private readonly httpService: AxiosService,
   ) {}
 
   async savePageJson(data: savePageJsonDto) {
@@ -81,7 +83,23 @@ export class PageJsonService {
   }
 
   async savePreviewData(data: UrlInfoDto) {
-    console.log(data, '123')
+    const { url, params, method } = data
+
+    if (method === 'GET') {
+      // 处理 params ,将 params 转换成 {a:2,b:''} 的形式
+      const result = params.reduce<{ [key: string]: any }>(
+        (acc, { key, value }) => {
+          acc[key] = value
+          return acc
+        },
+        {},
+      )
+
+      const res = await this.httpService.get(data.url, result)
+      // @ts-ignore
+      console.log(res.data.data, 'res.data')
+      // return ReturnResult.success('保存成功', res.data)
+    }
 
     return ReturnResult.success('保存成功')
   }

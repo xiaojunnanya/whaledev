@@ -7,18 +7,36 @@ import { debounce } from 'lodash-es'
 import UrlInfo from '../StepsContent/urlInfo'
 import PreviewData from '../StepsContent/previewData'
 import { getDataPreview } from '@/service/request/page_json'
+import ReturnRes from '../StepsContent/returnRes'
 
-const initValue = {
+type paramsType = {
+  key: string
+  value: any
+}
+
+interface initValueType {
+  name: string
+  method: string
+  url: string
+  params: paramsType[]
+  body: paramsType[]
+  isCors: boolean
+  'Content-Type': string
+}
+
+const initKeyValue = [{ key: '', value: '' }]
+
+const initValue: initValueType = {
   name: '',
   method: 'GET',
   url: '',
-  params: [{ key: '', value: '' }],
-  body: [{ key: '', value: '' }],
+  params: initKeyValue,
+  body: initKeyValue,
   isCors: true,
   'Content-Type': 'application/json',
 }
 
-const steps = ['接口设置', '字段映射', '数据预览']
+const steps = ['接口设置', '返回结构', '数据预览']
 
 export default memo(() => {
   const [form] = Form.useForm()
@@ -27,8 +45,27 @@ export default memo(() => {
   const next = () => {
     if (current === 0) {
       form.validateFields(['name', 'url']).then(() => {
-        console.log(form.getFieldsValue(), '1')
-        getDataPreview(form.getFieldsValue())
+        // 对parsma key/value 进行处理，value可以为空，key不能为空
+        const data: initValueType = form.getFieldsValue()
+        const { params, body } = data
+
+        const paramsFilter = params.filter(item => item.key !== '')
+        const bodyFilter = body.filter(item => item.key !== '')
+
+        const newParams =
+          paramsFilter.length === 0 ? initKeyValue : paramsFilter
+        const newBody = bodyFilter.length === 0 ? initKeyValue : bodyFilter
+
+        form.setFieldValue('params', newParams)
+        form.setFieldValue('body', newBody)
+
+        setCurrent(current + 1)
+
+        getDataPreview({
+          ...data,
+          params: newParams,
+          body: newBody,
+        })
         setCurrent(current + 1)
       })
     } else {
@@ -86,7 +123,7 @@ export default memo(() => {
           onValuesChange={debounce(handleValuesChange, 900)}
         >
           {current === 0 && <UrlInfo />}
-          {current === 1 && <>loading...</>}
+          {current === 1 && <ReturnRes />}
           {current === 2 && <PreviewData />}
         </Form>
       </ContainerVh>
