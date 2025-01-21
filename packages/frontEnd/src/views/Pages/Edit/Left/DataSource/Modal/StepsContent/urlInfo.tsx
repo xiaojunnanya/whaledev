@@ -16,7 +16,7 @@ export default memo(() => {
         <Radio.Group buttonStyle="solid">
           <Radio.Button value="GET">GET</Radio.Button>
           <Radio.Button value="POST">POST</Radio.Button>
-          <Radio.Button value="PATCH">PATCH</Radio.Button>
+          <Radio.Button value="PUT">PUT</Radio.Button>
           <Radio.Button value="DELETE">DELETE</Radio.Button>
         </Radio.Group>
       </Form.Item>

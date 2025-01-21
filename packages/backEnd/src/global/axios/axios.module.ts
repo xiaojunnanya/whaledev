@@ -4,7 +4,12 @@ import { HttpModule } from '@nestjs/axios'
 
 @Global()
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule.register({
+      timeout: 10000,
+      maxRedirects: 5,
+    }),
+  ],
   providers: [AxiosService],
   exports: [AxiosService],
 })

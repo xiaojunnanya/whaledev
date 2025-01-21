@@ -13,8 +13,8 @@ export class UrlInfoDto {
   name: string
 
   @IsNotEmpty()
-  @IsIn(['GET', 'POST', 'PATCH', 'DELETE'], {
-    message: 'method 只能为 GET, POST, PATCH, DELETE中的一个',
+  @IsIn(['GET', 'POST', 'PUT', 'DELETE'], {
+    message: 'method 只能为 GET, POST, PUT, DELETE中的一个',
   })
   method: string
 
