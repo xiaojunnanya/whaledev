@@ -22,6 +22,9 @@ export class UrlInfoDto {
   url: string
 
   @IsNotEmpty()
+  header: { key: string; value: string }[]
+
+  @IsNotEmpty()
   params: { key: string; value: string }[]
 
   @IsNotEmpty()
@@ -45,4 +48,7 @@ export class UrlInfoDto {
 
   @IsNotEmpty()
   isCors: boolean
+
+  @IsNotEmpty()
+  res: any
 }

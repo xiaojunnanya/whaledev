@@ -38,6 +38,12 @@ export default memo(() => {
       </Form.Item>
       <ParamInOrDec
         formData={{
+          label: 'Header',
+          name: 'header',
+        }}
+      ></ParamInOrDec>
+      <ParamInOrDec
+        formData={{
           label: 'Params参数',
           name: 'params',
         }}

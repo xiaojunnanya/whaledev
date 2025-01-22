@@ -83,7 +83,7 @@ export class PageJsonService {
   }
 
   async savePreviewData(data: UrlInfoDto) {
-    const { url, params, method } = data
+    const { url, params, method, res } = data
 
     if (method === 'GET') {
       // 处理 params ,将 params 转换成 {a:2,b:''} 的形式
@@ -95,10 +95,16 @@ export class PageJsonService {
         {},
       )
 
-      const res = await this.httpService.get(data.url, result)
-      // @ts-ignore
-      console.log(res.data.data, 'res.data')
-      // return ReturnResult.success('保存成功', res.data)
+      const retRes = await this.httpService.get(data.url, result)
+
+      // 对res进行处理
+      const spt: string = res === 'data' ? '' : res.split('data.')[1]
+
+      const returnData = spt
+        ? retRes?.[spt as keyof typeof retRes] || null
+        : retRes
+
+      return ReturnResult.success('保存成功', returnData)
     }
 
     return ReturnResult.success('保存成功')
