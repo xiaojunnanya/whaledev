@@ -66,18 +66,18 @@ class WhaleRequest {
             break
         }
 
-        if (messageText) {
-          message.destroy()
-          message.error(messageText)
+        // if (messageText) {
+        //   message.destroy()
+        //   message.error(messageText)
 
-          setTimeout(() => {
-            if (window.location.pathname !== '/login') {
-              window.location.href = '/login'
-            }
-          }, 1000)
+        //   setTimeout(() => {
+        //     if (window.location.pathname !== '/login') {
+        //       window.location.href = '/login'
+        //     }
+        //   }, 1000)
 
-          return
-        }
+        //   return
+        // }
 
         Promise.reject(error)
       },

@@ -13,25 +13,35 @@ import { ErrorException } from '@/config'
 @Catch()
 export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
+    console.log(exception, 'exception')
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
+    let response: any = {}
+    let code = 500
+
     let message = ''
 
-    const response: {
-      message: any
-      type: string
-    } = exception.getResponse() as any
-
-    // console.error(response, 'exception')
+    if (exception instanceof HttpException) {
+      response = exception.getResponse() as any
+      code = exception.getStatus()
+    } else if ((exception as any) instanceof Error) {
+      // 处理普通 Error 对象
+      message = (exception as any).message
+      response = { message, type: 'SystemError' }
+    } else {
+      // 处理未知类型的异常
+      message = 'Internal Server Error'
+      response = { message, type: 'UnknownError' }
+    }
 
     if (
-      exception.name === 'BadRequestException' &&
+      exception?.name === 'BadRequestException' &&
       response?.type === 'ValidatorError'
     ) {
       // 处理 class-validator 异常
       message = response?.message || ErrorException.ValidatorError
     } else if (
-      exception.name === 'HttpException' &&
+      exception?.name === 'HttpException' &&
       response?.type === 'PrismaError'
     ) {
       // 处理处理数据库异常
@@ -39,9 +49,6 @@ export default class AllExceptionsFilter implements ExceptionFilter {
     } else {
       message = exception.message || ErrorException.ServerError
     }
-
-    const code =
-      exception instanceof HttpException ? exception.getStatus() : 500
 
     const errorResponse: responseType = {
       code: code,
