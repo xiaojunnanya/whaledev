@@ -63,4 +63,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 cache/
 
-packages/backEnd/src/config/index.ts
+/packages/backEnd/src/config/index.ts
+/packages/frontEnd/tsconfig.app.tsbuildinfo
+/packages/frontEnd/tsconfig.node.tsbuildinfo

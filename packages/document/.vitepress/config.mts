@@ -37,4 +37,5 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/xiaojunnanya/whaledev' },
     ],
   },
+  outDir: '../../build/docs',
 })
