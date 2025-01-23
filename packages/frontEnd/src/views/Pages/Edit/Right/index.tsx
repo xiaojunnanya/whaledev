@@ -23,7 +23,7 @@ export default memo(() => {
         <>
           <Segmented
             value={key}
-            onChange={setKey}
+            onChange={value => setKey(value)}
             block
             options={['属性', '样式', '事件']}
             className="whale-segmented"
