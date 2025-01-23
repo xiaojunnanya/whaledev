@@ -236,7 +236,7 @@ export default memo(() => {
         </Button>
       </div>
 
-      <ContainerVh isLoading={cardLoading} height={150} isSetHeight>
+      <ContainerVh isLoading={cardLoading} height={150} isSetHeight={true}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="content"

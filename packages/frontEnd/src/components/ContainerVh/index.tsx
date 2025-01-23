@@ -10,12 +10,15 @@ interface IProps {
 }
 
 export default memo((props: IProps) => {
-  // 遗留的问题：这个高度？？？
   const { children, height = 0, isLoading = false, isSetHeight = false } = props
+
   return (
     <Flex gap="middle" vertical>
       <Spin tip="加载中..." spinning={isLoading}>
-        <ContainerStyled height={height} isSetHeight={isSetHeight}>
+        <ContainerStyled
+          height={height}
+          $isHeight={isSetHeight ? 'true' : 'false'}
+        >
           {children}
         </ContainerStyled>
       </Spin>

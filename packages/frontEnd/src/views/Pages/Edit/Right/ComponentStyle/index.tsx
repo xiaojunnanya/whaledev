@@ -105,7 +105,7 @@ export default memo(() => {
   }, 500)
 
   return (
-    <ContainerVh height={132}>
+    <ContainerVh height={135}>
       <ComponentStyleStyled>
         <div className="whale-style">
           <div className="whale-right-title">自定义样式</div>

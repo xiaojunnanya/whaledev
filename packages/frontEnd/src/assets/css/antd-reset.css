@@ -12,3 +12,7 @@
 .ant-tree-node-content-wrapper {
   white-space: nowrap;
 }
+
+.ant-tabs-nav {
+  margin: 0 !important;
+}
