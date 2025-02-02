@@ -44,13 +44,13 @@ export default memo((props: IProps) => {
     const obj = {
       ...res,
       actionType: saveAction?.key || '',
-      actioneName: saveAction?.label || '编排节点',
+      actionName: saveAction?.label || '编排节点',
     }
 
     const newObj = {
       ...editNode,
       config: obj,
-      content: obj?.actioneName,
+      content: obj?.actionName,
     }
 
     const newList = cloneDeep(list)

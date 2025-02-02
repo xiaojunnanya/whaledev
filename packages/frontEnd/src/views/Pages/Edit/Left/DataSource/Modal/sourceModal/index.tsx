@@ -67,6 +67,7 @@ export default memo(() => {
 
       form.setFieldValue('params', newParams)
       form.setFieldValue('body', newBody)
+      form.setFieldValue('header', newHeader)
 
       setCurrent(current + 1)
 
