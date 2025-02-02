@@ -5,13 +5,7 @@ import { DataSourceStyled } from './style'
 import ContainerVh from '@/components/ContainerVh'
 import SourceModal from './Modal/sourceModal'
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-]
+const data: any[] = []
 
 export default memo(() => {
   const [isSourceModalOpen, setSourceModalOpen] = useState(false)
@@ -39,7 +33,7 @@ export default memo(() => {
         <Button
           type="link"
           icon={<PlusOutlined />}
-          onClick={() => setSourceModalOpen(true)}
+          // onClick={() => setSourceModalOpen(true)}
         >
           新增
         </Button>
