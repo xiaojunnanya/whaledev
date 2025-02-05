@@ -1,27 +1,40 @@
-import { memo } from 'react'
+import { lazy, memo, Suspense } from 'react'
 import { RightStyled } from './style'
 import { Tabs, TabsProps } from 'antd'
 import { useComponetsStore } from '@/stores/components'
 
-import ComponentAttr from './ComponentAttr'
-import ComponentStyle from './ComponentStyle'
-import ComponentEvent from './ComponentEvent'
+const ComponentAttr = lazy(() => import('./ComponentAttr'))
+const ComponentStyle = lazy(() => import('./ComponentStyle'))
+const ComponentEvent = lazy(() => import('./ComponentEvent'))
+import Loading from '@/components/Loading'
 
 const items: TabsProps['items'] = [
   {
     key: '1',
     label: '属性',
-    children: <ComponentAttr />,
+    children: (
+      <Suspense fallback={<Loading />}>
+        <ComponentAttr />
+      </Suspense>
+    ),
   },
   {
     key: '2',
     label: '样式',
-    children: <ComponentStyle />,
+    children: (
+      <Suspense fallback={<Loading />}>
+        <ComponentStyle />
+      </Suspense>
+    ),
   },
   {
     key: '3',
     label: '事件',
-    children: <ComponentEvent />,
+    children: (
+      <Suspense fallback={<Loading />}>
+        <ComponentEvent />
+      </Suspense>
+    ),
   },
 ]
 

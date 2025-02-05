@@ -35,12 +35,9 @@ export const ContentStyled = styled.div`
 
   .left-aside {
     height: 100%;
-    /* width: 298px; */
+    width: 300px;
     background-color: ${props => props.theme.defaultColor.white};
     border-left: 1px solid ${props => props.theme.defaultColor.grey};
-    border-right: 1px solid ${props => props.theme.defaultColor.grey};
-    left: 48px;
-    z-index: 999;
 
     .side-top {
       display: flex;
@@ -51,20 +48,6 @@ export const ContentStyled = styled.div`
 
       &-title {
         font-weight: 700;
-      }
-
-      &-right {
-        display: flex;
-        align-items: center;
-
-        img {
-          cursor: pointer;
-        }
-
-        > span {
-          margin-left: 10px;
-          cursor: pointer;
-        }
       }
     }
   }

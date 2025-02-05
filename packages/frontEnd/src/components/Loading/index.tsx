@@ -2,9 +2,19 @@ import { memo } from 'react'
 import { Spin } from 'antd'
 import { LoadingStyled } from './style.ts'
 
-export default memo(() => {
+interface IProps {
+  isBigLoading?: boolean
+}
+
+export default memo((props: IProps) => {
+  const { isBigLoading = false } = props
+
   return (
-    <LoadingStyled>
+    <LoadingStyled
+      style={{
+        height: isBigLoading ? '100vh' : '40vh',
+      }}
+    >
       <Spin size="large" />
     </LoadingStyled>
   )

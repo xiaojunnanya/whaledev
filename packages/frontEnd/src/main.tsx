@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <AuthRouter>
       <ThemeProvider theme={theme}>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<Loading isBigLoading={true} />}>
           <App />
         </Suspense>
       </ThemeProvider>
