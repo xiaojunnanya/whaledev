@@ -23,11 +23,13 @@ const tabsItems = [
     label: '组件市场',
     key: 'componentlibrary',
     icon: <ProductOutlined />,
+    disabled: true,
   },
   {
     label: '模版市场',
     key: 'template',
     icon: <AppstoreAddOutlined />,
+    disabled: true,
   },
 ]
 

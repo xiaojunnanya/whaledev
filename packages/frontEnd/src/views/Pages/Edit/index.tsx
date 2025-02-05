@@ -55,7 +55,7 @@ export default memo(() => {
           style={{
             display: active.key ? 'block' : 'none',
             position: isAffix ? 'static' : 'absolute',
-            width: leftwiden ? '498px' : '298px',
+            width: leftwiden ? '500px' : '300px',
           }}
           onTransitionEnd={handleWindowResize}
         >

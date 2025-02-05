@@ -1,4 +1,4 @@
-import { Form, Slider } from 'antd'
+import { Form } from 'antd'
 import { memo } from 'react'
 import WInputNumber from '../Comp/WInputNumber'
 
@@ -19,9 +19,9 @@ export default memo(() => {
       <Form.Item label="内边距" name="padding">
         <WInputNumber placeholder="padding" notafter={1} />
       </Form.Item>
-      <Form.Item label="透明度" name="opacity">
+      {/* <Form.Item label="透明度" name="opacity">
         <Slider min={0} max={1} step={0.1} />
-      </Form.Item>
+      </Form.Item> */}
     </div>
   )
 })

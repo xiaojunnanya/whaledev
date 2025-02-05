@@ -3,7 +3,7 @@ export const SELFWEBURL = {
   github: 'https://github.com/xiaojunnanya',
   juejin: 'https://juejin.cn/user/3633256370537165',
   whaleDocs: 'http://localhost:4173/',
-  profile: 'http://www.xiaojunnan.cn/img/logo.webp',
+  profile: '/img/avatar/default-avatar.jpg',
 }
 
 export const OUTWEBURL = {

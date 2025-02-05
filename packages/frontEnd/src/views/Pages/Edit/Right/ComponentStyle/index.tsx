@@ -16,7 +16,6 @@ import { splitValue } from '@/utils'
 import { camelToHyphen } from '@/utils'
 
 const initStyle = {
-  opacity: '1',
   'fontSize-prefix': 'px',
   'height-prefix': 'px',
   'width-prefix': 'px',
@@ -79,15 +78,18 @@ export default memo(() => {
 
     let newData = { ...data }
 
+    // 对所有输入的数据进行一层处理
     Object.entries(data).forEach(([key, value]: [string, any]) => {
       if (value === null) {
         newData[key] = undefined
       }
 
+      // 将单位与数据结合
       if (key.includes('-prefix') && value) {
         const [name, _] = key.split('-')
-        // 添加单位
+        // 单位数据结合
         if (newData[name]) newData[name] += value
+        // 单位置空，在后续清楚
         newData[key] = undefined
       }
 
@@ -99,7 +101,13 @@ export default memo(() => {
 
         newData[key] = `rgba(${r},${g},${b},${a})`
       }
+
+      // 删除不存在的数据
+      if (newData[key] === undefined) {
+        delete newData[key]
+      }
     })
+
     handleEditorChange(toCSSStr(newData))
     updateComponentStyles(curComponentId, newData)
   }, 500)
