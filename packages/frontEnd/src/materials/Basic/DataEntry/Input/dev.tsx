@@ -85,5 +85,9 @@ export default memo((props: CommonComponentProps) => {
     }
   }
 
-  return <div data-component-id={id}>{showInput()}</div>
+  return (
+    <div data-component-id={id} style={styles}>
+      {showInput()}
+    </div>
+  )
 })

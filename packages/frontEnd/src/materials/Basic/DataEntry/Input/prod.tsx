@@ -85,5 +85,5 @@ export default memo((props: CommonComponentProps) => {
     }
   }
 
-  return <div>{showInput()}</div>
+  return <div style={styles}>{showInput()}</div>
 })
