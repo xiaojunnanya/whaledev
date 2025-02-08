@@ -83,30 +83,50 @@ export class PageJsonService {
   }
 
   async savePreviewData(data: UrlInfoDto) {
-    const { url, params, method, res } = data
+    const { url, params, method, res, header, body, isCors } = data
+    const contentType = data['Content-Type']
 
-    if (method === 'GET') {
-      // 处理 params ,将 params 转换成 {a:2,b:''} 的形式
-      const result = params.reduce<{ [key: string]: any }>(
-        (acc, { key, value }) => {
-          acc[key] = value
-          return acc
-        },
-        {},
-      )
+    // 处理 params ,将 params 转换成 {a:2,b:''} 的形式
+    const paramsData = arrToObj(params)
+    const headerData = arrToObj(header)
+    const bodyData = arrToObj(body)
 
-      const retRes = await this.httpService.get(data.url, result)
+    let retRes = null
 
-      // 对res进行处理
-      const spt: string = res === 'data' ? '' : res.split('data.')[1]
-
-      const returnData = spt
-        ? retRes?.[spt as keyof typeof retRes] || null
-        : retRes
-
-      return ReturnResult.success('保存成功', returnData)
+    switch (method) {
+      case 'GET':
+        retRes = await this.httpService.get(url, paramsData)
+        break
+      // case 'POST':
+      //   retRes = await this.httpService.post(url, paramsData)
+      //   break
+      // case 'PUT':
+      //   retRes = await this.httpService.put(url, paramsData)
+      //   break
+      // case 'DELETE':
+      //   retRes = await this.httpService.delete(url, paramsData)
+      //   break
     }
 
-    return ReturnResult.success('保存成功')
+    // 对res进行处理：默认接口获取的数据就是data
+    const spt: string = res === 'data' ? '' : res.replace('data.', '')
+    const sptData = !spt ? [] : spt.split('.')
+
+    for (const item of sptData) {
+      if (retRes?.[item as keyof typeof retRes]) {
+        retRes = retRes?.[item as keyof typeof retRes]
+      } else {
+        retRes = null
+      }
+    }
+
+    return ReturnResult.success('保存成功', retRes)
   }
+}
+
+function arrToObj(arr: { key: string; value: any }[]) {
+  return arr.reduce<{ [key: string]: any }>((acc, { key, value }) => {
+    acc[key] = value
+    return acc
+  }, {})
 }

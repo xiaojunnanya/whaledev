@@ -44,13 +44,13 @@ export default memo(() => {
       ></ParamInOrDec>
       <ParamInOrDec
         formData={{
-          label: 'Params参数',
+          label: 'Params',
           name: 'params',
         }}
       ></ParamInOrDec>
       <ParamInOrDec
         formData={{
-          label: 'Body参数',
+          label: 'Body',
           name: 'body',
         }}
       ></ParamInOrDec>

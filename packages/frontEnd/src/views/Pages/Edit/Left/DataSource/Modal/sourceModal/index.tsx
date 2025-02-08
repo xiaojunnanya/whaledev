@@ -45,17 +45,18 @@ const steps = ['接口设置', '返回结构', '数据预览']
 export default memo(() => {
   const [form] = Form.useForm()
   const [current, setCurrent] = useState(0)
+  const [previewData, setPreviewData] = useState<any>({})
 
-  const next = () => {
+  const next = async () => {
     if (current === 0) {
       form.validateFields(['name', 'url']).then(() => {
         setCurrent(current + 1)
       })
     } else if (current === 1) {
       // 对parsma key/value 进行处理，value可以为空，key不能为空
-      const data: initValueType = form.getFieldsValue()
+      const formData: initValueType = form.getFieldsValue()
 
-      const { params, body, header } = data
+      const { params, body, header } = formData
 
       const headerFilter = header.filter(item => item.key !== '')
       const paramsFilter = params.filter(item => item.key !== '')
@@ -69,14 +70,15 @@ export default memo(() => {
       form.setFieldValue('body', newBody)
       form.setFieldValue('header', newHeader)
 
-      setCurrent(current + 1)
-
-      getDataPreview({
-        ...data,
+      const { data } = await getDataPreview({
+        ...formData,
         header: newHeader,
         params: newParams,
         body: newBody,
       })
+
+      setPreviewData(data)
+
       setCurrent(current + 1)
     }
   }
@@ -138,7 +140,7 @@ export default memo(() => {
             <ReturnRes />
           </div>
           <div style={{ display: current === 2 ? 'block' : 'none' }}>
-            <PreviewData />
+            <PreviewData data={previewData} />
           </div>
         </Form>
       </ContainerVh>
