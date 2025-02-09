@@ -22,18 +22,32 @@ export default defineConfig({
     host: 'localhost',
     port: 5173,
     open: false,
-    proxy: {
-      '/img': {
-        target: 'http://localhost:3173/',
-        changeOrigin: true,
-        rewrite: path => path.replace('/img', '/img'),
-      },
-      '/api': {
-        target: 'http://localhost:3173/',
-        changeOrigin: true,
-        rewrite: path => path.replace('/api', '/whaledev/v1'),
-      },
-    },
+    proxy:
+      process.env.NODE_ENV === 'development'
+        ? {
+            '/api': {
+              target: 'http://localhost:3173/',
+              changeOrigin: true,
+              rewrite: path => path.replace('/api', '/whaledev/v1'),
+            },
+            '/img': {
+              target: 'http://localhost:3173/',
+              changeOrigin: true,
+              rewrite: path => path.replace('/img', '/img'),
+            },
+          }
+        : {
+            '/api': {
+              target: 'http://whaleback.xiaojunnan.cn/',
+              changeOrigin: true,
+              rewrite: path => path.replace('/api', '/whaledev/v1'),
+            },
+            '/img': {
+              target: 'http://whaleback.xiaojunnan.cn/',
+              changeOrigin: true,
+              rewrite: path => path.replace('/img', '/img'),
+            },
+          },
   },
   build: {
     outDir: '../../build/front',

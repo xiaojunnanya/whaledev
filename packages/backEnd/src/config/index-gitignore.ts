@@ -16,3 +16,9 @@ export const ErrorException = {
   PrismaError: '数据库异常，请稍后重试',
   UserTokenErr: '用户身份信息错误，请重新登陆',
 }
+
+export const REDISCONNEST = {
+  host: 'localhost',
+  port: 6379,
+  password: 'xxx',
+}

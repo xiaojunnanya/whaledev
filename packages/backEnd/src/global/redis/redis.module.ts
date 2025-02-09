@@ -2,6 +2,7 @@ import { Module, Global } from '@nestjs/common'
 import Redis from 'ioredis'
 import { RedisService } from './redis.service'
 import { RedisComment } from './redis.comment'
+import { REDISCONNEST } from '@/config'
 
 @Global()
 @Module({
@@ -10,8 +11,7 @@ import { RedisComment } from './redis.comment'
       provide: 'RedisClientConnect',
       useFactory: () => {
         return new Redis({
-          host: 'localhost',
-          port: 6379,
+          ...REDISCONNEST,
           retryStrategy(times) {
             const maxRetries = 5 // 最大重连次数
             if (times >= maxRetries) {
