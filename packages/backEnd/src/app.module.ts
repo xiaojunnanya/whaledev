@@ -17,6 +17,7 @@ import { PagesModule } from './api/pages/pages.module'
 import { PageJsonModule } from './api/page_json/page_json.module'
 import { LoggerModule } from './global/logger/logger.module'
 import { AxiosModule } from './global/axios/axios.module'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -32,6 +33,10 @@ import { AxiosModule } from './global/axios/axios.module'
     UserModule,
     PagesModule,
     PageJsonModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+    }),
   ],
   controllers: [AppController],
   providers: [

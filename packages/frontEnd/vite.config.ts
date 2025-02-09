@@ -3,6 +3,12 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import Checker from 'vite-plugin-checker'
 
+const isDev = process.env.NODE_ENV === 'development'
+const LOCALURL = 'http://localhost:3173'
+const PRODURL = 'http://whaleback.xiaojunnan.cn'
+
+const URL = isDev ? LOCALURL : PRODURL
+
 export default defineConfig({
   plugins: [
     react(),
@@ -22,32 +28,18 @@ export default defineConfig({
     host: 'localhost',
     port: 5173,
     open: false,
-    proxy:
-      process.env.NODE_ENV === 'development'
-        ? {
-            '/api': {
-              target: 'http://localhost:3173/',
-              changeOrigin: true,
-              rewrite: path => path.replace('/api', '/whaledev/v1'),
-            },
-            '/img': {
-              target: 'http://localhost:3173/',
-              changeOrigin: true,
-              rewrite: path => path.replace('/img', '/img'),
-            },
-          }
-        : {
-            '/api': {
-              target: 'http://whaleback.xiaojunnan.cn/',
-              changeOrigin: true,
-              rewrite: path => path.replace('/api', '/whaledev/v1'),
-            },
-            '/img': {
-              target: 'http://whaleback.xiaojunnan.cn/',
-              changeOrigin: true,
-              rewrite: path => path.replace('/img', '/img'),
-            },
-          },
+    proxy: {
+      '/api': {
+        target: URL,
+        changeOrigin: true,
+        rewrite: path => path.replace('/api', '/whaledev/v1'),
+      },
+      '/img': {
+        target: URL,
+        changeOrigin: true,
+        rewrite: path => path.replace('/img', '/img'),
+      },
+    },
   },
   build: {
     outDir: '../../build/front',
