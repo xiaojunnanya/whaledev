@@ -100,8 +100,7 @@ export default memo((props: IProps) => {
             }}
             className="github"
           >
-            <GithubOutlined style={{ marginRight: '5px' }} />
-            GitHub
+            <GithubOutlined />
           </div>
 
           {userInfo.username ? (

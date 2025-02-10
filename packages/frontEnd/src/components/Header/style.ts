@@ -55,6 +55,12 @@ export const HeaderStyle = styled.header`
       .github {
         cursor: pointer;
       }
+
+      .github {
+        cursor: pointer;
+        font-size: 20px;
+        margin-right: 5px;
+      }
     }
   }
 `
