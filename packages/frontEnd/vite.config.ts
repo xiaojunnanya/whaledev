@@ -44,5 +44,28 @@ export default defineConfig({
   build: {
     outDir: '../../build/front',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            const packageName = id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+            // 希望合并的库, 合并成 vendor.[hash].js，减少请求数。
+            const vendorPackages = [
+              'lodash-es',
+              'axios',
+              'react',
+              'antd',
+              '@ant-design/icons',
+              'typescript',
+              'vite',
+            ]
+            return vendorPackages.includes(packageName) ? 'vendor' : packageName
+          }
+        },
+      },
+    },
   },
 })
