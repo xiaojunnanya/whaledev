@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const FooterStyle = styled.div`
   width: 100%;
   background-color: ${props => props.theme.defaultColor.black};
+  padding: 32px 0;
 
   .footer {
     margin: 0 auto;
