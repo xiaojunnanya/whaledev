@@ -1,0 +1,131 @@
+/* 样式中的关于antd的css代码 */
+
+.login-body {
+  .emailCode,
+  .checkCode {
+    .ant-form-item {
+      width: 260px;
+    }
+
+    .ant-btn {
+      flex: 1;
+      height: 44px;
+      margin-left: 10px;
+    }
+  }
+
+  .login-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .ant-input-affix-wrapper {
+    padding: 10px;
+  }
+}
+
+.head-center {
+  flex: 1;
+
+  .ant-tabs-nav {
+    &&::before {
+      border: none;
+    }
+  }
+
+  .ant-tabs-tab {
+    height: 48px;
+  }
+}
+
+.projectListTop {
+  .ant-input-outlined {
+    width: 200px;
+  }
+}
+
+.projectHeaders {
+  .ant-tabs-nav {
+    margin: 0;
+    height: 42px;
+  }
+}
+
+.edit-top-middle {
+  .ant-input-number-group-wrapper {
+    margin-left: 20px;
+    width: 120px;
+  }
+}
+
+.edit-compoennt-library {
+  .search-input {
+    margin: 0 10px;
+  }
+  .ant-collapse-content-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 !important;
+  }
+}
+
+.ant-modal {
+  top: 50px;
+  padding-bottom: 0;
+}
+.ant-modal.actonModal {
+  .ant-modal-body {
+    height: calc(100vh - 230px);
+  }
+}
+
+.whale-attr,
+.whale-style {
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+}
+
+.ant-modal-content {
+  .ant-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+    width: 100%;
+  }
+}
+
+.actionModalContent {
+  .ant-form {
+    height: 100%;
+  }
+}
+
+/* -----为相应的div添加class进行重置 */
+.resetUploadStyle {
+  .ant-upload-wrapper,
+  .ant-upload-list,
+  .ant-upload-list-item-container,
+  .ant-upload {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .ant-upload-wrapper {
+    .ant-upload-list-item-container {
+      .ant-upload-list-item {
+        border: none;
+        padding: 0;
+        justify-content: center;
+
+        &::before,
+        &:hover::before {
+          width: calc(100% - 6px) !important;
+          height: calc(100% - 6px) !important;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+}

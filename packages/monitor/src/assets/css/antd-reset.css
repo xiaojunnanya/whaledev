@@ -1,0 +1,18 @@
+/* 全局antd样式重置 */
+
+/* 全局loading */
+.ant-spin-dot {
+  color: #00bfff;
+}
+
+.ant-pagination.ant-pagination-end {
+  margin-right: 40px;
+}
+
+.ant-tree-node-content-wrapper {
+  white-space: nowrap;
+}
+
+.ant-tabs-nav {
+  margin: 0 !important;
+}
