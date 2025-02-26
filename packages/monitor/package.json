@@ -9,12 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^5.21.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
-    "antd": "^5.21.5",
     "styled-components": "^6.1.13",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "@ant-design/icons": "^5.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.10",
@@ -22,7 +23,6 @@
     "@vitejs/plugin-react": "^4.3.2",
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
-    "vite": "^5.4.8",
-    "@types/node": "^20.3.1"
+    "vite": "^5.4.8"
   }
 }
