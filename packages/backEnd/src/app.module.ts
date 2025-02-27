@@ -1,38 +1,45 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AuthModule } from './api/auth/auth.module'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { ResponseInterceptor } from './interceptor/response.interceptor'
 import { RequestInterceptor } from './interceptor/request.interceptor'
 import { RouterMiddleware } from './middleware/router.middleware'
-import { StaticonfigModule } from './api/staticonfig/staticonfig.module'
-import { ProjectModule } from './api/project/project.module'
 import { LoginGuard } from './guards/auth.guard'
 import { PrismaModule } from './global/prisma/prisma.module'
 import { RedisModule } from './global/redis/redis.module'
 import { StoreModule } from './global/store/store.module'
-import { UserModule } from './api/user/user.module'
-import { PagesModule } from './api/pages/pages.module'
-import { PageJsonModule } from './api/page_json/page_json.module'
 import { LoggerModule } from './global/logger/logger.module'
 import { AxiosModule } from './global/axios/axios.module'
 import { ConfigModule } from '@nestjs/config'
+// whaledev_api
+import { AuthModule } from './api/whaledev_api/auth/auth.module'
+import { UserModule } from './api/whaledev_api/user/user.module'
+import { PagesModule } from './api/whaledev_api/pages/pages.module'
+import { PageJsonModule } from './api/whaledev_api/page_json/page_json.module'
+import { StaticonfigModule } from './api/whaledev_api/staticonfig/staticonfig.module'
+import { ProjectModule } from './api/whaledev_api/project/project.module'
+// monitor_api
+import { MenuModule } from './api/monitor_api/menu/menu.module'
 
 @Module({
   imports: [
+    // module
     LoggerModule,
     PrismaModule,
     RedisModule,
     StoreModule,
     AxiosModule,
-    // api
+    // whaledev_api
     AuthModule,
     StaticonfigModule,
     ProjectModule,
     UserModule,
     PagesModule,
     PageJsonModule,
+    // monitor_api
+    MenuModule,
+    // ----
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,

@@ -15,7 +15,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter())
 
   // 添加全局路由前缀
-  app.setGlobalPrefix('/whaledev/v1', {
+  app.setGlobalPrefix('/whaledev', {
     exclude: ['/', '/img/*'],
   })
 

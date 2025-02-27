@@ -29,15 +29,14 @@ export default defineConfig({
     port: 5173,
     open: false,
     proxy: {
-      '/api': {
+      '/whaledev': {
         target: URL,
         changeOrigin: true,
-        rewrite: path => path.replace('/api', '/whaledev/v1'),
+        // rewrite: path => path.replace('/whaledev', '/whaledev')
       },
       '/img': {
         target: URL,
         changeOrigin: true,
-        rewrite: path => path.replace('/img', '/img'),
       },
     },
   },

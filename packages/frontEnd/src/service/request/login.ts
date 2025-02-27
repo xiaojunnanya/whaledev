@@ -15,7 +15,7 @@ export const sendEmail = (email: string, type: 'register' | 'forget'): any => {
 // 图形验证码
 export const getCodeImg = () => {
   const time = new Date().getTime()
-  return `/api/auth/img_code?time=${time}`
+  return `/whaledev/auth/img_code?time=${time}`
 }
 
 // 注册
