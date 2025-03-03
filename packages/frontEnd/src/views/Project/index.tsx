@@ -1,12 +1,13 @@
 import Header from '@/components/Header'
 import { getProjectDetail } from '@/service/request/project'
 import { useGlobal } from '@/stores/global'
-import { lazy, memo, useEffect, useState } from 'react'
+import { lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ProjectType } from '../ProjectList'
 import { ProjectStyled } from './style'
 import { LeftOutlined } from '@ant-design/icons'
 import { Tabs, TabsProps } from 'antd'
+import Loading from '@/components/Loading'
 
 const Rapid = lazy(() => import('./Rapid'))
 const Setting = lazy(() => import('./Setting'))
@@ -26,11 +27,23 @@ const items: TabsProps['items'] = [
 const showContainer = (key: string) => {
   switch (key) {
     case 'rapid':
-      return <Rapid />
+      return (
+        <Suspense fallback={<Loading />}>
+          <Rapid />
+        </Suspense>
+      )
     case 'settings':
-      return <Setting />
+      return (
+        <Suspense fallback={<Loading />}>
+          <Setting />
+        </Suspense>
+      )
     default:
-      return <NotFound></NotFound>
+      return (
+        <Suspense fallback={<Loading />}>
+          <NotFound />
+        </Suspense>
+      )
   }
 }
 
