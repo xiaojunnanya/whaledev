@@ -53,11 +53,9 @@ export default class AllExceptionsFilter implements ExceptionFilter {
     const errorResponse: responseType = {
       code: code,
       timestamp: formatDate(),
-      data: {
-        data: null,
-        message,
-        msgType: 'error',
-      },
+      data: null,
+      message,
+      msgType: 'error',
       type: 'system',
     }
 
