@@ -23,6 +23,25 @@ export class ReturnResult {
   }
 
   /**
+   * 成功 - 使用 data 和 message
+   *
+   * @param data
+   * @param message
+   * @return
+   */
+  public static successUseCode200<T>(
+    message: string = '请求成功',
+    data: T | null = null,
+  ): BaseResponse<T> {
+    return {
+      code: 200,
+      message,
+      data,
+      msgType: 'success',
+    }
+  }
+
+  /**
    * 失败 - 使用 data 和 message
    *
    * @param data

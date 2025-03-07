@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common'
+import { Controller, Post, Body, Get, Query } from '@nestjs/common'
 import { MenuService } from './menu.service'
 import { LoginDto } from './dto/menu.dto'
 import { WhaleSkipAuth } from '@/decorator/router.decorator'
@@ -11,5 +11,21 @@ export class MenuController {
   @Post('/user/login')
   login(@Body() loginDto: LoginDto) {
     return this.menuService.login(loginDto)
+  }
+
+  @Get('/menu/list')
+  getMenuList() {
+    return this.menuService.getMenuList()
+  }
+
+  @Get('/user/refresh-permissions')
+  refreshPermissions(@Query('refresh_cache') refresh_cache: string) {
+    console.log(refresh_cache, 'refresh_cache')
+    return this.menuService.refreshPermissions()
+  }
+
+  @Get('/dashboard')
+  dashboard() {
+    return this.menuService.dashboard()
   }
 }

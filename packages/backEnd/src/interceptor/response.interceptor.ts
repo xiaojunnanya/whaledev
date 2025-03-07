@@ -30,7 +30,11 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
 
         if (data?.token) {
           res.setHeader('authorization', data.token)
-          delete data.token
+
+          // 兼容monitor
+          if (!data?.is_not_delete_token) {
+            delete data.token
+          }
         }
 
         const returnMsg: responseType = {
