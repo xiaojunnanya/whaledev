@@ -1,4 +1,4 @@
-import { ConfigProvider, message } from 'antd'
+import { ConfigProvider, FloatButton, message } from 'antd'
 import { memo, useEffect } from 'react'
 import { useGlobal } from './stores/global'
 import zhCN from 'antd/es/locale/zh_CN'
@@ -6,6 +6,8 @@ import { useLocation, useRoutes } from 'react-router-dom'
 import theme from './assets/theme'
 import routes from './router'
 import Footer from './components/Footer'
+import { OpenAIOutlined, WechatOutlined } from '@ant-design/icons'
+import Wechat from './assets/images/png/wechat.png'
 
 const App = memo(() => {
   const [messageApi, msgContextHolder] = message.useMessage()
@@ -33,7 +35,7 @@ const App = memo(() => {
     const { type, text } = globalMessage
 
     type ? messageApi[type](text) : messageApi.destroy()
-  }, [globalMessage])
+  }, [globalMessage.text, globalMessage.type])
 
   // 捕获错误：系统+网络(在封装的axios中通过promise.reject抛出)
   const catchErr = (e: any) => {
@@ -67,11 +69,33 @@ const App = memo(() => {
           {useRoutes(routes)}
         </ConfigProvider>
       </article>
+
       {pathname === '/' && (
         <footer>
           <Footer></Footer>
         </footer>
       )}
+
+      <FloatButton.Group
+        shape="square"
+        style={{
+          bottom: 120,
+        }}
+      >
+        <FloatButton
+          icon={<WechatOutlined />}
+          tooltip={
+            <img
+              src={Wechat}
+              alt="联系方式"
+              style={{
+                width: 200,
+              }}
+            />
+          }
+        />
+        <FloatButton icon={<OpenAIOutlined />} />
+      </FloatButton.Group>
     </>
   )
 })

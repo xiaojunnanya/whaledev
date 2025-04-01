@@ -16,6 +16,11 @@ export default class AllExceptionsFilter implements ExceptionFilter {
     console.log(exception, 'exception')
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
+
+    if (res.headersSent) {
+      return // 避免重复发送响应
+    }
+
     let response: any = {}
     let code = 500
 
