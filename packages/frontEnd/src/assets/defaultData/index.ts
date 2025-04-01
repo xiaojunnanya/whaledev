@@ -13,3 +13,13 @@ export const SELFWEBURL = {
 export const OUTWEBURL = {
   antd: 'https://ant-design.antgroup.com/index-cn',
 }
+
+export const INITIALDATA = {
+  loginInfo: isDev
+    ? {
+        email: '2376974436@qq.com',
+        password: 'qwer1234',
+        code: '1234',
+      }
+    : undefined,
+}
