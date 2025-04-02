@@ -15,6 +15,7 @@ enum EmailCodeType {
 enum ProjectType {
   reception
    backstage
+   page
 }
 
 enum PageType {

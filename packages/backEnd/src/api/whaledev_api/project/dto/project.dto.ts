@@ -10,10 +10,10 @@ export class createProjectDto {
   project_desc?: string
 
   @IsNotEmpty({ message: '项目类型不能为空' })
-  @IsIn(['backstage', 'reception'], {
-    message: 'project_type 只能为 reception、backstage 中的一个',
+  @IsIn(['backstage', 'reception', 'page'], {
+    message: 'project_type 只能为 reception、backstage、page 中的一个',
   })
-  project_type: 'reception' | 'backstage'
+  project_type: 'reception' | 'backstage' | 'page'
 
   @IsIn(['inProgress', 'completed', 'paused', 'obsolete'], {
     message:

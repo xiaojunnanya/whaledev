@@ -35,6 +35,7 @@ import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash-es'
 import Masonry from 'react-masonry-css'
 import { SELFWEBURL } from '@/assets/defaultData'
+import type { CheckboxGroupProps } from 'antd/es/checkbox'
 const { Meta } = Card
 const { Option } = Select
 
@@ -62,9 +63,9 @@ export interface ProjectType {
 
 const defaultProjectData = [{}] as ProjectType[]
 
-const optionsWithScene = [
+const optionsWithScene: CheckboxGroupProps<string>['options'] = [
   { label: '个人', value: 'slef' },
-  { label: '分享', value: 'share' },
+  { label: '分享', value: 'share', disabled: true },
 ]
 
 const breakpointColumnsObj = {
@@ -305,6 +306,12 @@ export default memo(() => {
                                 return (
                                   <span className="type" key={i.value}>
                                     {i.lable}
+                                  </span>
+                                )
+                              } else {
+                                return (
+                                  <span className="type" key={+new Date()}>
+                                    ---
                                   </span>
                                 )
                               }

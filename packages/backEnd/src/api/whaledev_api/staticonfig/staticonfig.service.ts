@@ -5,13 +5,17 @@ import { Injectable } from '@nestjs/common'
 export class StaticonfigService {
   getProjectType() {
     const data: any = [
+      // {
+      //   lable: '前台项目',
+      //   value: 'reception',
+      // },
+      // {
+      //   lable: '后台项目',
+      //   value: 'backstage',
+      // },
       {
-        lable: '前台项目',
-        value: 'reception',
-      },
-      {
-        lable: '后台项目',
-        value: 'backstage',
+        lable: '页面',
+        value: 'page',
       },
     ]
 
