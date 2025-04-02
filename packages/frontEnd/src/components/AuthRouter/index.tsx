@@ -6,7 +6,7 @@ export default (props: { children: JSX.Element }) => {
   const { setMessage } = useGlobal()
 
   const go = Boolean(pathname === '/login' || pathname === '/')
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('TOKEN')
 
   if (go) {
     return props.children

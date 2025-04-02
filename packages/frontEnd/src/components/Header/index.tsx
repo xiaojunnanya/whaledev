@@ -21,10 +21,14 @@ interface IUserInfo {
 
 export default memo((props: IProps) => {
   const { children } = props
-  const localToken = window.localStorage.getItem('token')
+  const localToken = window.localStorage.getItem('TOKEN')
+  const localUserInfo = window.localStorage.getItem('USER_INFO') || '{}'
   const naviage = useNavigate()
 
-  const [userInfo, setUserInfo] = useState({} as IUserInfo)
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localUserInfo) as IUserInfo,
+  )
+
   const [token, setToken] = useState<string | null>(localToken)
 
   const items: MenuProps['items'] = [
@@ -68,7 +72,7 @@ export default memo((props: IProps) => {
     const { data } = await getUserInfoData()
     setUserInfo(data)
   }
-
+  console.log('123')
   return (
     <HeaderStyle>
       <div className="head-container">

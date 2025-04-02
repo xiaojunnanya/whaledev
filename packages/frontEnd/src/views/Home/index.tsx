@@ -8,7 +8,7 @@ export default memo(() => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('TOKEN')
     navigate(token ? '/engineering/project' : '/login')
   }
 

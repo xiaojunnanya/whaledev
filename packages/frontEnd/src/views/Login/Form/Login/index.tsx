@@ -29,9 +29,10 @@ export default memo(() => {
       password: SparkMD5.hash(values.password),
     }
 
-    const { msgType, message } = await login(valuesData)
+    const { msgType, message, data } = await login(valuesData)
 
     if (msgType === 'success') {
+      window.localStorage.setItem('USER_INFO', JSON.stringify(data))
       setMessage({ type: msgType, text: message })
       naviage('/engineering/project')
     } else {

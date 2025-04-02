@@ -18,7 +18,7 @@ class WhaleRequest {
       config => {
         if (config.url) config.url = `${config.url}?_=${new Date().getTime()}`
 
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('TOKEN')
         if (token) config.headers['authorization'] = 'Bearer ' + token
         config.headers['Accept-Language'] = navigator.language
         return config
@@ -33,7 +33,7 @@ class WhaleRequest {
       res => {
         const { data, headers } = res
         const token = headers['authorization']
-        if (token) localStorage.setItem('token', token)
+        if (token) localStorage.setItem('TOKEN', token)
         const { code, message: msg } = data
         // 这边需要对自定义状态码进行处理
         if (code !== 0) {
