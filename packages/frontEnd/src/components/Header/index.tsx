@@ -72,7 +72,7 @@ export default memo((props: IProps) => {
     const { data } = await getUserInfoData()
     setUserInfo(data)
   }
-  console.log('123')
+
   return (
     <HeaderStyle>
       <div className="head-container">

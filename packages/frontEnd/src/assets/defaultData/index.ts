@@ -2,6 +2,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export const SELFWEBURL = {
   blog: 'http://www.xiaojunnan.cn/',
+  'blog/about': 'http://www.xiaojunnan.cn/about/',
   github: 'https://github.com/xiaojunnanya',
   juejin: 'https://juejin.cn/user/3633256370537165',
   whaleDocs: isDev

@@ -1,10 +1,13 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import Content from './Content'
 import { FloatButton } from 'antd'
 import { OpenAIOutlined, WechatOutlined } from '@ant-design/icons'
-// import Wechat from './assets/images/png/wechat.png'
+import { SELFWEBURL } from './assets/defaultData'
+import Ai from './components/Ai'
 
 const App = memo(() => {
+  const [openAiModal, setOpenAiModal] = useState(false)
+
   return (
     <>
       <Content></Content>
@@ -15,26 +18,18 @@ const App = memo(() => {
           bottom: 120,
         }}
       >
-        {/* 遗留的问题：Popover加载之后url跳转都会显示，然后第一次加载会出现滚动 */}
-        {/* <Popover
-          placement="left"
-          title="联系方式"
-          content={
-            <img
-              src={Wechat}
-              alt="联系方式"
-              style={{
-                width: 200,
-              }}
-            />
-          }
-          defaultOpen={false}
-        >
-          <FloatButton icon={<WechatOutlined />} />
-        </Popover> */}
-        <FloatButton icon={<WechatOutlined />} />
-        <FloatButton icon={<OpenAIOutlined />} />
+        <FloatButton
+          href={SELFWEBURL['blog/about']}
+          target="_blank"
+          icon={<WechatOutlined />}
+        />
+        <FloatButton
+          icon={<OpenAIOutlined />}
+          onClick={() => setOpenAiModal(!openAiModal)}
+        />
       </FloatButton.Group>
+
+      {openAiModal && <Ai setOpenAiModal={setOpenAiModal} />}
     </>
   )
 })
