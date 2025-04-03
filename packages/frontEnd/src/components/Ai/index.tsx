@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { AiStyled } from './style'
+import AiContent from './AiContent'
 import { CloseOutlined } from '@ant-design/icons'
 
 interface IProps {
@@ -8,6 +9,7 @@ interface IProps {
 
 export default memo((props: IProps) => {
   const { setOpenAiModal } = props
+
   return (
     <AiStyled>
       <div className="ai_header">
@@ -17,7 +19,7 @@ export default memo((props: IProps) => {
           onClick={() => setOpenAiModal(false)}
         />
       </div>
-      <div className="ai_container"></div>
+      <AiContent></AiContent>
     </AiStyled>
   )
 })

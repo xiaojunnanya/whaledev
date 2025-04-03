@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@ant-design/x": "^1.1.0",
     "@babel/standalone": "^7.26.2",
     "@monaco-editor/react": "^4.6.0",
     "@typescript/ata": "^0.9.7",

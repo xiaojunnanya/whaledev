@@ -3,13 +3,13 @@ import styled from 'styled-components'
 interface IProps {}
 
 export const AiStyled = styled.div<IProps>`
-  display: 'block';
+  display: block;
   position: fixed;
   bottom: 80px;
   right: 80px;
   z-index: 999;
   width: 800px;
-  height: 800px;
+  height: 80vh;
   background-color: ${props => props.theme.defaultColor.white};
   box-shadow: 0 0 10px ${props => props.theme.blackOpacity[5]};
   border-radius: 10px;
@@ -18,7 +18,7 @@ export const AiStyled = styled.div<IProps>`
   .ai_header {
     height: 70px;
     padding: 10px;
-    border-bottom: 1px solid ${props => props.theme.blackOpacity[3]};
+    border-bottom: 1px solid ${props => props.theme.blackOpacity[1]};
 
     display: flex;
     align-items: center;
@@ -28,11 +28,26 @@ export const AiStyled = styled.div<IProps>`
 
     &_close {
       cursor: pointer;
+
+      &:hover {
+        color: ${props => props.theme.primaryColor[700]};
+      }
     }
 
     &_logo {
       color: ${props => props.theme.primaryColor[700]};
       user-select: none;
+    }
+  }
+
+  .ai_container {
+    height: calc(100% - 70px - 10px);
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &_sender {
     }
   }
 `

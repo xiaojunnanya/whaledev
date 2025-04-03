@@ -1,6 +1,7 @@
 import Header from '@/components/Header'
 import {
   AppstoreAddOutlined,
+  OpenAIOutlined,
   ProductOutlined,
   ProjectOutlined,
 } from '@ant-design/icons'
@@ -12,6 +13,7 @@ const NotFound = lazy(() => import('@/components/NotFound/index'))
 const Project = lazy(() => import('@/views/ProjectList/index'))
 const Componentlibrary = lazy(() => import('@/views/Componentlibrary/index'))
 const Template = lazy(() => import('@/views/Template/index'))
+const AiView = lazy(() => import('@/views/AiView/index'))
 
 const tabsItems = [
   {
@@ -30,6 +32,12 @@ const tabsItems = [
     key: 'template',
     icon: <AppstoreAddOutlined />,
     disabled: true,
+  },
+  {
+    label: '灵析AI',
+    key: 'ai',
+    icon: <OpenAIOutlined />,
+    // disabled: true,
   },
 ]
 
@@ -54,6 +62,9 @@ export default memo(() => {
         break
       case 'template':
         setShowContent(<Template />)
+        break
+      case 'ai':
+        setShowContent(<AiView />)
         break
       default:
         setShowContent(<NotFound />)

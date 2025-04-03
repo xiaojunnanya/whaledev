@@ -57,6 +57,7 @@ export default defineConfig({
               'axios',
               'react',
               'antd',
+              '@ant-design/x',
               '@ant-design/icons',
               'typescript',
               'vite',
