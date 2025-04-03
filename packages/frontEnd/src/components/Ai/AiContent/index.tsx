@@ -1,13 +1,14 @@
 import { OpenAIOutlined } from '@ant-design/icons'
 import { Sender, Welcome } from '@ant-design/x'
 import { memo, useState } from 'react'
+import { AiContentStyled } from './style'
 
 export default memo(() => {
   const [value, setValue] = useState<string>('灵析你好')
   const [loading, setLoading] = useState<boolean>(false)
 
   return (
-    <div className="ai_container">
+    <AiContentStyled className="ai_container">
       <div className="ai_container_content">
         <Welcome
           style={{
@@ -36,6 +37,6 @@ export default memo(() => {
           autoSize={{ minRows: 1, maxRows: 8 }}
         />
       </div>
-    </div>
+    </AiContentStyled>
   )
 })
