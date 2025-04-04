@@ -6,6 +6,8 @@ export const WHALE_ROUTER_V2 = 'router_whaledev_v2'
 
 export const WHAKE_Skip_AUTH = 'is_auth'
 
+export const RAW_RESPONSE_KEY = 'isRawResponse'
+
 // 路由是否有 /whaledev 前缀
 export const WhaleRouterGloabl = () => SetMetadata(WHALE_ROUTER_GLOBAL, true)
 
@@ -17,3 +19,6 @@ export const WhaleRouterV2 = () => SetMetadata(WHALE_ROUTER_V2, true)
 
 // 是否需要auth权限验证
 export const WhaleSkipAuth = () => SetMetadata(WHAKE_Skip_AUTH, true)
+
+// 跳过 interceptor\response.interceptor.ts 的接口返回统一封装
+export const RawResponse = () => SetMetadata(RAW_RESPONSE_KEY, true)

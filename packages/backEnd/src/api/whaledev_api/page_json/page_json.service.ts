@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dtp'
+import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dto'
 import { PrismaService } from '@/global/prisma/prisma.service'
 import { StoreService } from '@/global/store/store.service'
 import { ReturnResult } from '@/common/returnResult'

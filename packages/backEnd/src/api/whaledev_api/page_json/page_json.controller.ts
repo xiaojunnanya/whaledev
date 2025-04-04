@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { PageJsonService } from './page_json.service'
-import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dtp'
+import { savePageJsonDto, UrlInfoDto } from './dto/page_json.dto'
 
 @Controller('page_json')
 export class PageJsonController {

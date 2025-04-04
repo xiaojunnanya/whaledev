@@ -20,7 +20,6 @@ export class MenuController {
 
   @Get('/user/refresh-permissions')
   refreshPermissions(@Query('refresh_cache') refresh_cache: string) {
-    console.log(refresh_cache, 'refresh_cache')
     return this.menuService.refreshPermissions()
   }
 

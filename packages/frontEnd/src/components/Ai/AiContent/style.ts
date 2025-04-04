@@ -8,7 +8,12 @@ export const AiContentStyled = styled.div`
     flex-direction: column;
     justify-content: space-between;
 
-    &_sender {
+    .ai_container_content {
+      overflow-y: auto;
+    }
+
+    .ai_container_sender {
+      margin-top: 20px;
     }
   }
 `

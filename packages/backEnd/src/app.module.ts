@@ -19,6 +19,7 @@ import { PagesModule } from './api/whaledev_api/pages/pages.module'
 import { PageJsonModule } from './api/whaledev_api/page_json/page_json.module'
 import { StaticonfigModule } from './api/whaledev_api/staticonfig/staticonfig.module'
 import { ProjectModule } from './api/whaledev_api/project/project.module'
+import { AiModule } from './api/whaledev_api/ai/ai.module'
 // monitor_api
 import { MenuModule } from './api/monitor_api/menu/menu.module'
 
@@ -44,6 +45,7 @@ import { MenuModule } from './api/monitor_api/menu/menu.module'
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
     }),
+    AiModule,
   ],
   controllers: [AppController],
   providers: [

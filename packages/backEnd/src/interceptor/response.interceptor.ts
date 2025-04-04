@@ -9,10 +9,22 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
+import { RAW_RESPONSE_KEY } from '@/decorator/router.decorator'
+import { Reflector } from '@nestjs/core'
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
+  constructor(private readonly reflector: Reflector) {}
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const isRaw = this.reflector.get<boolean>(
+      RAW_RESPONSE_KEY,
+      context.getHandler(),
+    )
+
+    // 如果打了 @RawResponse()，不做任何包装，直接放行
+    if (isRaw) return next.handle()
+
     return next.handle().pipe(
       map(response => {
         const res = context.switchToHttp().getResponse<Response>()

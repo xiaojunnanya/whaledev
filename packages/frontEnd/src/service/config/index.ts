@@ -1,4 +1,4 @@
-export const TIMEOUT = 10000
+export const TIMEOUT = 20000
 
 // 设置开发环境和生产环境
 export let BASE_URL = '/whaledev'

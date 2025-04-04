@@ -25,7 +25,6 @@ export const CustomValidationPipe = new ValidationPipe({
     const error = errors.map(error => error.constraints || {})
 
     const result = error.map(obj => Object.values(obj).join(', ')).join(', ')
-    console.log(result)
     return new BadRequestException({
       message: result,
       errors: error,
