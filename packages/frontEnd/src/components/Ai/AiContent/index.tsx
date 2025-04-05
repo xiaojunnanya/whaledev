@@ -24,6 +24,7 @@ export default memo(() => {
   const local_user_info = JSON.parse(localStorage.getItem('USER_INFO') || '{}')
   const { setMessage } = useGlobal()
   const bubbleListRef = useRef<HTMLDivElement | null>(null)
+  const controllerRef = useRef<AbortController | null>(null)
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
@@ -39,6 +40,8 @@ export default memo(() => {
   }, [aiReplyList])
 
   const handleSubmit = async () => {
+    const controller = new AbortController()
+    controllerRef.current = controller
     setValue('')
     setLoading(true)
 
@@ -95,6 +98,7 @@ export default memo(() => {
         // 遗留的问题：异常兼容
         setLoading(false)
       },
+      controller,
     )
   }
 
@@ -194,6 +198,9 @@ export default memo(() => {
         }}
         onSubmit={handleSubmit}
         onCancel={() => {
+          if (controllerRef.current) {
+            controllerRef.current.abort()
+          }
           setLoading(false)
         }}
         autoSize={{ minRows: 1, maxRows: 8 }}

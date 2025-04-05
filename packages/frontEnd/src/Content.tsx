@@ -31,7 +31,7 @@ const App = memo(() => {
     const { type, text } = globalMessage
 
     type ? messageApi[type](text) : messageApi.destroy()
-  }, [globalMessage.text, globalMessage.type])
+  }, [globalMessage])
 
   // 捕获错误：系统+网络(在封装的axios中通过promise.reject抛出)
   const catchErr = (e: any) => {

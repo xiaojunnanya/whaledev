@@ -6,6 +6,7 @@ export const getAiTream = async (
   onChunk: (text: string) => void,
   onDone: () => void,
   onError: (err: any) => void,
+  controller: AbortController,
 ) => {
   try {
     const response = await fetch('/whaledev/ai/completions', {
@@ -15,6 +16,7 @@ export const getAiTream = async (
         authorization: 'Bearer ' + localStorage.getItem('TOKEN'),
       },
       body: JSON.stringify(data),
+      signal: controller.signal,
     })
 
     const reader = response.body?.getReader()
@@ -28,7 +30,10 @@ export const getAiTream = async (
     }
 
     onDone()
-  } catch (err) {
+  } catch (err: any) {
+    if (err.name === 'AbortError') {
+      console.log('请求被取消')
+    }
     onError(err)
   }
 }
