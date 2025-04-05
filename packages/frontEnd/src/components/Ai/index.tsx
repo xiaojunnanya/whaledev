@@ -5,13 +5,14 @@ import { CloseOutlined } from '@ant-design/icons'
 
 interface IProps {
   setOpenAiModal: (open: boolean) => void
+  openAiModal: boolean
 }
 
 export default memo((props: IProps) => {
-  const { setOpenAiModal } = props
+  const { setOpenAiModal, openAiModal } = props
 
   return (
-    <AiStyled>
+    <AiStyled openAiModal={openAiModal}>
       <div className="ai_header">
         <div className="ai_header_logo">灵析AI</div>
         <CloseOutlined

@@ -39,7 +39,7 @@ const App = memo(() => {
           />
         </FloatButton.Group>
 
-        {openAiModal && <Ai setOpenAiModal={setOpenAiModal} />}
+        <Ai setOpenAiModal={setOpenAiModal} openAiModal={openAiModal} />
       </XProvider>
     </ConfigProvider>
   )

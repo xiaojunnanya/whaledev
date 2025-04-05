@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
-interface IProps {}
+interface IProps {
+  openAiModal: boolean
+}
 
-export const AiStyled = styled.div<IProps>`
-  display: block;
+export const AiStyled = styled.div.withConfig({
+  shouldForwardProp: prop => !['openAiModal'].includes(prop),
+})<IProps>`
+  display: ${props => (props.openAiModal ? 'block' : 'none')};
   position: fixed;
   bottom: 80px;
   right: 80px;

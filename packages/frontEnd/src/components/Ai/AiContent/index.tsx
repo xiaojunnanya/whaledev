@@ -1,9 +1,15 @@
 import { CopyOutlined, OpenAIOutlined, UserOutlined } from '@ant-design/icons'
 import { Bubble, BubbleProps, Sender, Welcome } from '@ant-design/x'
-import { memo, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { AiContentStyled } from './style'
 import { getAiTream } from '@/service/request/ai'
-import { Button } from 'antd'
+import { Button, Typography } from 'antd'
+import markdownit from 'markdown-it'
+import { useTheme } from 'styled-components'
+import copy from 'copy-to-clipboard'
+import { useGlobal } from '@/stores/global'
+
+const md = markdownit({ html: true, breaks: true })
 
 export interface AiContentType {
   content: string
@@ -11,11 +17,26 @@ export interface AiContentType {
 }
 
 export default memo(() => {
-  const [value, setValue] = useState<string>('1+1等于几')
+  const [value, setValue] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [aiReplyList, setAiReplyList] = useState<AiContentType[]>([]) // AI 输出的内容列表
-
+  const theme = useTheme()
   const local_user_info = JSON.parse(localStorage.getItem('USER_INFO') || '{}')
+  const { setMessage } = useGlobal()
+  const bubbleListRef = useRef<HTMLDivElement | null>(null)
+
+  // 滚动到最底部的函数
+  const scrollToBottom = () => {
+    const element = bubbleListRef.current
+    if (element) {
+      element.scrollTop = element.scrollHeight
+    }
+  }
+
+  useEffect(() => {
+    // 页面加载或 aiReplyList 更新后滚动到底部
+    scrollToBottom()
+  }, [aiReplyList])
 
   const handleSubmit = async () => {
     setValue('')
@@ -71,6 +92,7 @@ export default memo(() => {
         setLoading(false)
       },
       () => {
+        // 遗留的问题：异常兼容
         setLoading(false)
       },
     )
@@ -80,11 +102,17 @@ export default memo(() => {
     <AiContentStyled className="ai_container">
       <div className="ai_container_content">
         {aiReplyList.length > 0 ? (
-          <>
+          <div ref={bubbleListRef} className="ai_container_content_bubbleList">
             <Bubble.List
               roles={(bubbleData: BubbleProps) => {
-                const renderContent: BubbleProps['messageRender'] = content =>
-                  content
+                const renderContent: BubbleProps['messageRender'] = content => (
+                  <Typography className="ai_content_typography">
+                    <div
+                      className={String(+new Date())}
+                      dangerouslySetInnerHTML={{ __html: md.render(content) }}
+                    />
+                  </Typography>
+                )
 
                 let obj = {}
 
@@ -94,7 +122,7 @@ export default memo(() => {
                       placement: 'start' as const,
                       avatar: {
                         icon: <OpenAIOutlined />,
-                        style: { background: '#fde3cf' },
+                        style: { background: theme.primaryColor[700] },
                       },
                       header: '灵析AI',
                     }
@@ -104,7 +132,7 @@ export default memo(() => {
                       placement: 'end' as const,
                       avatar: {
                         icon: <UserOutlined />,
-                        style: { background: '#87d068' },
+                        style: { background: theme.primaryColor[900] },
                       },
                       header: `${local_user_info.username}`,
                     }
@@ -118,18 +146,31 @@ export default memo(() => {
                   messageRender: renderContent,
                   loading: !bubbleData.content,
                   footer: (
-                    <Button
-                      color="default"
-                      variant="text"
-                      size="small"
-                      icon={<CopyOutlined />}
-                    />
+                    <div
+                      style={{
+                        visibility: !loading ? 'visible' : 'hidden',
+                      }}
+                    >
+                      <Button
+                        color="default"
+                        variant="text"
+                        size="small"
+                        icon={<CopyOutlined />}
+                        onClick={() => {
+                          copy(bubbleData.content as string)
+                          setMessage({
+                            type: 'success',
+                            text: '复制成功',
+                          })
+                        }}
+                      />
+                    </div>
                   ),
                 }
               }}
               items={aiReplyList}
             />
-          </>
+          </div>
         ) : (
           <Welcome
             style={{

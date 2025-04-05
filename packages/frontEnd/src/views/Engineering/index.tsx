@@ -37,7 +37,7 @@ const tabsItems = [
     label: '灵析AI',
     key: 'ai',
     icon: <OpenAIOutlined />,
-    // disabled: true,
+    disabled: true,
   },
 ]
 

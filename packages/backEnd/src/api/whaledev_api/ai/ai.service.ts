@@ -5,7 +5,7 @@ import { Response } from 'express'
 import { ChatCompletionFunctionMessageParam } from 'openai/resources/chat'
 
 const openai = new OpenAI({
-  apiKey: '',
+  apiKey: 'sk-5239824461ab49afa238b9ce3cf15711',
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
 })
 
