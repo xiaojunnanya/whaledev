@@ -16,6 +16,14 @@ export const AiContentStyled = styled.div`
     .ai_container_content {
       overflow-y: auto;
 
+      .ai_container_prompts {
+        margin-top: 20px;
+
+        .ant-prompts-list {
+          justify-content: space-between;
+        }
+      }
+
       .ai_container_content_bubbleList {
         // 为了支持滚动
         max-height: 100%;

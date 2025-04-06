@@ -1,9 +1,23 @@
-import { CopyOutlined, OpenAIOutlined, UserOutlined } from '@ant-design/icons'
-import { Bubble, BubbleProps, Sender, Welcome } from '@ant-design/x'
+import {
+  CopyOutlined,
+  FireOutlined,
+  OpenAIOutlined,
+  ReadOutlined,
+  RocketOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
+import {
+  Bubble,
+  BubbleProps,
+  Prompts,
+  PromptsProps,
+  Sender,
+  Welcome,
+} from '@ant-design/x'
 import { memo, useEffect, useRef, useState } from 'react'
 import { AiContentStyled } from './style'
 import { getAiTream } from '@/service/request/ai'
-import { Button, Typography } from 'antd'
+import { Button, Space, Typography } from 'antd'
 import markdownit from 'markdown-it'
 import { useTheme } from 'styled-components'
 import copy from 'copy-to-clipboard'
@@ -15,6 +29,52 @@ export interface AiContentType {
   content: string
   role: string
 }
+
+const renderTitle = (icon: React.ReactElement, title: string) => (
+  <Space align="start">
+    {icon}
+    <span>{title}</span>
+  </Space>
+)
+
+const promptsItems: PromptsProps['items'] = [
+  {
+    key: '1',
+    label: renderTitle(
+      <FireOutlined style={{ color: '#FF4D4F' }} />,
+      '关于精灵开发',
+    ),
+    children: [
+      {
+        key: '1-1',
+        description: `精灵开发是做什么的？`,
+      },
+    ],
+  },
+  {
+    key: '2',
+    label: renderTitle(<ReadOutlined style={{ color: '#1890FF' }} />, '低代码'),
+    children: [
+      {
+        key: '2-1',
+        description: `低代码的作用是什么？`,
+      },
+    ],
+  },
+  {
+    key: '3',
+    label: renderTitle(
+      <RocketOutlined style={{ color: '#722ED1' }} />,
+      '灵析AI',
+    ),
+    children: [
+      {
+        key: '3-1',
+        description: `你是谁？`,
+      },
+    ],
+  },
+]
 
 export default memo(() => {
   const [value, setValue] = useState<string>('')
@@ -39,7 +99,8 @@ export default memo(() => {
     scrollToBottom()
   }, [aiReplyList])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (v: string = '') => {
+    if (!value && !v) return
     const controller = new AbortController()
     controllerRef.current = controller
     setValue('')
@@ -48,7 +109,7 @@ export default memo(() => {
     const aiReplyNewList = [
       ...aiReplyList,
       {
-        content: value,
+        content: value || v,
         role: 'user',
       },
     ]
@@ -176,20 +237,44 @@ export default memo(() => {
             />
           </div>
         ) : (
-          <Welcome
-            style={{
-              backgroundImage:
-                'linear-gradient(97deg, #f2f9fe 0%, #f7f3ff 100%)',
-              borderStartStartRadius: 4,
-            }}
-            icon={<OpenAIOutlined style={{ fontSize: 40 }} />}
-            title="你好，我是精灵开发平台智能助手灵析AI，有什么可以帮助你的。"
-            description="灵析AI是一个基于大模型的智能助手，可以帮助您快速了解灵开发的功能和使用方法。"
-          />
+          <>
+            <Welcome
+              style={{
+                backgroundImage:
+                  'linear-gradient(97deg, #f2f9fe 0%, #f7f3ff 100%)',
+                borderStartStartRadius: 4,
+              }}
+              icon={<OpenAIOutlined style={{ fontSize: 40 }} />}
+              title="你好，我是精灵开发平台智能助手灵析AI，有什么可以帮助你的。"
+              description="灵析AI是一个基于大模型的智能助手，可以帮助您快速了解灵开发的功能和使用方法。"
+            />
+            <Prompts
+              className="ai_container_prompts"
+              title="我可以帮你做这些事情："
+              items={promptsItems}
+              wrap
+              styles={{
+                item: {
+                  flex: 'none',
+                  width: 'calc(30% - 6px)',
+                  backgroundImage: `linear-gradient(137deg, #e5f4ff 0%, #efe7ff 100%)`,
+                  border: 0,
+                },
+                subItem: {
+                  background: 'rgba(255,255,255,0.45)',
+                  border: '1px solid #FFF',
+                },
+              }}
+              onItemClick={info => {
+                handleSubmit(info.data.description as string)
+              }}
+            />
+          </>
         )}
       </div>
 
       <Sender
+        placeholder="有什么我能帮你的吗？"
         className="ai_container_sender"
         loading={loading}
         value={value}

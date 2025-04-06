@@ -61,14 +61,14 @@ class WhaleRequest {
         }
 
         if (messageText) {
-          // message.destroy()
-          // message.error(messageText)
-          // setTimeout(() => {
-          //   if (window.location.pathname !== '/login') {
-          //     window.location.href = '/login'
-          //   }
-          // }, 1000)
-          // return
+          message.error(messageText)
+          setTimeout(() => {
+            window.localStorage.removeItem('TOKEN')
+            if (window.location.pathname !== '/login') {
+              window.location.href = '/login'
+            }
+          }, 1000)
+          return
         }
 
         Promise.reject(error)
