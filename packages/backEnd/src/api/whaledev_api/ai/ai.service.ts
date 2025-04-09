@@ -20,6 +20,22 @@ export class AiService {
           content:
             '你是低代码平台精灵开发的开发助手，名为灵析AI。你的任务是帮助用户快速理解和使用低代码平台的功能，例如创建表单、配置工作流、设置权限等。你的回答应该简洁明了，并尽量结合具体的步骤或示例进行说明。如果问题超出范围，请引导用户查阅官方文档或联系技术支持。',
         },
+        // {
+        //   role: 'user',
+        //   content: '官网地址是多少',
+        // },
+        // {
+        //   role: 'assistant',
+        //   content: 'http://localhost:5173/',
+        // },
+        // {
+        //   role: 'user',
+        //   content: '官网文档地址是多少',
+        // },
+        // {
+        //   role: 'assistant',
+        //   content: 'http://localhost:4173/',
+        // },
         ...(msgs.messages as ChatCompletionFunctionMessageParam[]),
       ],
       stream: true,
