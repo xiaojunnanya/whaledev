@@ -1,9 +1,10 @@
 import { Body, Controller, Header, Post, Res } from '@nestjs/common'
 import { AiService } from './ai.service'
-import { RawResponse } from '@/decorator/router.decorator'
+import { RawResponse, WhaleSkipAuth } from '@/decorator/router.decorator'
 import { MessagesDto } from './dto/ai.dto'
 import { Response } from 'express'
 
+@WhaleSkipAuth()
 @Controller('ai')
 export class AiController {
   constructor(private readonly aiService: AiService) {}
