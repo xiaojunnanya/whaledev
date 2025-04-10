@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: '鲸灵开发',
-  description: '鲸灵开发开发文档',
+  description: '鲸灵开发产品官网文档',
   lang: 'zh-CN',
   head: [['link', { rel: 'icon', href: '/images/favicon.ico' }]],
   themeConfig: {
@@ -63,7 +63,10 @@ export default defineConfig({
         },
       ],
     },
-
+    footer: {
+      message: '基于 MIT 许可发布',
+      copyright: `版权所有 © 2024-${new Date().getFullYear()} 鲸落`,
+    },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/xiaojunnanya/whaledev' },
     ],

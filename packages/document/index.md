@@ -9,15 +9,18 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /docs/platform/whale
-    # - theme: alt
-    #   text: 在线体验
-    #   link:
-    #   target: _blank
+      link: /docs/platform
+    - theme: alt
+      text: 在线体验
+      link: http://whaledev.xiaojunnan.cn/
+      target: _blank
     - theme: alt
       text: 接口文档
       link: https://apifox.com/apidoc/shared-11558048-39d0-4780-be4e-2b3b20a09cfb/api-227075591
       target: _blank
+  # image:
+  #   src: /vitepress-logo-large.svg
+  #   alt: VitePress
 # features:
 #   - title: Feature A
 #     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit

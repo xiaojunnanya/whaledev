@@ -1,7 +1,5 @@
 # 我的团队
 
-目前就我一个人哈哈哈
-
 <TeamMember
   name="鲸落"
   role="Creator"
