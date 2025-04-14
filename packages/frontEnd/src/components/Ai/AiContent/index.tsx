@@ -1,4 +1,5 @@
 import {
+  CheckOutlined,
   CopyOutlined,
   FireOutlined,
   OpenAIOutlined,
@@ -22,6 +23,8 @@ import markdownit from 'markdown-it'
 import { useTheme } from 'styled-components'
 import copy from 'copy-to-clipboard'
 import { useGlobal } from '@/stores/global'
+import { useComponetsStore } from '@/stores/components'
+import { extractJSONFromString } from '@/utils'
 
 const md = markdownit({ html: true, breaks: true })
 
@@ -49,6 +52,10 @@ const promptsItems: PromptsProps['items'] = [
         key: '1-1',
         description: `精灵开发是做什么的？`,
       },
+      {
+        key: '1-2',
+        description: `你是谁？`,
+      },
     ],
   },
   {
@@ -70,7 +77,11 @@ const promptsItems: PromptsProps['items'] = [
     children: [
       {
         key: '3-1',
-        description: `你是谁？`,
+        description: `帮我生成一个页面，页面有一个输入框和一个按钮，按钮名字为确定，颜色为粉色`,
+      },
+      {
+        key: '3-2',
+        description: `帮我分析一下当前页面的内容`,
       },
     ],
   },
@@ -85,6 +96,7 @@ export default memo(() => {
   const { setMessage } = useGlobal()
   const bubbleListRef = useRef<HTMLDivElement | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
+  const { updeteComponent } = useComponetsStore()
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
@@ -98,6 +110,18 @@ export default memo(() => {
     // 页面加载或 aiReplyList 更新后滚动到底部
     scrollToBottom()
   }, [aiReplyList])
+
+  const handleClick = (s: string) => {
+    const str = extractJSONFromString(s)
+    if (str) {
+      updeteComponent(str)
+    } else {
+      setMessage({
+        type: 'error',
+        text: '解析失败，详情请查看控制台',
+      })
+    }
+  }
 
   const handleSubmit = async (v: string = '') => {
     if (!value && !v) return
@@ -216,12 +240,30 @@ export default memo(() => {
                         visibility: !loading ? 'visible' : 'hidden',
                       }}
                     >
+                      {typeof bubbleData?.content === 'string' &&
+                        bubbleData?.content?.includes('```json') && (
+                          <>
+                            <Button
+                              onClick={() => {
+                                handleClick(bubbleData?.content as string)
+                              }}
+                              icon={<CheckOutlined />}
+                            >
+                              确定使用
+                            </Button>
+                          </>
+                        )}
+
                       <Button
                         color="default"
                         variant="text"
                         size="small"
                         icon={<CopyOutlined />}
                         onClick={() => {
+                          console.log(
+                            typeof bubbleData.content,
+                            'bubbleData.content',
+                          )
                           copy(bubbleData.content as string)
                           setMessage({
                             type: 'success',
