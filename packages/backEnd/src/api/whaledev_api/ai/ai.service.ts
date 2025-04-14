@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import OpenAI from 'openai'
-import { MessagesDto } from './dto/ai.dto'
+import { MessageItemDto } from './dto/ai.dto'
 import { Response } from 'express'
 import { ChatCompletionFunctionMessageParam } from 'openai/resources/chat'
 
@@ -11,7 +11,7 @@ const openai = new OpenAI({
 
 @Injectable()
 export class AiService {
-  async getMsgWithQwenPlus(msgs: MessagesDto, res: Response) {
+  async getMsgWithQwenPlus(msgs: MessageItemDto[], res: Response) {
     const completion = await openai.chat.completions.create({
       model: 'qwen-plus',
       messages: [
@@ -87,25 +87,11 @@ export class AiService {
               5. 返回JSON之前，需要有一定的解释，告诉用户你返回了什么
               6. 低代码组件使用的是Ant Design的组件库,请参考官网文档：https://ant-design.antgroup.com/components/overview-cn/，遵循Ant Design的规范
 
+            四. 其他要求
+              1. 当用户需要你分析页面的时候，对主要的页面结构进行描述，不需要返回JSON
           `,
         },
-        // {
-        //   role: 'user',
-        //   content: '官网地址是多少',
-        // },
-        // {
-        //   role: 'assistant',
-        //   content: 'http://localhost:5173/',
-        // },
-        // {
-        //   role: 'user',
-        //   content: '官网文档地址是多少',
-        // },
-        // {
-        //   role: 'assistant',
-        //   content: 'http://localhost:4173/',
-        // },
-        ...(msgs.messages as ChatCompletionFunctionMessageParam[]),
+        ...(msgs as ChatCompletionFunctionMessageParam[]),
       ],
       stream: true,
     })

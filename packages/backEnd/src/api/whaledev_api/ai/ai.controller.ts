@@ -21,6 +21,18 @@ export class AiController {
     // 立即把已设置的响应头发送到客户端，即使还没开始写入正文内容
     res.flushHeaders?.()
 
-    await this.aiService.getMsgWithQwenPlus(messages, res)
+    const msg = messages.messages
+
+    msg.map(item => {
+      if (item.extra && Object.keys(item.extra).length > 0) {
+        if (item.extra?.type === 'combine') {
+          item.content = item.content + '\n' + item.extra?.content
+        }
+      }
+
+      return item
+    })
+
+    await this.aiService.getMsgWithQwenPlus(msg, res)
   }
 }

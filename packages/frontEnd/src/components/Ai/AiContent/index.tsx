@@ -80,7 +80,7 @@ const promptsItems: PromptsProps['items'] = [
         description: `帮我生成一个页面，页面有一个输入框和一个按钮，按钮名字为确定，颜色为粉色`,
       },
       {
-        key: '3-2',
+        key: 'analysis_page',
         description: `帮我分析一下当前页面的内容`,
       },
     ],
@@ -96,10 +96,11 @@ export default memo(() => {
   const { setMessage } = useGlobal()
   const bubbleListRef = useRef<HTMLDivElement | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
-  const { updeteComponent } = useComponetsStore()
+  const { updeteComponent, components } = useComponetsStore()
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
+    // 遗留的问题：当用户主动向上滚动的时候没法滚动
     const element = bubbleListRef.current
     if (element) {
       element.scrollTop = element.scrollHeight
@@ -123,7 +124,13 @@ export default memo(() => {
     }
   }
 
-  const handleSubmit = async (v: string = '') => {
+  const handleSubmit = async (
+    v: string = '',
+    extra?: {
+      type: 'combine'
+      content: any
+    },
+  ) => {
     if (!value && !v) return
     const controller = new AbortController()
     controllerRef.current = controller
@@ -135,6 +142,7 @@ export default memo(() => {
       {
         content: value || v,
         role: 'user',
+        extra: extra || {},
       },
     ]
 
@@ -260,10 +268,6 @@ export default memo(() => {
                         size="small"
                         icon={<CopyOutlined />}
                         onClick={() => {
-                          console.log(
-                            typeof bubbleData.content,
-                            'bubbleData.content',
-                          )
                           copy(bubbleData.content as string)
                           setMessage({
                             type: 'success',
@@ -308,7 +312,14 @@ export default memo(() => {
                 },
               }}
               onItemClick={info => {
-                handleSubmit(info.data.description as string)
+                if (info.data.key === 'analysis_page') {
+                  handleSubmit(info.data.description as string, {
+                    type: 'combine',
+                    content: JSON.stringify(components),
+                  })
+                } else {
+                  handleSubmit(info.data.description as string)
+                }
               }}
             />
           </>

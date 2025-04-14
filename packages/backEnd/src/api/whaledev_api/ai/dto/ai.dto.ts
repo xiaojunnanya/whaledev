@@ -12,6 +12,11 @@ export class MessageItemDto {
       'role 只能为 function, developer, system, user, assistant, tool 中的一个',
   })
   role: 'function' | 'developer' | 'system' | 'user' | 'assistant' | 'tool'
+
+  extra?: {
+    type: 'combine'
+    content: any
+  }
 }
 
 // 定义主 DTO，包含消息数组
