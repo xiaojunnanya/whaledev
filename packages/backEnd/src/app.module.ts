@@ -43,7 +43,7 @@ import { MenuModule } from './api/monitor_api/menu/menu.module'
     // ----
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV || 'production'}`,
+      envFilePath: '.env',
     }),
     AiModule,
   ],
