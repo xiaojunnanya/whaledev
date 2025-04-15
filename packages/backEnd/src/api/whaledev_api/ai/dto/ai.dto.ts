@@ -14,8 +14,7 @@ export class MessageItemDto {
   role: 'function' | 'developer' | 'system' | 'user' | 'assistant' | 'tool'
 
   extra?: {
-    type: 'combine'
-    content: any
+    path: any
   }
 }
 

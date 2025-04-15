@@ -41,6 +41,14 @@ export const AiStyled = styled.div.withConfig({
     &_logo {
       color: ${props => props.theme.primaryColor[700]};
       user-select: none;
+      display: flex;
+      align-items: center;
+
+      .anticon-question-circle {
+        margin-left: 10px;
+        font-size: 16px;
+        transform: translateY(2px);
+      }
     }
   }
 `

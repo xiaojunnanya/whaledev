@@ -25,6 +25,7 @@ import copy from 'copy-to-clipboard'
 import { useGlobal } from '@/stores/global'
 import { useComponetsStore } from '@/stores/components'
 import { extractJSONFromString } from '@/utils'
+import { useLocation } from 'react-router-dom'
 
 const md = markdownit({ html: true, breaks: true })
 
@@ -79,10 +80,10 @@ const promptsItems: PromptsProps['items'] = [
         key: '3-1',
         description: `帮我生成一个页面，页面有一个输入框和一个按钮，按钮名字为确定，颜色为粉色`,
       },
-      {
-        key: 'analysis_page',
-        description: `帮我分析一下当前页面的内容`,
-      },
+      // {
+      //   key: 'analysis_page',
+      //   description: `帮我分析一下当前页面的内容`,
+      // },
     ],
   },
 ]
@@ -96,7 +97,9 @@ export default memo(() => {
   const { setMessage } = useGlobal()
   const bubbleListRef = useRef<HTMLDivElement | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
-  const { updeteComponent, components } = useComponetsStore()
+  const { updeteComponent } = useComponetsStore()
+  const { pathname } = useLocation()
+  console.log(pathname, 'pathname')
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
@@ -124,13 +127,7 @@ export default memo(() => {
     }
   }
 
-  const handleSubmit = async (
-    v: string = '',
-    extra?: {
-      type: 'combine'
-      content: any
-    },
-  ) => {
+  const handleSubmit = async (v: string = '') => {
     if (!value && !v) return
     const controller = new AbortController()
     controllerRef.current = controller
@@ -142,7 +139,9 @@ export default memo(() => {
       {
         content: value || v,
         role: 'user',
-        extra: extra || {},
+        extra: {
+          path: String(pathname),
+        },
       },
     ]
 
@@ -166,7 +165,7 @@ export default memo(() => {
           data: dataMatch ? JSON.parse(dataMatch[1]) : null, // 提取 data 的值并解析为对象
         }
 
-        //更新 aiReplyList 中的最后一个消息对象
+        // 更新 aiReplyList 中的最后一个消息对象
         setAiReplyList(prev => {
           const lastMessage = prev[prev.length - 1]
           if (lastMessage?.role === 'assistant') {
@@ -238,6 +237,14 @@ export default memo(() => {
                     break
                 }
 
+                const showSureButton =
+                  typeof bubbleData?.content === 'string' &&
+                  bubbleData.role === 'assistant' &&
+                  bubbleData?.content?.includes('```') &&
+                  pathname.includes('/project') &&
+                  pathname.includes('/page') &&
+                  pathname.includes('/edit')
+
                 return {
                   ...obj,
                   messageRender: renderContent,
@@ -248,19 +255,18 @@ export default memo(() => {
                         visibility: !loading ? 'visible' : 'hidden',
                       }}
                     >
-                      {typeof bubbleData?.content === 'string' &&
-                        bubbleData?.content?.includes('```json') && (
-                          <>
-                            <Button
-                              onClick={() => {
-                                handleClick(bubbleData?.content as string)
-                              }}
-                              icon={<CheckOutlined />}
-                            >
-                              确定使用
-                            </Button>
-                          </>
-                        )}
+                      {showSureButton && (
+                        <>
+                          <Button
+                            onClick={() => {
+                              handleClick(bubbleData?.content as string)
+                            }}
+                            icon={<CheckOutlined />}
+                          >
+                            确认使用
+                          </Button>
+                        </>
+                      )}
 
                       <Button
                         color="default"
@@ -296,7 +302,7 @@ export default memo(() => {
             />
             <Prompts
               className="ai_container_prompts"
-              title="我可以帮你做这些事情："
+              title="你可能想问："
               items={promptsItems}
               wrap
               styles={{
@@ -313,10 +319,7 @@ export default memo(() => {
               }}
               onItemClick={info => {
                 if (info.data.key === 'analysis_page') {
-                  handleSubmit(info.data.description as string, {
-                    type: 'combine',
-                    content: JSON.stringify(components),
-                  })
+                  handleSubmit(info.data.description as string)
                 } else {
                   handleSubmit(info.data.description as string)
                 }

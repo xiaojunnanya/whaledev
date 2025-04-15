@@ -77,7 +77,7 @@ export default memo((props: IProps) => {
   // 点击左侧导航栏,callback缓存优化
   const handleItemClick = useCallback(
     (item: itemProps) => {
-      setActive(item.key === active.key ? ({} as itemProps) : item)
+      setActive(item.key === active.key ? ({ ...active } as itemProps) : item)
     },
     [active],
   )

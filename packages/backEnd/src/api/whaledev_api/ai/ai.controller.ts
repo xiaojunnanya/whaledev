@@ -25,9 +25,6 @@ export class AiController {
 
     msg.map(item => {
       if (item.extra && Object.keys(item.extra).length > 0) {
-        if (item.extra?.type === 'combine') {
-          item.content = item.content + '\n' + item.extra?.content
-        }
       }
 
       return item
