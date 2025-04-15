@@ -25,6 +25,7 @@ export class AiController {
 
     msg.map(item => {
       if (item.extra && Object.keys(item.extra).length > 0) {
+        item.content = item.content + 'path: ' + item.extra.path
       }
 
       return item
