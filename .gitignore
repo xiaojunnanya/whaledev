@@ -42,12 +42,6 @@ build
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env.production
-.env.development
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
 init.sh
 
 # temp directory

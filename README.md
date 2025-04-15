@@ -31,21 +31,14 @@
 # 克隆代码
 git clone https://github.com/xiaojunnanya/whaledev.git
 
-# 安装依赖
-npm install
-
-# 初始化数据库
-npm run start:db
+# 初始化
+./init_local.sh
 
 # 运行项目
 npm run start:front # 前端服务 http://localhost:5173
 npm run start:back # 后端服务 http://localhost:3173
 npm run start:doc # 文档服务 http://localhost:4173
-npm run start:monitor # 文档服务 http://localhost:2173
-npm run start # 同时启动前端、监控、后端和文档
-
-# 初始化Mysql数据库
-npm run start:db
+npm run start # 同时启动前端、监控、后端服务
 ```
 
 项目说明
