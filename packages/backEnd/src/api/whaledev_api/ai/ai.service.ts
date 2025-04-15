@@ -89,6 +89,7 @@ export class AiService {
 
             四. 其他要求
               1. 当用户需要你分析页面的时候，对主要的页面结构进行描述，不需要返回JSON
+              2. 当用户给你的数据中包含 \path: 的时候，不需要对其进行任何的处理解释操作
           `,
         },
         ...(msgs as ChatCompletionFunctionMessageParam[]),
