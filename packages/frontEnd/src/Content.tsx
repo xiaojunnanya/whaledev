@@ -4,6 +4,7 @@ import { useGlobal } from './stores/global'
 import { useLocation, useRoutes } from 'react-router-dom'
 import routes from './router'
 import Footer from './components/Footer'
+import checkPageRefresh from './utils/pageRefresh'
 
 const App = memo(() => {
   const [messageApi, msgContextHolder] = message.useMessage()
@@ -16,6 +17,9 @@ const App = memo(() => {
   }, [pathname])
 
   useEffect(() => {
+    // 生产环境轮询检测页面是否刷新
+    process.env.NODE_ENV === 'production' && checkPageRefresh()
+
     window.addEventListener('error', catchErr)
     window.addEventListener('unhandledrejection', catchErr)
 

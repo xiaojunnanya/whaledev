@@ -52,9 +52,12 @@ export default defineConfig({
           items: [],
         },
         {
-          text: '重难点',
+          text: '产品',
           collapsed: false,
-          items: [],
+          items: [
+            { text: '重难点', link: '/docs/think/key_difficult' },
+            { text: '亮点', link: '/docs/think/highlights' },
+          ],
         },
         {
           text: '平台开发',
