@@ -9,10 +9,13 @@ export const SELFWEBURL = {
     ? 'http://localhost:4173/'
     : 'https://whaledoc.xiaojunnan.cn/',
   profile: '/img/avatar/default-avatar.jpg',
+  projectGithub: 'https://github.com/xiaojunnanya/whaledev',
 }
 
 export const OUTWEBURL = {
   antd: 'https://ant-design.antgroup.com/index-cn',
+  antdx: 'https://x.ant.design/index-cn',
+  react: 'https://react.dev/',
 }
 
 export const INITIALDATA = {

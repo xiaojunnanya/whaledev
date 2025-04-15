@@ -14,7 +14,9 @@ export default memo(() => {
       <div className="footer" onClick={e => urlToWeb(e)}>
         <dl>
           <dt>致谢</dt>
+          <dd data-url={OUTWEBURL.react}>React</dd>
           <dd data-url={OUTWEBURL.antd}>Ant Design</dd>
+          <dd data-url={OUTWEBURL.antdx}>Ant Design X</dd>
         </dl>
         <dl>
           <dt>社交媒体</dt>

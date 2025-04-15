@@ -4,6 +4,7 @@ import path from 'path'
 import Checker from 'vite-plugin-checker'
 
 const isDev = process.env.NODE_ENV === 'development'
+
 const LOCALURL = 'http://localhost:3173'
 const PRODURL = 'http://whaleback.xiaojunnan.cn'
 

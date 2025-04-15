@@ -1,3 +1,4 @@
+import { SELFWEBURL } from '@/assets/defaultData'
 import { Button, Result } from 'antd'
 import { Component, ErrorInfo, ReactNode } from 'react'
 
@@ -38,13 +39,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 <Button type="primary" onClick={() => window.location.reload()}>
                   刷新页面
                 </Button>
-                <Button
-                  onClick={() =>
-                    window.open(
-                      'https://github.com/xiaojunnanya/whaledev/issues',
-                    )
-                  }
-                >
+                <Button onClick={() => window.open(SELFWEBURL.projectGithub)}>
                   联系我们
                 </Button>
               </>
