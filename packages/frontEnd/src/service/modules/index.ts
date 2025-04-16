@@ -34,12 +34,12 @@ class WhaleRequest {
         const { data, headers } = res
         const token = headers['authorization']
         if (token) localStorage.setItem('TOKEN', token)
-        const { code, message: msg } = data
-        // 这边需要对自定义状态码进行处理
-        if (code !== 0) {
-          message.error(msg)
-          return Promise.reject(new Error(msg))
-        }
+        // const { code, message: msg } = data
+        // // 这边需要对自定义状态码进行处理
+        // if (code !== 0) {
+        //   message.error(msg)
+        //   return Promise.reject(new Error(msg))
+        // }
 
         return data
       },
