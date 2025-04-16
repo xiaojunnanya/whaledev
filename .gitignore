@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
 build
 
 # Editor directories and files
@@ -42,12 +41,8 @@ build
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env.production
-.env.development
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+init.sh
+.env
 
 # temp directory
 .temp
@@ -64,6 +59,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 cache/
 
-/packages/backEnd/src/config/index.ts
 /packages/frontEnd/tsconfig.app.tsbuildinfo
 /packages/frontEnd/tsconfig.node.tsbuildinfo

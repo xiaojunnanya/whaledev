@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 import SparkMD5 from 'spark-md5'
 import { useGlobal } from '@/stores/global'
 import { gloablErrorMessage } from '@/utils/global'
-import { INITIALDATA } from '@/assets/defaultData'
 
 export default memo(() => {
   const { setMode, setMessage } = useGlobal()
@@ -66,7 +65,6 @@ export default memo(() => {
         className="login-form"
         onFinish={onFinish}
         form={form}
-        initialValues={INITIALDATA.loginInfo}
       >
         <Form.Item
           name="email"

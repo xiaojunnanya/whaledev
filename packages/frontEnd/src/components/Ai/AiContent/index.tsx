@@ -1,4 +1,5 @@
 import {
+  CheckOutlined,
   CopyOutlined,
   FireOutlined,
   OpenAIOutlined,
@@ -22,6 +23,9 @@ import markdownit from 'markdown-it'
 import { useTheme } from 'styled-components'
 import copy from 'copy-to-clipboard'
 import { useGlobal } from '@/stores/global'
+import { useComponetsStore } from '@/stores/components'
+import { extractJSONFromString } from '@/utils'
+import { useLocation } from 'react-router-dom'
 
 const md = markdownit({ html: true, breaks: true })
 
@@ -49,6 +53,10 @@ const promptsItems: PromptsProps['items'] = [
         key: '1-1',
         description: `精灵开发是做什么的？`,
       },
+      {
+        key: '1-2',
+        description: `你是谁？`,
+      },
     ],
   },
   {
@@ -70,8 +78,12 @@ const promptsItems: PromptsProps['items'] = [
     children: [
       {
         key: '3-1',
-        description: `你是谁？`,
+        description: `帮我生成一个页面，页面有一个输入框和一个按钮，按钮名字为确定，颜色为粉色`,
       },
+      // {
+      //   key: 'analysis_page',
+      //   description: `帮我分析一下当前页面的内容`,
+      // },
     ],
   },
 ]
@@ -85,9 +97,13 @@ export default memo(() => {
   const { setMessage } = useGlobal()
   const bubbleListRef = useRef<HTMLDivElement | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
+  const { updeteComponent } = useComponetsStore()
+  const { pathname } = useLocation()
+  console.log(pathname, 'pathname')
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
+    // 遗留的问题：当用户主动向上滚动的时候没法滚动
     const element = bubbleListRef.current
     if (element) {
       element.scrollTop = element.scrollHeight
@@ -98,6 +114,18 @@ export default memo(() => {
     // 页面加载或 aiReplyList 更新后滚动到底部
     scrollToBottom()
   }, [aiReplyList])
+
+  const handleClick = (s: string) => {
+    const str = extractJSONFromString(s)
+    if (str) {
+      updeteComponent(str)
+    } else {
+      setMessage({
+        type: 'error',
+        text: '解析失败，详情请查看控制台',
+      })
+    }
+  }
 
   const handleSubmit = async (v: string = '') => {
     if (!value && !v) return
@@ -111,6 +139,9 @@ export default memo(() => {
       {
         content: value || v,
         role: 'user',
+        extra: {
+          path: String(pathname),
+        },
       },
     ]
 
@@ -134,7 +165,7 @@ export default memo(() => {
           data: dataMatch ? JSON.parse(dataMatch[1]) : null, // 提取 data 的值并解析为对象
         }
 
-        //更新 aiReplyList 中的最后一个消息对象
+        // 更新 aiReplyList 中的最后一个消息对象
         setAiReplyList(prev => {
           const lastMessage = prev[prev.length - 1]
           if (lastMessage?.role === 'assistant') {
@@ -206,6 +237,14 @@ export default memo(() => {
                     break
                 }
 
+                const showSureButton =
+                  typeof bubbleData?.content === 'string' &&
+                  bubbleData.role === 'assistant' &&
+                  bubbleData?.content?.includes('```') &&
+                  pathname.includes('/project') &&
+                  pathname.includes('/page') &&
+                  pathname.includes('/edit')
+
                 return {
                   ...obj,
                   messageRender: renderContent,
@@ -216,6 +255,19 @@ export default memo(() => {
                         visibility: !loading ? 'visible' : 'hidden',
                       }}
                     >
+                      {showSureButton && (
+                        <>
+                          <Button
+                            onClick={() => {
+                              handleClick(bubbleData?.content as string)
+                            }}
+                            icon={<CheckOutlined />}
+                          >
+                            确认使用
+                          </Button>
+                        </>
+                      )}
+
                       <Button
                         color="default"
                         variant="text"
@@ -250,7 +302,7 @@ export default memo(() => {
             />
             <Prompts
               className="ai_container_prompts"
-              title="我可以帮你做这些事情："
+              title="你可能想问："
               items={promptsItems}
               wrap
               styles={{
@@ -266,7 +318,11 @@ export default memo(() => {
                 },
               }}
               onItemClick={info => {
-                handleSubmit(info.data.description as string)
+                if (info.data.key === 'analysis_page') {
+                  handleSubmit(info.data.description as string)
+                } else {
+                  handleSubmit(info.data.description as string)
+                }
               }}
             />
           </>

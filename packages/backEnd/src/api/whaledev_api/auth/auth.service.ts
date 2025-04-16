@@ -4,7 +4,6 @@ import { createTransport, Transporter } from 'nodemailer'
 import * as fs from 'fs'
 import * as ejs from 'ejs'
 import * as svgCaptcha from 'svg-captcha'
-import { AUTHOR, EMAIL_PASS, EMAIL_USER } from '@/config'
 import { v4 as uuidv4 } from 'uuid'
 import { codeType } from './type/index.type'
 import { JwtService } from '@nestjs/jwt'
@@ -12,18 +11,32 @@ import { PrismaService } from '@/global/prisma/prisma.service'
 import { RedisService } from '@/global/redis/redis.service'
 import { ReturnResult } from '@/common/returnResult'
 import { ErrorCode } from '@/common/errorCode'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AuthService {
   private readonly transporter: Transporter
   private readonly emailTemplatePath = './public/email.html'
   private readonly validity = 5 // 验证码有效期（分钟）
+  private envConfig = {
+    EMAIL_USER: '',
+    EMAIL_PASS: '',
+    AUTHOR_NAME: '',
+    AUTHOR_PROJECTNAME: '',
+  }
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly redisService: RedisService<string>,
+    private readonly configService: ConfigService,
   ) {
+    const EMAIL_USER = this.configService.get('EMAIL_USER') || ''
+    const EMAIL_PASS = this.configService.get('EMAIL_PASS') || ''
+    const AUTHOR_NAME = this.configService.get('AUTHOR_NAME') || ''
+    const AUTHOR_PROJECTNAME =
+      this.configService.get('AUTHOR_PROJECTNAME') || ''
+
     this.transporter = createTransport({
       host: 'smtp.qq.com', // smtp服务的域名
       port: 587, // smtp服务的端口
@@ -33,6 +46,13 @@ export class AuthService {
         pass: EMAIL_PASS, // 你的授权码
       },
     })
+
+    this.envConfig = {
+      EMAIL_USER,
+      EMAIL_PASS,
+      AUTHOR_NAME,
+      AUTHOR_PROJECTNAME,
+    }
   }
 
   /**
@@ -48,15 +68,15 @@ export class AuthService {
       const emailConfig = {
         code,
         validity: this.validity,
-        name: AUTHOR.NAME,
+        name: this.envConfig.AUTHOR_NAME,
       }
 
       const emailHtml = ejs.render(emailTemplate, emailConfig)
 
       await this.transporter.sendMail({
         from: {
-          name: AUTHOR.PROJECTNAME,
-          address: EMAIL_USER,
+          name: this.envConfig.AUTHOR_PROJECTNAME,
+          address: this.envConfig.EMAIL_USER,
         },
         to: emailCode.email,
         subject: '注册信息',

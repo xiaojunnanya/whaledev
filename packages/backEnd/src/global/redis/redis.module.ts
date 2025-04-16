@@ -2,16 +2,23 @@ import { Module, Global } from '@nestjs/common'
 import Redis from 'ioredis'
 import { RedisService } from './redis.service'
 import { RedisComment } from './redis.comment'
-import { REDISCONNEST } from '@/config'
+import { ConfigService } from '@nestjs/config'
 
 @Global()
 @Module({
   providers: [
     {
       provide: 'RedisClientConnect',
-      useFactory: () => {
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const host = configService.get<string>('REDIS_HOST')
+        const port = configService.get<number>('REDIS_PORT')
+        const password = configService.get<string>('REDIS_PASSWORD')
+
         return new Redis({
-          ...REDISCONNEST,
+          host,
+          port,
+          password,
           retryStrategy(times) {
             const maxRetries = 5 // 最大重连次数
             if (times >= maxRetries) {

@@ -1,9 +1,10 @@
 import { Body, Controller, Header, Post, Res } from '@nestjs/common'
 import { AiService } from './ai.service'
-import { RawResponse } from '@/decorator/router.decorator'
+import { RawResponse, WhaleSkipAuth } from '@/decorator/router.decorator'
 import { MessagesDto } from './dto/ai.dto'
 import { Response } from 'express'
 
+@WhaleSkipAuth()
 @Controller('ai')
 export class AiController {
   constructor(private readonly aiService: AiService) {}
@@ -20,6 +21,16 @@ export class AiController {
     // 立即把已设置的响应头发送到客户端，即使还没开始写入正文内容
     res.flushHeaders?.()
 
-    await this.aiService.getMsgWithQwenPlus(messages, res)
+    const msg = messages.messages
+
+    msg.map(item => {
+      if (item.extra && Object.keys(item.extra).length > 0) {
+        item.content = item.content + 'path: ' + item.extra.path
+      }
+
+      return item
+    })
+
+    await this.aiService.getMsgWithQwenPlus(msg, res)
   }
 }

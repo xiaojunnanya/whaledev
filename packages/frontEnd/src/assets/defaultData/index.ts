@@ -9,18 +9,11 @@ export const SELFWEBURL = {
     ? 'http://localhost:4173/'
     : 'https://whaledoc.xiaojunnan.cn/',
   profile: '/img/avatar/default-avatar.jpg',
+  projectGithub: 'https://github.com/xiaojunnanya/whaledev',
 }
 
 export const OUTWEBURL = {
   antd: 'https://ant-design.antgroup.com/index-cn',
-}
-
-export const INITIALDATA = {
-  loginInfo: isDev
-    ? {
-        email: '2376974436@qq.com',
-        password: 'qwer1234',
-        code: '1234',
-      }
-    : undefined,
+  antdx: 'https://x.ant.design/index-cn',
+  react: 'https://react.dev/',
 }

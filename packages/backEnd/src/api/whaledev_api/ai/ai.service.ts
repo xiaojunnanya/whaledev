@@ -1,26 +1,110 @@
 import { Injectable } from '@nestjs/common'
 import OpenAI from 'openai'
-import { MessagesDto } from './dto/ai.dto'
+import { MessageItemDto } from './dto/ai.dto'
 import { Response } from 'express'
 import { ChatCompletionFunctionMessageParam } from 'openai/resources/chat'
-
-const openai = new OpenAI({
-  apiKey: 'sk-5239824461ab49afa238b9ce3cf15711',
-  baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-})
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AiService {
-  async getMsgWithQwenPlus(msgs: MessagesDto, res: Response) {
-    const completion = await openai.chat.completions.create({
+  private openai: OpenAI
+
+  constructor(private configService: ConfigService) {
+    // 获取环境变量
+    const apiKey = this.configService.get<string>('OPENAI_API_KEY')
+    const baseURL = this.configService.get<string>('OPENAI_BASE_URL')
+
+    // 初始化 OpenAI 客户端
+    this.openai = new OpenAI({
+      apiKey: apiKey,
+      baseURL: baseURL,
+    })
+  }
+
+  async getMsgWithQwenPlus(msgs: MessageItemDto[], res: Response) {
+    const completion = await this.openai.chat.completions.create({
       model: 'qwen-plus',
       messages: [
         {
           role: 'system',
-          content:
-            '你是低代码平台精灵开发的开发助手，名为灵析AI。你的任务是帮助用户快速理解和使用低代码平台的功能，例如创建表单、配置工作流、设置权限等。你的回答应该简洁明了，并尽量结合具体的步骤或示例进行说明。如果问题超出范围，请引导用户查阅官方文档或联系技术支持。',
+          content: `
+            你是一个专业的低代码平台AI助手，需要根据用户需求生成符合平台规范的JSON配置数据或回答低代码相关问题。
+            当用户询问常规问题的时候，保持自然对话
+            
+            请遵循以下规则：
+
+            一、 响应模式判断
+              1. 当用户需求涉及页面布局、组件配置、数据绑定等需要结构化输出的场景时，必须返回严格合法的JSON
+
+            二、 JSON格式要求
+              1. 基础结构：
+                [
+                  {
+                    "id": "Page_WhaleDev",
+                    "name": "Page",
+                    "props": {},
+                    "desc": "页面",
+                    "children": []
+                  }
+                ]
+
+              2. 组件模板示例：
+                - 按钮：
+                  {
+                    "id": "Button_8b33187c0e",
+                    "name": "Button",
+                    "desc": "按钮",
+                    "props": {
+                      "type": "primary",
+                      "text": "按钮",
+                      "autoInsertSpace": true,
+                      "block": false,
+                      "disabled": false,
+                      "icon": "",
+                      "iconPosition": "start",
+                      "loading": false,
+                      "shape": "default",
+                      "size": "middle"
+                    },
+                    "parentId": "Page_WhaleDev",
+                    "styles": {
+                      "backgroundColor": "#ff69b4",
+                      "color": "#ffffff"
+                    }
+                  }
+
+                - 输入框：
+                  {
+                    "id": "Input_9633f62d18",
+                    "name": "Input",
+                    "desc": "输入框",
+                    "props": {
+                      "allowClear": false,
+                      "showCount": false,
+                      "disabled": false,
+                      "status": "default",
+                      "size": "middle",
+                      "inputMode": "Input",
+                      "autoSize": false,
+                      "length": 6
+                    },
+                    "parentId": "Page_WhaleDev"
+                  }
+
+            三. 特殊要求
+              1. JSON格式必须严格合法，不能有多余的逗号、括号等
+              2. 组件的JSON编排都是放在children字段下
+              3. 组件的id必须唯一，不能重复，id使用组件名+时间戳生成
+              4. 组件的parentId必须指向父组件的id
+              5. 返回JSON之前，需要有一定的解释，告诉用户你返回了什么
+              6. 低代码组件使用的是Ant Design的组件库,请参考官网文档：https://ant-design.antgroup.com/components/overview-cn/，遵循Ant Design的规范
+
+            四. 其他要求
+              1. 当用户需要你分析页面的时候，对主要的页面结构进行描述，不需要返回JSON
+              2. 当用户给你的数据中包含 path: 的时候，不需要对其进行任何的解释操作
+          `,
         },
-        ...(msgs.messages as ChatCompletionFunctionMessageParam[]),
+        ...(msgs as ChatCompletionFunctionMessageParam[]),
       ],
       stream: true,
     })

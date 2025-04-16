@@ -91,3 +91,28 @@ export function replaceNodeById(data: any[], nodeId: string, newObj: any) {
 
   return data
 }
+
+// 提取JSON代码块
+export function extractJSONFromString(str: string) {
+  // 匹配 ```json 和 ``` 之间的内容
+  const jsonRegex = /```json\n([\s\S]*?)\n```/
+  const match = str.match(jsonRegex)
+
+  if (!match || !match[1]) {
+    console.error('未找到有效的JSON代码块')
+    return null
+  }
+
+  try {
+    const jsonStr = match[1]
+      // 处理可能的尾随逗号
+      .replace(/,\s*([}\]])/g, '$1')
+      // 处理单引号
+      .replace(/'/g, '"')
+
+    return JSON.parse(jsonStr)
+  } catch (error) {
+    console.error('JSON解析失败:', error)
+    return null
+  }
+}

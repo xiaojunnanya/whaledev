@@ -17,7 +17,7 @@ export const HeaderStyle = styled.header`
 
     background-color: ${props => props.theme.defaultColor.white};
 
-    padding: 0 20px;
+    padding: 0 24px;
     box-shadow: 0 0 10px ${props => props.theme.blackOpacity[1]};
 
     .logo {
