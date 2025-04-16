@@ -34,7 +34,7 @@
 在backEnd 将.env.local 修改为.env 并修改为个人信息即可。
 
 # 初始化
-./init_local.sh
+./init.sh
 
 # 运行项目
 npm run start:front # 前端服务 http://localhost:5173

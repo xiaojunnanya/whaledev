@@ -5,6 +5,7 @@ set -a
 source ./packages/backEnd/.env
 set +a
 
+
 echo "===== 检查 Node.js ====="
 NODE_VERSION=$(node -v 2>/dev/null | sed 's/^v//')
 
