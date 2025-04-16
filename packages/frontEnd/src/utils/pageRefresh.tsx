@@ -48,7 +48,7 @@ function hasChanged(oldList: string[], newList: string[]): boolean {
  */
 
 let hasShownNotification = false
-export default function checkPageRefresh(interval: number = 5 * 1000): void {
+export default function checkPageRefresh(interval: number = 20): void {
   const check = async () => {
     const newSrcs = await getScriptSrcList()
 
@@ -96,5 +96,5 @@ export default function checkPageRefresh(interval: number = 5 * 1000): void {
   }
 
   check()
-  setInterval(check, interval)
+  setInterval(check, interval * 1000)
 }
