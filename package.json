@@ -13,8 +13,9 @@
     "build:doc": "npm --prefix ./packages/document run docs:build",
     "start": "concurrently -n \"front,back,docs\" -c \"magenta,cyan,black\" \"npm run start:front\" \"npm run start:back\" \"npm run start:doc\"",
     "dev": "npm run start",
-    "build": "concurrently -n \"front,back,docs\" -c \"magenta,cyan,black\" \"npm run build:front\" \"npm run build:back\" \"npm run build:doc\"",
-    "start:db": "npm --prefix ./packages/backEnd run mysql:init"
+    "build:all": "concurrently -n \"front,back,docs\" -c \"magenta,cyan,black\" \"npm run build:front\" \"npm run build:back\" \"npm run build:doc\"",
+    "build": "concurrently -n \"front,docs\" -c \"magenta,black\" \"npm run build:front\" \"npm run build:doc\"",
+    "mysql:init": "npm --prefix ./packages/backEnd run mysql:init"
   },
   "author": "鲸落",
   "license": "ISC",
