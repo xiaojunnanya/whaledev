@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
 build
 
 # Editor directories and files
@@ -43,6 +42,7 @@ build
 
 # dotenv environment variable files
 init.sh
+.env
 
 # temp directory
 .temp
@@ -59,6 +59,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 cache/
 
-/packages/backEnd/src/config/index.ts
 /packages/frontEnd/tsconfig.app.tsbuildinfo
 /packages/frontEnd/tsconfig.node.tsbuildinfo

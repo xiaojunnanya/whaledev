@@ -1,12 +1,9 @@
 #!/bin/sh
 
-MYSQL_USER="root"
-MYSQL_PASS="123456"
-MYSQL_HOST="localhost"
-MYSQL_PORT="3306"
-MYSQL_DB="whaledev"
-REDIS_HOST=localhost
-REDIS_PORT=6379
+# 加载 .env 文件中的环境变量
+set -a
+source ./packages/backEnd/.env
+set +a
 
 echo "===== 检查 Node.js ====="
 NODE_VERSION=$(node -v 2>/dev/null | sed 's/^v//')

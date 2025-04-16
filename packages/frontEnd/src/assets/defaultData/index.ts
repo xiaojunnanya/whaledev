@@ -17,13 +17,3 @@ export const OUTWEBURL = {
   antdx: 'https://x.ant.design/index-cn',
   react: 'https://react.dev/',
 }
-
-export const INITIALDATA = {
-  loginInfo: isDev
-    ? {
-        email: '2376974436@qq.com',
-        password: 'qwer1234',
-        code: '1234',
-      }
-    : undefined,
-}

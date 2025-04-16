@@ -3,16 +3,26 @@ import OpenAI from 'openai'
 import { MessageItemDto } from './dto/ai.dto'
 import { Response } from 'express'
 import { ChatCompletionFunctionMessageParam } from 'openai/resources/chat'
-
-const openai = new OpenAI({
-  apiKey: 'sk-5239824461ab49afa238b9ce3cf15711',
-  baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-})
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AiService {
+  private openai: OpenAI
+
+  constructor(private configService: ConfigService) {
+    // 获取环境变量
+    const apiKey = this.configService.get<string>('OPENAI_API_KEY')
+    const baseURL = this.configService.get<string>('OPENAI_BASE_URL')
+
+    // 初始化 OpenAI 客户端
+    this.openai = new OpenAI({
+      apiKey: apiKey,
+      baseURL: baseURL,
+    })
+  }
+
   async getMsgWithQwenPlus(msgs: MessageItemDto[], res: Response) {
-    const completion = await openai.chat.completions.create({
+    const completion = await this.openai.chat.completions.create({
       model: 'qwen-plus',
       messages: [
         {
@@ -91,7 +101,7 @@ export class AiService {
 
             四. 其他要求
               1. 当用户需要你分析页面的时候，对主要的页面结构进行描述，不需要返回JSON
-              2. 当用户给你的数据中包含 path: 的时候，不需要对其进行任何的解释操作，但是你可以使用 path: 后的数据进行操作
+              2. 当用户给你的数据中包含 path: 的时候，不需要对其进行任何的解释操作
           `,
         },
         ...(msgs as ChatCompletionFunctionMessageParam[]),
