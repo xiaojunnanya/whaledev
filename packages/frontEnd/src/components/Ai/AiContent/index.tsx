@@ -99,7 +99,6 @@ export default memo(() => {
   const controllerRef = useRef<AbortController | null>(null)
   const { updeteComponent } = useComponetsStore()
   const { pathname } = useLocation()
-  console.log(pathname, 'pathname')
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {

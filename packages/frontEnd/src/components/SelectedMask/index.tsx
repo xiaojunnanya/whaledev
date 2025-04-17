@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Popconfirm } from 'antd'
 import {
@@ -8,7 +8,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons'
 import { getComponentById } from '@/utils/components'
-import { Component, PAGEID, useComponetsStore } from '@/stores/components'
+import { PAGEID, useComponetsStore } from '@/stores/components'
 import { useGlobal } from '@/stores/global'
 import { SelectedMaskStyled } from './style'
 
@@ -38,6 +38,7 @@ const SelectedMask = memo(
     const {
       components,
       curComponentId,
+      curComponent,
       deleteComponent,
       setCurComponentId,
       updeteComponentById,
@@ -47,15 +48,31 @@ const SelectedMask = memo(
     const el = document.querySelector(`.${portalWrapperClassName}`)!
 
     useEffect(() => {
-      updatePosition()
-    }, [componentId, width])
+      if (!componentId) return
 
-    // 遗留的问题：加个延迟，样式变化的时候需要一定的时间获取渲染
-    useEffect(() => {
-      setTimeout(() => {
+      const node = document.querySelector(
+        `[data-component-id="${componentId}"]`,
+      )
+      if (!node) return
+
+      // 立即执行一次位置更新
+      updatePosition()
+
+      const observer = new MutationObserver(() => {
         updatePosition()
-      }, 100)
-    }, [components])
+      })
+
+      observer.observe(node, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        attributeFilter: ['style', 'class'], // 只监听样式和类名变化
+      })
+
+      return () => {
+        observer.disconnect()
+      }
+    }, [curComponent, components, componentId, width]) // 添加componentId依赖
 
     function updatePosition() {
       if (!componentId) return
@@ -101,17 +118,14 @@ const SelectedMask = memo(
       })
     }
 
-    const curComponent = useMemo(() => {
-      return getComponentById(componentId, components)
-    }, [componentId])
-
     function handleDelete() {
       deleteComponent(curComponentId!)
       setCurComponentId(null)
     }
 
-    const move = (curComponent: Component, type: 'up' | 'down') => {
-      const { parentId } = curComponent
+    const move = (type: 'up' | 'down') => {
+      if (!curComponent) return
+      const { parentId = '' } = curComponent
       // 拿到父id取父children
       const parent = getComponentById(parentId!, components)
       const children = parent?.children || []
@@ -159,12 +173,12 @@ const SelectedMask = memo(
                   <div className="whale-mask-icon">
                     <ArrowUpOutlined
                       onClick={() => {
-                        move(curComponent!, 'up')
+                        move('up')
                       }}
                     />
                     <ArrowDownOutlined
                       onClick={() => {
-                        move(curComponent!, 'down')
+                        move('down')
                       }}
                     />
                     <CopyOutlined />

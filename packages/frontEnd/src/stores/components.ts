@@ -51,10 +51,10 @@ export const initComponents: Component[] = [
 
 export const useComponetsStore = create<State & Action>((set, get) => ({
   // State
-  components: initComponents,
-  curComponentId: null,
-  curComponent: null,
-  componentActionList: [],
+  components: initComponents, // 组件列表
+  curComponentId: null, // 当前组件ID
+  curComponent: null, // 当前组件
+  componentActionList: [], // 组件操作列表
   // Action
   updeteComponent: (component: Component[]) =>
     set(() => ({

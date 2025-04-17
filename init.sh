@@ -7,7 +7,7 @@ if [ -f "./packages/backEnd/.env" ]; then
   set +a
   echo ".env 文件已加载"
 else
-  echo ".env 文件不存在，请检查路径"
+  echo ".env 文件不存在，请先阅读README文档"
 fi
 
 echo "===== 检查 Node.js ====="
