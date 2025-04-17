@@ -16,11 +16,11 @@ async function bootstrap() {
 
   // 添加全局路由前缀
   app.setGlobalPrefix('/whaledev', {
-    exclude: ['/', '/img/*'],
+    exclude: ['/', '/whaledev/*'],
   })
 
   // 静态资源的展示
-  app.useStaticAssets('src/assets/images', { prefix: '/img' })
+  app.useStaticAssets('src/assets/images', { prefix: '/whaledev' })
 
   await app.listen(3173)
   Logger.log('开始使用nest，端口号3173')

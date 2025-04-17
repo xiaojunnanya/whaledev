@@ -6,7 +6,7 @@ import Checker from 'vite-plugin-checker'
 const isDev = process.env.NODE_ENV === 'development'
 
 const LOCALURL = 'http://localhost:3173'
-const PRODURL = 'http://whaledev.xiaojunnan.cn/api'
+const PRODURL = 'http://whaledev.xiaojunnan.cn'
 
 const URL = isDev ? LOCALURL : PRODURL
 
@@ -34,10 +34,6 @@ export default defineConfig({
         target: URL,
         changeOrigin: true,
         // rewrite: path => path.replace('/whaledev', '/whaledev')
-      },
-      '/img': {
-        target: URL,
-        changeOrigin: true,
       },
     },
   },
