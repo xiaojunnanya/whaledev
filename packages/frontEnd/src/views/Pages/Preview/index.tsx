@@ -17,22 +17,25 @@ export default memo((props: IProps) => {
   const { page_id = '' } = params
   const { componentMap } = useComponentMapStore()
   const [pageJson, setPageJson] = useState<Component[]>([] as Component[])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getPageJson()
   }, [page_id])
 
   const getPageJson = async () => {
-    setLoading(true)
-    // 获取页面信息
-    const { data } = await getPageJsonByPageId(page_id)
-    let pageJson = data?.page_json
-    if (!pageJson || pageJson === JSON.stringify(initComponents))
-      pageJson = JSON.stringify([])
+    try {
+      // 获取页面信息
+      const { data } = await getPageJsonByPageId(page_id)
+      let pageJson = data?.page_json
+      if (!pageJson || pageJson === JSON.stringify(initComponents))
+        pageJson = JSON.stringify([])
 
-    setPageJson(JSON.parse(pageJson))
-    setLoading(false)
+      setPageJson(JSON.parse(pageJson))
+    } catch (_) {
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleEvent = (component: Component) => {
@@ -80,13 +83,13 @@ export default memo((props: IProps) => {
 
   return (
     <>
-      {pageJson.length === 0 ? (
-        <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
-      ) : (
-        <ContainerVh isLoading={loading} height={height ? height : 0}>
-          {renderComponents(pageJson)}
-        </ContainerVh>
-      )}
+      <ContainerVh isLoading={loading} height={height ? height : 0}>
+        {pageJson.length === 0 ? (
+          <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
+        ) : (
+          <>{renderComponents(pageJson)}</>
+        )}
+      </ContainerVh>
     </>
   )
 })
