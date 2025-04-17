@@ -1,10 +1,14 @@
 #!/bin/sh
 
-# 加载 .env 文件中的环境变量
-set -a
-source ./packages/backEnd/.env
-set +a
-
+echo "===== 检查 是否存在 .env 文件 ====="
+if [ -f "./packages/backEnd/.env" ]; then
+  set -a
+  source ./packages/backEnd/.env
+  set +a
+  echo ".env 文件已加载"
+else
+  echo ".env 文件不存在，请检查路径"
+fi
 
 echo "===== 检查 Node.js ====="
 NODE_VERSION=$(node -v 2>/dev/null | sed 's/^v//')
@@ -67,11 +71,17 @@ else
 fi
 
 echo "===== 初始化数据库 ====="
-if npm --prefix ./packages/backEnd run mysql:init; then
-  echo "✅ 初始化数据库完成！"
+read -p "是否初始化数据库？（y/n）： " choice
+
+if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
+  if npm run mysql:init; then
+    echo "✅ 初始化数据库完成！"
+  else
+    echo "❌ 初始化数据库失败，请检查错误信息！"
+    exit 1
+  fi
 else
-  echo "❌ 初始化数据库失败，请检查错误信息！"
-  exit 1
+  echo "初始化数据库操作已取消，请手动执行命令创建表。"
 fi
 
 
