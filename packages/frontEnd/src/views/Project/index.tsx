@@ -93,7 +93,7 @@ export default memo(() => {
           <LeftOutlined />
           <span className="project-name-text">
             &nbsp;{projectDetail?.project_name}
-            {/* 遗留的问题：项目版本问题 */}
+            {/* 待实现的功能：项目版本问题 */}
             &nbsp;&nbsp;版本：V1.0.0
           </span>
         </div>

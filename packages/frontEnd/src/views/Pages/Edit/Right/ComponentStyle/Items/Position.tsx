@@ -34,23 +34,6 @@ export default memo(() => {
           ]}
         />
       </Form.Item>
-      {/* 遗留的问题：四周的位置 */}
-      {/* {!['', undefined, 'static'].includes(formData?.position) && (
-              <Form.Item label="位置">
-                <Form.Item name={['scopeStyle', 'top']} noStyle>
-                  <WInputNumber placeholder="T: 10" />
-                </Form.Item>
-                <Form.Item name={['scopeStyle', 'right']} noStyle>
-                  <WInputNumber placeholder="R: 10" />
-                </Form.Item>
-                <Form.Item name={['scopeStyle', 'bottom']} noStyle>
-                  <WInputNumber placeholder="B: 10" />
-                </Form.Item>
-                <Form.Item name={['scopeStyle', 'left']} noStyle>
-                  <WInputNumber placeholder="L: 10" />
-                </Form.Item>
-              </Form.Item>
-            )} */}
       <Form.Item name="zIndex" label="层级">
         <WInputNumber placeholder="zIndex" />
       </Form.Item>

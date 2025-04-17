@@ -62,12 +62,13 @@ class WhaleRequest {
 
         if (messageText) {
           message.error(messageText)
-          setTimeout(() => {
-            window.localStorage.removeItem('TOKEN')
-            if (window.location.pathname !== '/login') {
-              window.location.href = '/login'
-            }
-          }, 1000)
+          // 遗留的问题:跳转到登录页,条件还需要思考
+          // setTimeout(() => {
+          //   window.localStorage.removeItem('TOKEN')
+          //   if (window.location.pathname !== '/login') {
+          //     window.location.href = '/login'
+          //   }
+          // }, 1000)
           return
         }
 

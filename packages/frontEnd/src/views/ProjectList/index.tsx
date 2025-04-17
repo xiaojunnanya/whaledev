@@ -75,7 +75,7 @@ const breakpointColumnsObj = {
   580: 1, // 当宽度小于 480px 时显示 1 列
 }
 
-// 遗留的问题：分享功能、复制功能、类型部分
+// 待实现的功能：分享功能、复制功能、类型部分
 export default memo(() => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
@@ -375,7 +375,7 @@ export default memo(() => {
             />
           </Form.Item>
 
-          {/* 遗留的问题：后续思考这个项目类型是否可以修改 */}
+          {/* 待实现的功能：后续思考这个项目类型是否可以修改 */}
           <Form.Item<FieldType>
             name="project_type"
             label="应用类型"

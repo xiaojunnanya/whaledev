@@ -46,8 +46,6 @@ export default memo(() => {
         ></WSelect>
       </Form.Item>
       <WColorPicker name="borderColor" label="颜色" />
-
-      {/* 遗留的问题：阴影 */}
     </div>
   )
 })

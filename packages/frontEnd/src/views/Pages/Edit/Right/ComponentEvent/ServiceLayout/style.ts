@@ -56,7 +56,7 @@ export const ServiceLayoutStyled = styled.div`
           position: relative;
           display: flex;
           justify-content: center;
-          transition: all 0.3s;
+          transition: opacity 0.3s;
           width: 0;
           height: 0;
           border-radius: 50%;

@@ -20,8 +20,7 @@ type nodeParentType = 'condition' | 'success' | 'fail' | 'normal' | undefined
 
 export default memo((props: IProps) => {
   const { type, node, renderNode, list, setList } = props
-  // 遗留的问题：visibility 的问题
-  // const { setMessage } = useGlobal()
+
   const [showActionModal, setShowActionModal] = useState(false)
   const [editNode, setEditNode] = useState<NodeType>({} as NodeType)
 
