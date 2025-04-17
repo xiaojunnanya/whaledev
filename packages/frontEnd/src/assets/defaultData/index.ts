@@ -8,7 +8,7 @@ export const SELFWEBURL = {
   whaleDocs: isDev
     ? 'http://localhost:4173/'
     : 'https://whaledoc.xiaojunnan.cn/',
-  profile: '/whaledev/avatar/default-avatar.jpg',
+  profile: '/img/avatar/default-avatar.jpg',
   projectGithub: 'https://github.com/xiaojunnanya/whaledev',
 }
 

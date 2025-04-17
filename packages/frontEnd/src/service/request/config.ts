@@ -12,5 +12,5 @@ export const getProjectStatus = () => {
 
 // 展示图片
 export const getShowImg = (url: any) => {
-  return `/whaledev${url}`
+  return `/img${url}`
 }

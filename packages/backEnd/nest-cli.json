@@ -1,9 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src/api",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": [{ "include": "i18n/**/*", "watchAssets": true }]
+    "assets": [{ "include": "src/assets/**/*", "watchAssets": true }]
   }
 }

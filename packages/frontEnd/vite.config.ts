@@ -35,6 +35,10 @@ export default defineConfig({
         changeOrigin: true,
         // rewrite: path => path.replace('/whaledev', '/whaledev')
       },
+      '/img': {
+        target: URL,
+        changeOrigin: true,
+      },
     },
   },
   build: {

@@ -47,10 +47,12 @@ class WhaleRequest {
         // 对http状态码进行处理
         const { status } = error
         let messageText = ''
+        let isReturn = false
 
         switch (status) {
           case 401:
             messageText = '登录过期，请重新登录'
+            isReturn = true
             break
           // case 404:
           //   messageText = '404'
@@ -62,13 +64,17 @@ class WhaleRequest {
 
         if (messageText) {
           message.error(messageText)
+
           // 遗留的问题:跳转到登录页,条件还需要思考
-          // setTimeout(() => {
-          //   window.localStorage.removeItem('TOKEN')
-          //   if (window.location.pathname !== '/login') {
-          //     window.location.href = '/login'
-          //   }
-          // }, 1000)
+          if (isReturn) {
+            setTimeout(() => {
+              window.localStorage.removeItem('TOKEN')
+              if (window.location.pathname !== '/login') {
+                window.location.href = '/login'
+              }
+            }, 1000)
+          }
+
           return
         }
 
