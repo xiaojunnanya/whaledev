@@ -34,6 +34,12 @@ export const EditLeftStyled = styled.div`
     color: ${props => props.theme.primaryColor[700]};
   }
 
+  .edit-left-disabled {
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
   .edit-left-top {
     &-item {
       &:hover {

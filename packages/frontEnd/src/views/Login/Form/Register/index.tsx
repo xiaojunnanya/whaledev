@@ -51,6 +51,7 @@ export default memo(() => {
     form
       .validateFields(['email'])
       .then(async ({ email }: { email: string }) => {
+        if (btnName !== '获取验证码') return
         const { msgType, message } = await sendEmail(email, 'register')
         if (msgType === 'success') {
           downTime()

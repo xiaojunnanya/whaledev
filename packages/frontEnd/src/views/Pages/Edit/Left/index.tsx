@@ -26,6 +26,7 @@ export interface itemProps {
   title: string
   icon: JSX.Element
   children: ReactNode
+  disabled?: boolean
 }
 
 export const editLeftTop: itemProps[] = [
@@ -46,6 +47,7 @@ export const editLeftTop: itemProps[] = [
     title: '数据源',
     icon: <DatabaseOutlined />,
     children: <DataSource />,
+    disabled: true,
   },
   {
     key: 'sourceCode',
@@ -91,8 +93,10 @@ export default memo((props: IProps) => {
               key={item.key}
               className={`edit-left-top-item edit-left-item ${
                 active.key === item.key ? 'edit-left-active' : ''
-              }`}
-              onClick={() => handleItemClick(item)}
+              } ${item.disabled ? 'edit-left-disabled' : ''}`}
+              onClick={() => {
+                !item.disabled && handleItemClick(item)
+              }}
             >
               {item.icon}
               <span className="title">{item.title}</span>
