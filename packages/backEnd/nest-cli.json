@@ -4,8 +4,14 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
-      { "include": "src/assets/**/*", "watchAssets": true },
-      { "include": "./public/*", "watchAssets": true }
+      {
+        "include": "**/*.jpg",
+        "watchAssets": true
+      },
+      {
+        "include": "**/*.html",
+        "watchAssets": true
+      }
     ]
   }
 }

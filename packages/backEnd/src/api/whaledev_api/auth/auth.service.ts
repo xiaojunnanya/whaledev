@@ -12,11 +12,15 @@ import { RedisService } from '@/global/redis/redis.service'
 import { ReturnResult } from '@/common/returnResult'
 import { ErrorCode } from '@/common/errorCode'
 import { ConfigService } from '@nestjs/config'
+import { join } from 'path'
 
 @Injectable()
 export class AuthService {
   private readonly transporter: Transporter
-  private readonly emailTemplatePath = './public/email.html'
+  private readonly emailTemplatePath = join(
+    __dirname,
+    '../../../assets/html/email.html',
+  )
   private readonly validity = 5 // 验证码有效期（分钟）
   private envConfig = {
     EMAIL_USER: '',

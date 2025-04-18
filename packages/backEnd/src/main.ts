@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common'
 import AllExceptionsFilter from './expection/exception.filter'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { CustomValidationPipe } from './validator/index.validator'
+import { join } from 'path'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -20,7 +21,7 @@ async function bootstrap() {
   })
 
   // 静态资源的展示
-  app.useStaticAssets('./src/assets/images', { prefix: '/img' })
+  app.useStaticAssets(join(__dirname, './assets/images'), { prefix: '/img' })
 
   await app.listen(3173)
   Logger.log('开始使用nest，端口号3173')
