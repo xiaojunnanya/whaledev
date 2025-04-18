@@ -3,6 +3,9 @@
   "collection": "@nestjs/schematics",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": [{ "include": "src/assets/**/*", "watchAssets": true }]
+    "assets": [
+      { "include": "src/assets/**/*", "watchAssets": true },
+      { "include": "./public/*", "watchAssets": true }
+    ]
   }
 }

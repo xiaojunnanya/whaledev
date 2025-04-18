@@ -20,7 +20,7 @@ async function bootstrap() {
   })
 
   // 静态资源的展示
-  app.useStaticAssets('src/assets/images', { prefix: '/img' })
+  app.useStaticAssets('./src/assets/images', { prefix: '/img' })
 
   await app.listen(3173)
   Logger.log('开始使用nest，端口号3173')
