@@ -33,11 +33,6 @@ export default defineConfig({
       '/whaledev': {
         target: URL,
         changeOrigin: true,
-        // rewrite: path => path.replace('/whaledev', '/whaledev')
-      },
-      '/img': {
-        target: URL,
-        changeOrigin: true,
       },
     },
   },
