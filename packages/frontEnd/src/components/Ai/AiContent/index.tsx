@@ -114,6 +114,12 @@ export default memo(() => {
     scrollToBottom()
   }, [aiReplyList])
 
+  useEffect(() => {
+    return () => {
+      controllerRef.current?.abort() // 组件卸载时取消请求
+    }
+  }, [])
+
   const handleClick = (s: string) => {
     const str = extractJSONFromString(s)
     if (str) {
