@@ -99,6 +99,7 @@ export default memo(() => {
   const controllerRef = useRef<AbortController | null>(null)
   const { updeteComponent } = useComponetsStore()
   const { pathname } = useLocation()
+  const [aiUseNumber, SetAiUseNumber] = useState<number>(0)
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
@@ -133,11 +134,20 @@ export default memo(() => {
   }
 
   const handleSubmit = async (v: string = '') => {
+    if (aiUseNumber >= 3 && !local_user_info?.username) {
+      setMessage({
+        type: 'error',
+        text: '您已经超过免费次数，请登录后继续使用',
+      })
+      return
+    }
+
     if (!value && !v) return
     const controller = new AbortController()
     controllerRef.current = controller
     setValue('')
     setLoading(true)
+    SetAiUseNumber(aiUseNumber + 1)
 
     const aiReplyNewList = [
       ...aiReplyList,
@@ -235,7 +245,7 @@ export default memo(() => {
                         icon: <UserOutlined />,
                         style: { background: theme.primaryColor[900] },
                       },
-                      header: `${local_user_info.username}`,
+                      header: `${local_user_info?.username || '访客'}`,
                     }
                     break
                   default:
