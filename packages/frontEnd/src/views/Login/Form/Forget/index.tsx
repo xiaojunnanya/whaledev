@@ -9,6 +9,7 @@ import { useGlobal } from '@/stores/global'
 import { forgetPassword, getCodeImg, sendEmail } from '@/service/request/login'
 import { gloablErrorMessage } from '@/utils/global'
 import SparkMD5 from 'spark-md5'
+import { debounce } from 'lodash-es'
 
 export default memo(() => {
   const [form] = Form.useForm()
@@ -165,10 +166,17 @@ export default memo(() => {
             { required: true, message: '请输入密码' },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve()
-                }
-                return Promise.reject('两次密码输入不一致')
+                return new Promise((resolve, reject) => {
+                  const debouncedValidator = debounce(() => {
+                    if (!value || getFieldValue('password') === value) {
+                      resolve('')
+                    } else {
+                      reject('两次密码输入不一致')
+                    }
+                  }, 1000)
+
+                  debouncedValidator()
+                })
               },
             }),
           ]}
