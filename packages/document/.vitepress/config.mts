@@ -55,14 +55,9 @@ export default defineConfig({
           text: '产品',
           collapsed: false,
           items: [
-            { text: '重难点', link: '/docs/think/key_difficult' },
+            { text: '难点记录', link: '/docs/think/key_difficult' },
             { text: '亮点', link: '/docs/think/highlights' },
           ],
-        },
-        {
-          text: '平台开发',
-          collapsed: false,
-          items: [{ text: '开发纪录', link: '/docs/think/develop-record' }],
         },
       ],
     },
