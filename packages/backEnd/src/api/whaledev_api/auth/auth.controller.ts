@@ -82,7 +82,7 @@ export class AuthController {
 
     const redisCode = await this.redisService.get(lowCode)
 
-    if (redisCode !== lowCode && code !== '1234') {
+    if (redisCode !== lowCode) {
       return true
     } else {
       await this.redisService.delete(lowCode)
