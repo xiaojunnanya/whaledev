@@ -5,11 +5,7 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "**/*.jpg",
-        "watchAssets": true
-      },
-      {
-        "include": "**/*.html",
+        "include": "**/assets/**/*",
         "watchAssets": true
       }
     ]
