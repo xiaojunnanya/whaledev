@@ -84,7 +84,49 @@
 
 
 
-## 线上环境流式报错：Request with the provided ID has already finished loading（nginx 配置支持流式）
+## 线上环境流式报错
+
+在本地开发的时候，使用了ai，接口配置了流式
+
+```ts
+@Header('Content-Type', 'text/event-stream; charset=utf-8')
+@Header('Cache-Control', 'no-cache')
+@Header('Connection', 'keep-alive')
+```
+
+但是在部署到服务器的时候，报错：`Request with the provided ID has already finished loading`，
+
+经排查，是因为nginx配置缺少正确处理流式响应
+
+**解决方法，修改 Nginx 配置**
+
+1. **禁用缓冲**：对于流式传输，需要禁用 Nginx 的输出缓冲，避免它阻塞或延迟传输数据。
+2. **增加超时时间**：流式传输可能会持续很长时间，因此需要增加连接的超时时间。
+3. **确保使用正确的代理设置**：确保代理请求时没有中断或关闭连接。
+
+修改后的配置
+
+```nginx
+server {
+    location /whaledev {
+        proxy_pass http://localhost:3173/whaledev;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # 禁用 Nginx 缓存
+        proxy_buffering off;
+
+        # 增加了连接超时
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+        send_timeout 3600s;
+    }
+}
+```
+
+
 
 ## monaco CDN 引入问题
 
