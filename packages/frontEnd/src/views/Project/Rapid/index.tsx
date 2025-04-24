@@ -173,7 +173,7 @@ export default memo(() => {
     <RapidStyled>
       <div className="page-select">
         <div className="add">
-          <div className="add-text">广告位招租</div>
+          <div className="add-text">欢迎体验</div>
           <Button
             type="primary"
             size="small"

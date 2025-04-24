@@ -21,6 +21,7 @@ const items: TabsProps['items'] = [
   {
     key: 'settings',
     label: '应用设置',
+    disabled: true,
   },
 ]
 
