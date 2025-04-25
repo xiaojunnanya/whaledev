@@ -99,7 +99,10 @@ export default memo(() => {
   const controllerRef = useRef<AbortController | null>(null)
   const { updeteComponent } = useComponetsStore()
   const { pathname } = useLocation()
-  const [aiUseNumber, SetAiUseNumber] = useState<number>(0)
+  const use_ai_number = window.localStorage.getItem('USE_AI_NUMBER')
+  const [aiUseNumber, SetAiUseNumber] = useState<number>(
+    use_ai_number ? Number(use_ai_number) : 0,
+  )
 
   // 滚动到最底部的函数
   const scrollToBottom = () => {
@@ -147,7 +150,9 @@ export default memo(() => {
     controllerRef.current = controller
     setValue('')
     setLoading(true)
-    SetAiUseNumber(aiUseNumber + 1)
+    const n = aiUseNumber + 1
+    SetAiUseNumber(n)
+    window.localStorage.setItem('USE_AI_NUMBER', String(n))
 
     const aiReplyNewList = [
       ...aiReplyList,
