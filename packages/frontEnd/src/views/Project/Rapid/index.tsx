@@ -5,6 +5,7 @@ import {
   CopyOutlined,
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   PlusOutlined,
   SettingOutlined,
   SignatureOutlined,
@@ -34,6 +35,12 @@ const settingItems: MenuProps['items'] = [
     key: '1',
     label: <span> 编辑 </span>,
     icon: <EditOutlined />,
+    style: { fontSize: '12px' },
+  },
+  {
+    key: '5',
+    label: <span> 预览 </span>,
+    icon: <EyeOutlined />,
     style: { fontSize: '12px' },
   },
   {
@@ -143,6 +150,8 @@ export default memo(() => {
         setIsModalOpen(true)
         form.setFieldsValue(item)
         break
+      case '3':
+        break
       case '4':
         await deleteModal.confirm({
           title: '提示',
@@ -163,6 +172,9 @@ export default memo(() => {
             }
           },
         })
+        break
+      case '5':
+        navigate(`/project/${project_id}/page/${item.page_id}/preview`)
         break
       default:
         break
