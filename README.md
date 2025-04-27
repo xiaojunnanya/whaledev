@@ -56,10 +56,6 @@ npm run start # 同时启动前端、后端和文档服务
 
 如果你发现此项目对你有所帮助，请考虑在 [GitHub](https://github.com/xiaojunnanya/whaledev) 上给它一个 ⭐️ !
 
-<img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xiaojunnanya/whaledev&type=Date" />
-</picture>
-</a>
-
 ## 许可证
 
 此项目根据 MIT 许可证授权-有关更多信息，请参阅[许可证](./LICENSE)文件。

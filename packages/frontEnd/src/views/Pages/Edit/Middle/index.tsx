@@ -1,4 +1,4 @@
-import { createElement, memo } from 'react'
+import { createElement, memo, useEffect } from 'react'
 import type { MouseEventHandler, ReactNode } from 'react'
 import { MiddleStyled } from './style'
 import { Component, useComponetsStore } from '@/stores/components'
@@ -8,6 +8,12 @@ import SelectedMask from '@/components/SelectedMask'
 export default memo(() => {
   const { components, setCurComponentId, curComponentId } = useComponetsStore()
   const { componentMap } = useComponentMapStore()
+
+  useEffect(() => {
+    return () => {
+      setCurComponentId('')
+    }
+  }, [])
 
   const renderComponents = (components: Component[]): ReactNode => {
     return components.map((component: Component) => {

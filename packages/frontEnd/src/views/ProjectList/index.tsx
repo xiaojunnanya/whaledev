@@ -253,6 +253,9 @@ export default memo(() => {
                       onClick={e => {
                         e.stopPropagation()
                       }}
+                      style={{
+                        cursor: 'not-allowed',
+                      }}
                     />,
                     <EditOutlined
                       key="edit"
@@ -264,6 +267,9 @@ export default memo(() => {
                       key="share"
                       onClick={e => {
                         e.stopPropagation()
+                      }}
+                      style={{
+                        cursor: 'not-allowed',
                       }}
                     />,
                     <Popconfirm
