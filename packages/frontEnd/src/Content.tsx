@@ -57,7 +57,7 @@ const App = memo(() => {
     <>
       {msgContextHolder}
 
-      <article>{useRoutes(routes)}</article>
+      <>{useRoutes(routes)}</>
 
       {pathname === '/' && (
         <footer>

@@ -70,13 +70,9 @@
   }
 }
 
-.ant-modal {
-  top: 50px;
-  padding-bottom: 0;
-}
-.ant-modal.actonModal {
+.actonModal {
   .ant-modal-body {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 316px);
   }
 }
 

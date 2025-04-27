@@ -1,27 +1,69 @@
-import ContainerVh from '@/components/ContainerVh'
 import { getPageJsonByPageId } from '@/service/request/page_json'
 import { useComponentMapStore } from '@/stores/componentMap'
 import { Component, initComponents } from '@/stores/components'
 import { handleActionFlow } from '@/utils/actions'
 import { Empty } from 'antd'
-import { createElement, memo, ReactNode, useEffect, useState } from 'react'
+import {
+  createElement,
+  memo,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { createPortal } from 'react-dom'
 import { useParams } from 'react-router-dom'
 
-interface IProps {
-  height?: number
-}
+// 导入需要的样式
+import resetStyle from '@/assets/css/reset.css?raw'
+import antdResetStyle from '@/assets/css/antd-reset.css?raw'
 
-export default memo((props: IProps) => {
-  const { height } = props
+export default memo(() => {
   const params = useParams()
   const { page_id = '' } = params
   const { componentMap } = useComponentMapStore()
   const [pageJson, setPageJson] = useState<Component[]>([] as Component[])
-  const [loading, setLoading] = useState(true)
+  const shadowDivRef = useRef<HTMLDivElement | null>(null)
+  const shadowRootRef = useRef<ShadowRoot | null>(null)
 
   useEffect(() => {
     getPageJson()
   }, [page_id])
+
+  useEffect(() => {
+    if (shadowDivRef.current && !shadowRootRef.current) {
+      // 创建Shadow DOM并保存引用
+      shadowRootRef.current = shadowDivRef.current.attachShadow({
+        mode: 'open',
+      })
+
+      const headElement = document.createElement('head')
+      shadowRootRef.current.appendChild(headElement)
+
+      // 创建样式元素，用于注入全局样式
+      const styleElement = document.createElement('style')
+
+      // 将所有样式合并到一起
+      styleElement.textContent = `
+        ${resetStyle}
+        ${antdResetStyle}
+        /* 其他自定义样式 */
+      `
+
+      headElement.appendChild(styleElement)
+      const antdLink = document.createElement('link')
+      antdLink.rel = 'stylesheet'
+      antdLink.href = 'https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css'
+
+      // 插入script标签
+      headElement.appendChild(antdLink)
+
+      // 创建一个容器来放置渲染的组件
+      const containerElement = document.createElement('body')
+      containerElement.id = 'shadow-container'
+      shadowRootRef.current.appendChild(containerElement)
+    }
+  }, [])
 
   const getPageJson = async () => {
     try {
@@ -32,10 +74,7 @@ export default memo((props: IProps) => {
         pageJson = JSON.stringify([])
 
       setPageJson(JSON.parse(pageJson))
-    } catch (_) {
-    } finally {
-      setLoading(false)
-    }
+    } catch (_) {}
   }
 
   const handleEvent = (component: Component) => {
@@ -81,15 +120,28 @@ export default memo((props: IProps) => {
     })
   }
 
-  return (
-    <>
-      <ContainerVh isLoading={loading} height={height ? height : 0}>
+  // 使用createPortal将组件渲染到Shadow DOM中
+  const renderShadowContent = () => {
+    if (!shadowRootRef.current) return null
+
+    const container = shadowRootRef.current.getElementById('shadow-container')
+    if (!container) return null
+
+    return createPortal(
+      <>
         {pageJson.length === 0 ? (
           <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
         ) : (
           <>{renderComponents(pageJson)}</>
         )}
-      </ContainerVh>
-    </>
+      </>,
+      container,
+    )
+  }
+
+  return (
+    <div ref={shadowDivRef} style={{ width: '100%', height: '100%' }}>
+      {shadowRootRef.current && renderShadowContent()}
+    </div>
   )
 })

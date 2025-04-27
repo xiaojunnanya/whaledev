@@ -229,7 +229,7 @@ export default memo(() => {
 
       <div className="page-preview">
         {page_id ? (
-          <Preview height={122}></Preview>
+          <Preview />
         ) : (
           <Empty description="请选择页面" style={{ marginTop: 100 }} />
         )}

@@ -16,3 +16,7 @@
 .ant-tabs-nav {
   margin: 0 !important;
 }
+
+.ant-modal {
+  padding-bottom: 0;
+}
