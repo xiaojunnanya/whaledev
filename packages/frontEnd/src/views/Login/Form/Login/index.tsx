@@ -119,6 +119,18 @@ export default memo(() => {
           </a>
           <a
             className="login-form-forgot"
+            onClick={() => {
+              form.setFieldsValue({
+                email: 'use@whale.dev',
+                password: 'use@whale.dev',
+                code: '',
+              })
+            }}
+          >
+            直接体验
+          </a>
+          <a
+            className="login-form-forgot"
             onClick={e => {
               changeMode(e, 2)
             }}
