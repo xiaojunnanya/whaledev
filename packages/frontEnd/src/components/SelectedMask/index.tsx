@@ -58,16 +58,11 @@ const SelectedMask = memo(
       // 立即执行一次位置更新
       updatePosition()
 
-      const observer = new MutationObserver(() => {
+      const observer = new ResizeObserver(() => {
         updatePosition()
       })
 
-      observer.observe(node, {
-        attributes: true,
-        childList: true,
-        subtree: true,
-        attributeFilter: ['style', 'class'], // 只监听样式和类名变化
-      })
+      observer.observe(node)
 
       return () => {
         observer.disconnect()
