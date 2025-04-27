@@ -87,8 +87,8 @@ const SelectedMask = memo(
       let labelTop = top - containerTop + container.scrollTop
       let labelLeft = left - containerLeft + width
 
-      if (labelTop <= 0) {
-        // 除了页面组件，其他组件在最上方的时候，内容展示放在下面
+      // 除了页面组件在最里面，其他组件小于操作区域高度的时候，操作区域展示放在下面
+      if (labelTop <= 20) {
         if (componentId === PAGEID) {
           labelTop += 20
         } else {
