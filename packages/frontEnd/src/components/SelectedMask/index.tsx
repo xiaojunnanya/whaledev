@@ -37,12 +37,12 @@ const SelectedMask = memo(
 
     const {
       components,
-      curComponentId,
       curComponent,
       deleteComponent,
       setCurComponentId,
       updeteComponentById,
     } = useComponetsStore()
+
     const { width } = useGlobal()
 
     const el = document.querySelector(`.${portalWrapperClassName}`)!
@@ -119,7 +119,7 @@ const SelectedMask = memo(
     }
 
     function handleDelete() {
-      deleteComponent(curComponentId!)
+      deleteComponent(componentId!)
       setCurComponentId(null)
     }
 
@@ -166,8 +166,8 @@ const SelectedMask = memo(
               ref={whaleMask}
             >
               <div className="whale-mask-desc">{curComponent?.desc}</div>
-              {/* 画布不能被选中 */}
-              {curComponentId !== PAGEID && (
+              {/* 画布没有这些功能 */}
+              {componentId !== PAGEID && (
                 <>
                   <div className="whale-mask-line">|</div>
                   <div className="whale-mask-icon">
