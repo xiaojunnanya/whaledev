@@ -13,6 +13,7 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams } from 'react-router-dom'
+import { StyleProvider } from '@ant-design/cssinjs'
 
 // 导入需要的样式
 import resetStyle from '@/assets/css/reset.css?raw'
@@ -38,6 +39,7 @@ export default memo(() => {
       })
 
       const headElement = document.createElement('head')
+      headElement.id = 'shadow-head'
       shadowRootRef.current.appendChild(headElement)
 
       // 创建样式元素，用于注入全局样式
@@ -51,12 +53,6 @@ export default memo(() => {
       `
 
       headElement.appendChild(styleElement)
-      const antdLink = document.createElement('link')
-      antdLink.rel = 'stylesheet'
-      antdLink.href = 'https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css'
-
-      // 插入script标签
-      headElement.appendChild(antdLink)
 
       // 创建一个容器来放置渲染的组件
       const containerElement = document.createElement('body')
@@ -128,13 +124,16 @@ export default memo(() => {
     if (!container) return null
 
     return createPortal(
-      <>
+      <StyleProvider
+        // 将style 标签注册到head中
+        container={shadowRootRef.current.getElementById('shadow-head')!}
+      >
         {pageJson.length === 0 ? (
           <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
         ) : (
           <>{renderComponents(pageJson)}</>
         )}
-      </>,
+      </StyleProvider>,
       container,
     )
   }

@@ -107,3 +107,9 @@ export default function checkPageRefresh(interval: number = 5 * 1000): void {
   setInterval(check, interval)
 }
 ```
+
+
+
+
+
+## 预览使用`Element.attachShadow()`
