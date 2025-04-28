@@ -39,7 +39,6 @@ export default memo(() => {
       })
 
       const headElement = document.createElement('head')
-      headElement.id = 'shadow-head'
       shadowRootRef.current.appendChild(headElement)
 
       // 创建样式元素，用于注入全局样式
@@ -56,7 +55,6 @@ export default memo(() => {
 
       // 创建一个容器来放置渲染的组件
       const containerElement = document.createElement('body')
-      containerElement.id = 'shadow-container'
       shadowRootRef.current.appendChild(containerElement)
     }
   }, [])
@@ -120,13 +118,13 @@ export default memo(() => {
   const renderShadowContent = () => {
     if (!shadowRootRef.current) return null
 
-    const container = shadowRootRef.current.getElementById('shadow-container')
+    const container = shadowRootRef.current.querySelector('body')
     if (!container) return null
 
     return createPortal(
       <StyleProvider
         // 将style 标签注册到head中
-        container={shadowRootRef.current.getElementById('shadow-head')!}
+        container={shadowRootRef.current.querySelector('head')!}
       >
         {pageJson.length === 0 ? (
           <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
@@ -139,7 +137,11 @@ export default memo(() => {
   }
 
   return (
-    <div ref={shadowDivRef} style={{ width: '100%', height: '100%' }}>
+    <div
+      ref={shadowDivRef}
+      className="whale-shadow"
+      style={{ width: '100%', height: '100%' }}
+    >
       {shadowRootRef.current && renderShadowContent()}
     </div>
   )
