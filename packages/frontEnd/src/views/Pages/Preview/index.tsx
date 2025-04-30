@@ -48,7 +48,12 @@ export default memo(() => {
       styleElement.textContent = `
         ${resetStyle}
         ${antdResetStyle}
+        
         /* 其他自定义样式 */
+        body{
+          height: 100%;
+          overflow: auto;
+        }
       `
 
       headElement.appendChild(styleElement)
@@ -140,7 +145,10 @@ export default memo(() => {
     <div
       ref={shadowDivRef}
       className="whale-shadow"
-      style={{ width: '100%', height: '100%' }}
+      style={{
+        height: '100%',
+        width: '100%',
+      }}
     >
       {shadowRootRef.current && renderShadowContent()}
     </div>
