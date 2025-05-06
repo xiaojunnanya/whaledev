@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import Checker from 'vite-plugin-checker'
@@ -18,6 +19,10 @@ export default defineConfig({
         buildMode: true,
         tsconfigPath: './tsconfig.json',
       },
+    }),
+    codeInspectorPlugin({
+      bundler: 'vite',
+      editor: 'code',
     }),
   ],
   resolve: {

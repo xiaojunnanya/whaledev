@@ -126,7 +126,7 @@ export default memo(() => {
               保存
             </Button>
             <Button onClick={preview}>预览</Button>
-            <Button>发布至模版（个人/市场/地址）</Button>
+            {/* <Button>发布至模版（个人/市场/地址）</Button> */}
           </div>
         </div>
 
