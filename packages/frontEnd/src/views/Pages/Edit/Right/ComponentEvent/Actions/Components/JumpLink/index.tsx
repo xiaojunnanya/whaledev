@@ -1,5 +1,6 @@
-import { Form, FormInstance, Input, Radio, Select } from 'antd'
-import { memo, useState } from 'react'
+import { getProjectAndPages } from '@/service/request/project'
+import { Form, FormInstance, Input, Radio, TreeSelect } from 'antd'
+import { memo, useEffect, useState } from 'react'
 
 interface IProps {
   form: FormInstance
@@ -12,26 +13,44 @@ const linkTypeOptions = [
 
 const linkOptions = [
   {
-    label: '系统路由',
-    title: 'manager',
-    options: [
-      { label: '首页', value: '/' },
-      { label: '登录页', value: '/login' },
-      { label: '项目列表', value: '/engineering/project' },
-      { label: '个人中心', value: '/userinfo' },
+    title: '系统路由',
+    children: [
+      {
+        title: '首页',
+        value: '/',
+      },
+      {
+        title: '登录页',
+        value: '/login',
+      },
+      {
+        title: '项目列表',
+        value: '/engineering/project',
+      },
+      {
+        title: '个人中心',
+        value: '/userinfo',
+      },
     ],
   },
   {
-    label: '项目路由',
-    title: 'engineer',
-    options: [],
+    title: '项目路由',
+    children: [],
   },
 ]
-
 export default memo((props: IProps) => {
   const { form } = props
 
   const [type, setType] = useState(form.getFieldValue('jumpLink-type') || '')
+
+  useEffect(() => {
+    getList()
+  }, [])
+
+  const getList = async () => {
+    const { data } = await getProjectAndPages()
+    console.log(data)
+  }
 
   const handleChange = (value: string) => {
     setType(value)
@@ -62,7 +81,11 @@ export default memo((props: IProps) => {
           name="jumpLink-link"
           rules={[{ required: true, message: '请选择跳转地址' }]}
         >
-          <Select placeholder="请选择跳转地址" options={linkOptions} />
+          <TreeSelect
+            treeData={linkOptions}
+            placeholder="请选择跳转地址"
+            treeDefaultExpandAll
+          />
         </Form.Item>
       )}
 

@@ -6,7 +6,7 @@ export const RapidStyled = styled.div`
 
   .page-select {
     width: 180px;
-    box-shadow: -10px 10px 12px;
+    box-shadow: -10px 20px 12px;
 
     .add {
       margin: 10px;

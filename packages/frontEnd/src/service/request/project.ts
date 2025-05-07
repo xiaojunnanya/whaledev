@@ -1,5 +1,10 @@
 import { whaleRequset as req } from '..'
 
+/**
+ * 获取项目列表
+ * @param page 页码
+ * @returns
+ */
 export const getProjectList = (page: number): any => {
   return req.request({
     url: '/project/list',
@@ -10,6 +15,11 @@ export const getProjectList = (page: number): any => {
   })
 }
 
+/**
+ * 新增项目
+ * @param data
+ * @returns
+ */
 export const createProject = (data: any): any => {
   return req.request({
     url: '/project/create',
@@ -18,7 +28,11 @@ export const createProject = (data: any): any => {
   })
 }
 
-// 删除项目
+/**
+ * 删除项目
+ * @param id 项目地
+ * @returns
+ */
 export const deleteProject = (id: string): any => {
   return req.request({
     url: `/project/delete/${id}`,
@@ -26,7 +40,12 @@ export const deleteProject = (id: string): any => {
   })
 }
 
-// 更新项目
+/**
+ * 更新项目
+ * @param id
+ * @param data
+ * @returns
+ */
 export const updateProject = (id: string, data: any): any => {
   return req.request({
     url: `/project/update/${id}`,
@@ -35,7 +54,12 @@ export const updateProject = (id: string, data: any): any => {
   })
 }
 
-// 查询
+/**
+ * 关键词查询搜索
+ * @param keyword
+ * @param page
+ * @returns
+ */
 export const searchProject = (keyword: string, page: number): any => {
   return req.request({
     url: '/project/search',
@@ -47,9 +71,21 @@ export const searchProject = (keyword: string, page: number): any => {
   })
 }
 
+/**
+ * 根据id获取页面详细信息
+ * @param id
+ * @returns
+ */
 export const getProjectDetail = (id: string): any => {
   return req.request({
     url: `/project/detail/${id}`,
+    method: 'get',
+  })
+}
+
+export const getProjectAndPages = () => {
+  return req.request({
+    url: '/project/pages',
     method: 'get',
   })
 }
