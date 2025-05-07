@@ -26,8 +26,8 @@ export const itemsActions: itemsType[] = [
         key: 'jumpLink',
         describe:
           '跳转到指定页面。1. 系统内跳转会通过自身路由实现；2. 超链接跳转通过window.open实现；',
-        render: () => {
-          return <JumpLink />
+        render: form => {
+          return <JumpLink form={form} />
         },
       },
       {
