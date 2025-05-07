@@ -51,4 +51,9 @@ export class ProjectController {
   getProjectDetail(@Param('project_id') project_id: string) {
     return this.projectService.getProjectDetail(project_id)
   }
+
+  @Get('/pages')
+  getProjectPages() {
+    return this.projectService.getProjectPages()
+  }
 }

@@ -160,4 +160,49 @@ export class ProjectService {
 
     return ReturnResult.success('查询成功', data)
   }
+
+  /**
+   * 获取项目及项目的页面
+   */
+  async getProjectPages() {
+    // 优化查询，避免查询两次:使用聚合查询
+    const user_id = this.store.get('user_id')
+    const data = await this.prisma.project.findMany({
+      where: {
+        user_id,
+        status: 0,
+      },
+      orderBy: { created_time: 'desc' },
+      select: this.selectData,
+    })
+
+    const arr = []
+
+    for (let item of data) {
+      const pages = await this.prisma.pages.findMany({
+        where: {
+          project_id: item.project_id,
+          status: 0,
+        },
+        select: {
+          id: true,
+          page_id: true,
+          page_name: true,
+        },
+      })
+
+      arr.push({
+        title: item.project_name,
+        value: item.project_id,
+        children: pages.map(item => {
+          return {
+            title: item.page_name,
+            value: item.page_id,
+          }
+        }),
+      })
+    }
+
+    return ReturnResult.success('获取成功', arr)
+  }
 }
