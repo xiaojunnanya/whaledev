@@ -167,7 +167,7 @@ export class ProjectService {
   async getProjectPages() {
     // 优化查询，避免查询两次:使用聚合查询
     const user_id = this.store.get('user_id')
-    const data = await this.prisma.project.findMany({
+    const projects = await this.prisma.project.findMany({
       where: {
         user_id,
         status: 0,
@@ -176,33 +176,46 @@ export class ProjectService {
       select: this.selectData,
     })
 
-    const arr = []
+    const projectIds = projects.map(p => p.project_id)
 
-    for (let item of data) {
-      const pages = await this.prisma.pages.findMany({
-        where: {
-          project_id: item.project_id,
-          status: 0,
-        },
-        select: {
-          id: true,
-          page_id: true,
-          page_name: true,
-        },
-      })
+    const allPages = await this.prisma.pages.findMany({
+      where: {
+        project_id: { in: projectIds },
+        status: 0,
+      },
+      select: {
+        project_id: true,
+        page_id: true,
+        page_name: true,
+      },
+    })
 
-      arr.push({
-        title: item.project_name,
-        value: item.project_id,
-        children: pages.map(item => {
-          return {
-            title: item.page_name,
-            value: item.page_id,
-          }
-        }),
+    console.log(allPages, 'allPages')
+
+    // 将 pages 按 project_id 分组
+    const pagesMap = new Map<
+      string,
+      { title: string; value: string; type: 'page' }[]
+    >()
+    for (const page of allPages) {
+      if (!pagesMap.has(page.project_id)) {
+        pagesMap.set(page.project_id, [])
+      }
+      pagesMap.get(page.project_id)!.push({
+        title: page.page_name,
+        value: page.page_id,
+        type: 'page',
       })
     }
 
-    return ReturnResult.success('获取成功', arr)
+    // 构造最终结果
+    const result = projects.map(project => ({
+      title: project.project_name,
+      value: project.project_id,
+      type: 'project',
+      children: pagesMap.get(project.project_id) || [],
+    }))
+
+    return ReturnResult.success('获取成功', result)
   }
 }
