@@ -39,3 +39,14 @@ export const getPageDetail = (project_id: string, page_id: string): any => {
     method: 'get',
   })
 }
+
+/**
+ * 复制页面
+ */
+
+export const copyPage = (page_id: string): any => {
+  return req.request({
+    url: `/pages/copy/${page_id}`,
+    method: 'get',
+  })
+}

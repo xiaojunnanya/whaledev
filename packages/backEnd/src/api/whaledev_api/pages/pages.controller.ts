@@ -16,7 +16,7 @@ export class PagesController {
 
   @Post('create')
   async createPage(@Body() data: createPageDto) {
-    return this.pagesService.createPage(data)
+    return this.pagesService.createPage(data, false)
   }
 
   @Get('list')
@@ -34,11 +34,26 @@ export class PagesController {
     return this.pagesService.deletePage(page_id)
   }
 
+  /**
+   * 页面详情
+   * @param project_id 项目id
+   * @param page_id 页面id
+   * @returns
+   */
   @Get('/detail/:project_id/:page_id')
   getPageDetail(
     @Param('project_id') project_id: string,
     @Param('page_id') page_id: string,
   ) {
     return this.pagesService.getPageDetail(project_id, page_id)
+  }
+
+  /**
+   * 复制页面
+   * @param page_id 项目id
+   */
+  @Get('/copy/:page_id')
+  copyPage(@Param('page_id') page_id: string) {
+    return this.pagesService.copyPage(page_id)
   }
 }

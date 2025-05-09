@@ -15,6 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useGlobal } from '@/stores/global'
 
 import {
+  copyPage,
   createPage,
   deletePage,
   getPagesList,
@@ -32,31 +33,31 @@ interface pageDataType {
 
 const settingItems: MenuProps['items'] = [
   {
-    key: '1',
+    key: 'edit',
     label: <span> 编辑 </span>,
     icon: <EditOutlined />,
     style: { fontSize: '12px' },
   },
   {
-    key: '5',
+    key: 'preview',
     label: <span> 预览 </span>,
     icon: <EyeOutlined />,
     style: { fontSize: '12px' },
   },
   {
-    key: '2',
+    key: 'rename',
     label: <span> 重命名 </span>,
     icon: <SignatureOutlined />,
     style: { fontSize: '12px' },
   },
   {
-    key: '3',
+    key: 'copy',
     label: <span> 复制 </span>,
     icon: <CopyOutlined />,
     style: { fontSize: '12px' },
   },
   {
-    key: '4',
+    key: 'delete',
     label: <span> 删除 </span>,
     icon: <DeleteOutlined />,
     style: { fontSize: '12px' },
@@ -106,6 +107,16 @@ export default memo(() => {
     navigate(`/project/${project_id}/rapid/page/${page_id}`)
   }
 
+  const handleCopy = async (item: pageDataType) => {
+    const { data, message } = await copyPage(item.page_id)
+    if (!data) {
+      getPagesData()
+      setMessage({ type: 'success', text: message })
+    } else {
+      setMessage({ type: 'error', text: message || gloablErrorMessage })
+    }
+  }
+
   const onCancel = () => {
     setIsModalOpen(false)
     form.resetFields()
@@ -142,17 +153,18 @@ export default memo(() => {
     setEditPage(item)
 
     switch (e.key) {
-      case '1':
+      case 'edit':
         navigate(`/project/${project_id}/page/${item.page_id}/edit`)
         break
-      case '2':
+      case 'rename':
         setModalType('edit')
         setIsModalOpen(true)
         form.setFieldsValue(item)
         break
-      case '3':
+      case 'copy':
+        handleCopy(item)
         break
-      case '4':
+      case 'delete':
         await deleteModal.confirm({
           title: '提示',
           content: (
@@ -173,7 +185,7 @@ export default memo(() => {
           },
         })
         break
-      case '5':
+      case 'preview':
         navigate(`/project/${project_id}/page/${item.page_id}/preview`)
         break
       default:
