@@ -60,3 +60,6 @@ cache/
 
 /packages/frontEnd/tsconfig.app.tsbuildinfo
 /packages/frontEnd/tsconfig.node.tsbuildinfo
+
+.yalc
+yalc.lock

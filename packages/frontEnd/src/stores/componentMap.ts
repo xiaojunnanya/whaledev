@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import comConfig from '@/materials/index'
+import componentMap from '@/materials/index'
 import { ComponentConfig } from '@/materials/interface'
 
 interface State {
@@ -13,7 +13,7 @@ interface Action {
 // compnent 名字和 Component 实例的映射
 export const useComponentMapStore = create<State & Action>(set => ({
   // State
-  componentMap: comConfig,
+  componentMap,
   // Action
   registerComponent: (name, componentMap) =>
     set(state => {
