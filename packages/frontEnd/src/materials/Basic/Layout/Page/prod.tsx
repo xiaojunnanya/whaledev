@@ -1,10 +1,11 @@
 import { CommonComponentProps } from '@/materials/interface'
+import { PageStyled } from './style'
 
 const Page = ({ children, style, ...props }: CommonComponentProps) => {
   return (
-    <div {...props} style={style}>
+    <PageStyled {...props} style={style}>
       {children}
-    </div>
+    </PageStyled>
   )
 }
 

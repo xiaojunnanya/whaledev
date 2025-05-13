@@ -1,5 +1,6 @@
 import { useMaterailDrop } from '@/hooks/useMaterialDrop'
 import { CommonComponentProps } from '@/materials/interface'
+import { PageStyled } from './style'
 
 const Page = (props: CommonComponentProps) => {
   const { children, id, styles } = props
@@ -9,9 +10,9 @@ const Page = (props: CommonComponentProps) => {
   )
 
   return (
-    <div ref={drop} data-component-id={id} style={styles}>
+    <PageStyled ref={drop} data-component-id={id} style={styles}>
       {children}
-    </div>
+    </PageStyled>
   )
 }
 
