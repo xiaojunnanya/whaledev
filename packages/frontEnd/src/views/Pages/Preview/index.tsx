@@ -18,6 +18,7 @@ import { StyleProvider } from '@ant-design/cssinjs'
 // 导入需要的样式
 import resetStyle from '@/assets/css/reset.css?raw'
 import antdResetStyle from '@/assets/css/antd-reset.css?raw'
+import { StyleSheetManager } from 'styled-components'
 
 export default memo(() => {
   const params = useParams()
@@ -127,16 +128,18 @@ export default memo(() => {
     if (!container) return null
 
     return createPortal(
-      <StyleProvider
-        // 将style 标签注册到head中
-        container={shadowRootRef.current.querySelector('head')!}
-      >
-        {pageJson.length === 0 ? (
-          <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
-        ) : (
-          <>{renderComponents(pageJson)}</>
-        )}
-      </StyleProvider>,
+      <StyleSheetManager target={shadowRootRef.current}>
+        <StyleProvider
+          // 将style 标签注册到head中
+          container={shadowRootRef.current.querySelector('head')!}
+        >
+          {pageJson.length === 0 ? (
+            <Empty description="该页面暂无组件" style={{ marginTop: 100 }} />
+          ) : (
+            <>{renderComponents(pageJson)}</>
+          )}
+        </StyleProvider>
+      </StyleSheetManager>,
       container,
     )
   }

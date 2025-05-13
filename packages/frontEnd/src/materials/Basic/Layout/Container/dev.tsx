@@ -1,6 +1,6 @@
 import { useMaterailDrop } from '@/hooks/useMaterialDrop'
-import styleLess from './index.module.less'
 import { CommonComponentProps } from '@/materials/interface'
+import { ContainerStyled } from './style'
 
 const Container = (props: CommonComponentProps) => {
   const { id, styles, children } = props
@@ -8,14 +8,9 @@ const Container = (props: CommonComponentProps) => {
   const { drop } = useMaterailDrop(['Button', 'Container'], id)
 
   return (
-    <div
-      className={styleLess['whale-container']}
-      ref={drop}
-      data-component-id={id}
-      style={styles}
-    >
+    <ContainerStyled ref={drop} data-component-id={id} style={styles}>
       {children}
-    </div>
+    </ContainerStyled>
   )
 }
 

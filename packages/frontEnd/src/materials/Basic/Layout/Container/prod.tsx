@@ -1,11 +1,11 @@
 import { CommonComponentProps } from '@/materials/interface'
-import styleLess from './index.module.less'
+import { ContainerStyled } from './style'
 
 const Container = ({ children, styles, ...props }: CommonComponentProps) => {
   return (
-    <div {...props} className={styleLess['whale-container']} style={styles}>
+    <ContainerStyled {...props} style={styles}>
       {children}
-    </div>
+    </ContainerStyled>
   )
 }
 

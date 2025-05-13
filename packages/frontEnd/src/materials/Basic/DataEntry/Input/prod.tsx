@@ -1,6 +1,5 @@
 import { CommonComponentProps } from '@/materials/interface'
 import { createElement, memo } from 'react'
-import styleLess from './index.module.less'
 import { Input } from 'antd'
 import { WhaleIcons } from '@/utils/global'
 
@@ -26,7 +25,6 @@ export default memo((props: CommonComponentProps) => {
         return (
           <Input
             {...otherProps}
-            className={styleLess['whale-input']}
             style={styles}
             addonBefore={addonBefore && createElement(iconsList[addonBefore])}
             addonAfter={addonAfter && createElement(iconsList[addonAfter])}
@@ -38,7 +36,6 @@ export default memo((props: CommonComponentProps) => {
         return (
           <Input.TextArea
             {...otherProps}
-            className={styleLess['whale-input']}
             style={styles}
             // addonBefore={addonBefore && createElement(iconsList[addonBefore])}
             // addonAfter={addonAfter && createElement(iconsList[addonAfter])}
@@ -50,7 +47,6 @@ export default memo((props: CommonComponentProps) => {
         return (
           <Input.Search
             {...otherProps}
-            className={styleLess['whale-input']}
             style={styles}
             addonBefore={addonBefore && createElement(iconsList[addonBefore])}
             addonAfter={addonAfter && createElement(iconsList[addonAfter])}
@@ -62,7 +58,6 @@ export default memo((props: CommonComponentProps) => {
         return (
           <Input.Password
             {...otherProps}
-            className={styleLess['whale-input']}
             style={styles}
             addonBefore={addonBefore && createElement(iconsList[addonBefore])}
             addonAfter={addonAfter && createElement(iconsList[addonAfter])}
@@ -74,7 +69,6 @@ export default memo((props: CommonComponentProps) => {
         return (
           <Input.OTP
             {...otherProps}
-            className={styleLess['whale-input']}
             style={styles}
             // addonBefore={addonBefore && createElement(iconsList[addonBefore])}
             // addonAfter={addonAfter && createElement(iconsList[addonAfter])}

@@ -1,5 +1,4 @@
 import { Button as AntdButton } from 'antd'
-import styleLess from './index.module.less'
 import { WhaleIcons } from '@/utils/global'
 import { createElement } from 'react'
 import { CommonComponentProps } from '@/materials/interface'
@@ -12,7 +11,6 @@ const Button = (props: CommonComponentProps) => {
     <AntdButton
       {...otherProps}
       type={type}
-      className={styleLess['whale-button']}
       style={styles}
       icon={icon && createElement(iconsList[icon])}
     >
