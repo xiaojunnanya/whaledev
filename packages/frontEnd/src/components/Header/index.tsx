@@ -100,7 +100,7 @@ export default memo((props: IProps) => {
           <div>|</div>
           <div
             onClick={() => {
-              window.open(SELFWEBURL.github)
+              window.open(SELFWEBURL.projectGithub)
             }}
             className="github"
           >
