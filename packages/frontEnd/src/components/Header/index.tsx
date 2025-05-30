@@ -61,7 +61,12 @@ export default memo((props: IProps) => {
   ]
 
   useEffect(() => {
-    token && getUserInfo()
+    if (token) {
+      getUserInfo()
+    } else {
+      window.localStorage.clear()
+      setUserInfo({} as IUserInfo)
+    }
   }, [token])
 
   useEffect(() => {
