@@ -6,15 +6,15 @@ export class StaticonfigService {
   getProjectType() {
     const data: any = [
       // {
-      //   lable: '前台项目',
+      //   label: '前台项目',
       //   value: 'reception',
       // },
       // {
-      //   lable: '后台项目',
+      //   label: '后台项目',
       //   value: 'backstage',
       // },
       {
-        lable: '页面',
+        label: '页面',
         value: 'page',
       },
     ]
@@ -25,22 +25,22 @@ export class StaticonfigService {
   getProjectStatus() {
     const data: any = [
       {
-        lable: '进行中',
+        label: '进行中',
         value: 'inProgress',
         color: '#0099FF',
       },
       {
-        lable: '已完成',
+        label: '已完成',
         value: 'completed',
         color: '#52C41A',
       },
       {
-        lable: '已暂停',
+        label: '已暂停',
         value: 'paused',
         color: '#FAAD14',
       },
       {
-        lable: '已废弃',
+        label: '已废弃',
         value: 'obsolete',
         color: '#FF4D4F',
       },

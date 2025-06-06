@@ -47,7 +47,7 @@ interface FieldType {
 }
 
 interface PropjectTypeType {
-  lable: string
+  label: string
   value: string
   color?: string
 }
@@ -311,7 +311,7 @@ export default memo(() => {
                               if (i.value === item.project_type) {
                                 return (
                                   <span className="type" key={i.value}>
-                                    {i.lable}
+                                    {i.label}
                                   </span>
                                 )
                               } else {
@@ -328,7 +328,7 @@ export default memo(() => {
                               if (i.value === item.project_state) {
                                 return (
                                   <Tag color={i.color} key={i.value}>
-                                    {i.lable}
+                                    {i.label}
                                   </Tag>
                                 )
                               }
@@ -391,7 +391,7 @@ export default memo(() => {
               {projectTypeData.map(item => {
                 return (
                   <Option value={item.value} key={item.value}>
-                    {item.lable}
+                    {item.label}
                   </Option>
                 )
               })}
@@ -404,7 +404,7 @@ export default memo(() => {
                 {projectStateData.map(item => {
                   return (
                     <Radio.Button value={item.value} key={item.value}>
-                      {item.lable}
+                      {item.label}
                     </Radio.Button>
                   )
                 })}
