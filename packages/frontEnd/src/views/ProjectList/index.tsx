@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Card,
+  Empty,
   Form,
   Input,
   Modal,
@@ -61,7 +62,7 @@ export interface ProjectType {
   project_state: string
 }
 
-const defaultProjectData = [{}] as ProjectType[]
+const defaultProjectData = [] as ProjectType[]
 
 const optionsWithScene: CheckboxGroupProps<string>['options'] = [
   { label: '个人', value: 'slef' },
@@ -226,123 +227,134 @@ export default memo(() => {
           optionType="button"
           buttonStyle="solid"
         />
-        <Button
-          type="primary"
-          onClick={() => {
-            setModalType('create')
-            setIsModalOpen(true)
-          }}
-        >
-          创建应用
-        </Button>
+        <div className="createButton">
+          <Button
+            type="primary"
+            onClick={() => {
+              setModalType('create')
+              setIsModalOpen(true)
+            }}
+          >
+            创建应用
+          </Button>
+        </div>
       </div>
 
       <ContainerVh isLoading={cardLoading} height={150} isSetHeight={true}>
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="content"
-          columnClassName="cardColumn"
-        >
-          {projectData.map((item, index) => {
-            return (
-              <div className="cardItem" key={item.project_id || index}>
-                <Card
-                  actions={[
-                    <CopyOutlined
-                      key="copy"
-                      onClick={e => {
-                        e.stopPropagation()
-                      }}
-                      style={{
-                        cursor: 'not-allowed',
-                      }}
-                    />,
-                    <EditOutlined
-                      key="edit"
-                      onClick={e => {
-                        editModal(e, item)
-                      }}
-                    />,
-                    <ShareAltOutlined
-                      key="share"
-                      onClick={e => {
-                        e.stopPropagation()
-                      }}
-                      style={{
-                        cursor: 'not-allowed',
-                      }}
-                    />,
-                    <Popconfirm
-                      title="提示"
-                      description="确定要删除该项目吗"
-                      onConfirm={e => {
-                        deleteOneProject(e, item.project_id)
-                      }}
-                      onCancel={e => {
-                        e?.stopPropagation()
-                      }}
-                      okText="确定"
-                      cancelText="取消"
-                    >
-                      <DeleteOutlined
-                        key="delete"
+        {projectData.length === 0 ? (
+          <Empty
+            description="暂无项目，请先创建项目"
+            style={{
+              marginTop: '50px',
+            }}
+          />
+        ) : (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="content"
+            columnClassName="cardColumn"
+          >
+            {projectData.map((item, index) => {
+              return (
+                <div className="cardItem" key={item.project_id || index}>
+                  <Card
+                    actions={[
+                      <CopyOutlined
+                        key="copy"
                         onClick={e => {
                           e.stopPropagation()
                         }}
-                      />
-                    </Popconfirm>,
-                  ]}
-                  hoverable
-                  // onClick={() =>{ goProjectDetail(item.projectId)}}
-                  loading={cardLoading}
-                  onClick={() => {
-                    handleClickCard(item.project_id)
-                  }}
-                >
-                  <Meta
-                    avatar={<Avatar src={SELFWEBURL.profile} />}
-                    title={item.project_name}
-                    description={
-                      <div className="otherinfo">
-                        <div>{item.project_desc}</div>
-                        <div className="typestate">
-                          <>
-                            {projectTypeData.map(i => {
-                              if (i.value === item.project_type) {
-                                return (
-                                  <span className="type" key={i.value}>
-                                    {i.lable}
-                                  </span>
-                                )
-                              } else {
-                                return (
-                                  <span className="type" key={+new Date()}>
-                                    ---
-                                  </span>
-                                )
-                              }
-                            })}
-                          </>
-                          <>
-                            {projectStateData.map(i => {
-                              if (i.value === item.project_state) {
-                                return (
-                                  <Tag color={i.color} key={i.value}>
-                                    {i.lable}
-                                  </Tag>
-                                )
-                              }
-                            })}
-                          </>
+                        style={{
+                          cursor: 'not-allowed',
+                        }}
+                      />,
+                      <EditOutlined
+                        key="edit"
+                        onClick={e => {
+                          editModal(e, item)
+                        }}
+                      />,
+                      <ShareAltOutlined
+                        key="share"
+                        onClick={e => {
+                          e.stopPropagation()
+                        }}
+                        style={{
+                          cursor: 'not-allowed',
+                        }}
+                      />,
+                      <Popconfirm
+                        title="提示"
+                        description="确定要删除该项目吗"
+                        onConfirm={e => {
+                          deleteOneProject(e, item.project_id)
+                        }}
+                        onCancel={e => {
+                          e?.stopPropagation()
+                        }}
+                        okText="确定"
+                        cancelText="取消"
+                      >
+                        <DeleteOutlined
+                          key="delete"
+                          onClick={e => {
+                            e.stopPropagation()
+                          }}
+                        />
+                      </Popconfirm>,
+                    ]}
+                    hoverable
+                    // onClick={() =>{ goProjectDetail(item.projectId)}}
+                    loading={cardLoading}
+                    onClick={() => {
+                      handleClickCard(item.project_id)
+                    }}
+                  >
+                    <Meta
+                      avatar={<Avatar src={SELFWEBURL.profile} />}
+                      title={item.project_name}
+                      description={
+                        <div className="otherinfo">
+                          <div>{item.project_desc}</div>
+                          <div className="typestate">
+                            <>
+                              {projectTypeData.map(i => {
+                                if (i.value === item.project_type) {
+                                  return (
+                                    <span className="type" key={i.value}>
+                                      {i.lable}
+                                    </span>
+                                  )
+                                } else {
+                                  return (
+                                    <span className="type" key={+new Date()}>
+                                      ---
+                                    </span>
+                                  )
+                                }
+                              })}
+                            </>
+                            <>
+                              {projectStateData.map(i => {
+                                if (i.value === item.project_state) {
+                                  return (
+                                    <Tag color={i.color} key={i.value}>
+                                      {i.lable}
+                                    </Tag>
+                                  )
+                                }
+                              })}
+                            </>
+                          </div>
                         </div>
-                      </div>
-                    }
-                  />
-                </Card>
-              </div>
-            )
-          })}
-        </Masonry>
+                      }
+                    />
+                  </Card>
+                </div>
+              )
+            })}
+          </Masonry>
+        )}
       </ContainerVh>
 
       <Pagination

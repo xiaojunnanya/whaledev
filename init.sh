@@ -75,6 +75,7 @@ read -p "是否初始化数据库？（y/n）： " choice
 
 if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
   if npm run mysql:init; then
+    npm run seed
     echo "✅ 初始化数据库完成！"
   else
     echo "❌ 初始化数据库失败，请检查错误信息！"

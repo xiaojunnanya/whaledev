@@ -5,6 +5,14 @@ export const ProjectListStyled = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 10px 30px;
+
+    .createButton {
+      width: 200px;
+
+      & > button {
+        float: right;
+      }
+    }
   }
 
   .content {

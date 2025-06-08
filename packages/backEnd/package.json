@@ -14,7 +14,11 @@
     "create:project": "npx nest g resource",
     "postinstall": "npx prisma generate",
     "mysql:init": "npx prisma migrate dev --name whaledev",
-    "add:db": "npx prisma db push"
+    "add:db": "npx prisma db push",
+    "prisma:seed": "npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",

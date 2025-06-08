@@ -102,7 +102,7 @@ model page_json {
   created_time DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_time DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   status Int @default(0) // 0:正常 1:删除
-
+  
   page_id String @unique
   page_json String @db.MediumText
 

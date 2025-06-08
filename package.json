@@ -15,7 +15,8 @@
     "dev": "npm run start",
     "build:all": "concurrently -n \"front,back,docs\" -c \"magenta,cyan,black\" \"npm run build:front\" \"npm run build:back\" \"npm run build:doc\"",
     "build": "concurrently -n \"front,docs\" -c \"magenta,black\" \"npm run build:front\" \"npm run build:doc\"",
-    "mysql:init": "npm --prefix ./packages/backEnd run mysql:init"
+    "mysql:init": "npm --prefix ./packages/backEnd run mysql:init",
+    "seed": "npm --prefix ./packages/backEnd run prisma:seed"
   },
   "author": "鲸落",
   "license": "ISC",
