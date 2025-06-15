@@ -6,6 +6,7 @@
     "assets": [
       {
         "include": "**/assets/**/*",
+        "outDir": "../../build/back/src",
         "watchAssets": true
       }
     ]

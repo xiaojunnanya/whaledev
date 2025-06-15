@@ -68,7 +68,7 @@ class WhaleRequest {
           // 遗留的问题:跳转到登录页,条件还需要思考
           if (isReturn) {
             setTimeout(() => {
-              window.localStorage.removeItem('TOKEN')
+              window.localStorage.clear()
               if (window.location.pathname !== '/login') {
                 window.location.href = '/login'
               }
