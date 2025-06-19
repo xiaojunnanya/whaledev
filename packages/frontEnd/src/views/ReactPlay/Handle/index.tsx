@@ -21,8 +21,8 @@ export default memo(() => {
         />
       </div>
       <div className="right">
-        <Button type="primary">保存</Button>
-        <Button>发布</Button>
+        {/* <Button type="primary">保存</Button>
+        <Button>发布</Button> */}
         <Button
           type="dashed"
           onClick={async () => {
@@ -33,7 +33,7 @@ export default memo(() => {
         </Button>
         <QuestionCircleOutlined
           onClick={() => {
-            window.open(SELFWEBURL.whaleDocs + 'docs/reactplay.html')
+            window.open(SELFWEBURL.whaleDocs + 'docs/platform/reactplay.html')
           }}
         />
       </div>

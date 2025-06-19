@@ -5,6 +5,7 @@ import MessageContainer from '@/components/MessageContainer'
 
 import CompilerWorker from './compiler.worker?worker'
 import { debounce } from 'lodash-es'
+import { PreviewStyle } from './style'
 
 interface MessageData {
   data: {
@@ -20,9 +21,11 @@ export default memo(() => {
   const [iframeUrl, setIframeUrl] = useState(getIframeUrl())
   const compilerWorkerRef = useRef<Worker>()
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setIframeUrl(getIframeUrl())
+    setLoading(true)
   }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode])
 
   useEffect(() => {
@@ -75,16 +78,15 @@ export default memo(() => {
   }
 
   useEffect(() => {
-    window.addEventListener('message', handleMessage)
+    // window.addEventListener('message', handleMessage)
     return () => {
       window.removeEventListener('message', handleMessage)
     }
   }, [])
 
-  // 遗留的问题：loading加载
-
   return (
-    <div style={{ height: '100%' }}>
+    <PreviewStyle>
+      {loading ? <div className="loading">编译中...</div> : null}
       <iframe
         src={iframeUrl}
         style={{
@@ -92,9 +94,13 @@ export default memo(() => {
           height: '100%',
           padding: 0,
           border: 'none',
+          display: loading ? 'none' : 'block',
+        }}
+        onLoad={() => {
+          setLoading(false)
         }}
       />
       <MessageContainer type="error" content={error} />
-    </div>
+    </PreviewStyle>
   )
 })

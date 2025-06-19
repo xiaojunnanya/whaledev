@@ -10,7 +10,7 @@ export default memo(() => {
         navigate('/reactplay')
       }}
     >
-      组件市场
+      组件开发
     </Button>
   )
 })
