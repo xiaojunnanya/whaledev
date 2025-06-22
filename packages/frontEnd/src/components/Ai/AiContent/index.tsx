@@ -46,12 +46,12 @@ const promptsItems: PromptsProps['items'] = [
     key: '1',
     label: renderTitle(
       <FireOutlined style={{ color: '#FF4D4F' }} />,
-      '关于精灵开发',
+      '关于鲸灵开发',
     ),
     children: [
       {
         key: '1-1',
-        description: `精灵开发是做什么的？`,
+        description: `鲸灵开发是做什么的？`,
       },
       {
         key: '1-2',

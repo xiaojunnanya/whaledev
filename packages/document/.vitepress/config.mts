@@ -18,7 +18,7 @@ export default defineConfig({
     sidebar: {
       'docs/platform/': [
         {
-          text: '精灵开发平台',
+          text: '鲸灵开发平台',
           collapsed: false,
           items: [
             { text: '介绍', link: '/docs/platform/index' },

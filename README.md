@@ -23,7 +23,7 @@
 
 ## 在线使用
 
-[精灵开发](http://whaledev.xiaojunnan.cn/)
+[鲸灵开发](http://whaledev.xiaojunnan.cn/)
 
 ## 快速开始
 
