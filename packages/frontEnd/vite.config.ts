@@ -3,6 +3,8 @@ import { codeInspectorPlugin } from 'code-inspector-plugin'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import Checker from 'vite-plugin-checker'
+import viteCompression from 'vite-plugin-compression'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -24,6 +26,13 @@ export default defineConfig({
       bundler: 'vite',
       editor: 'code',
     }),
+    viteCompression({
+      threshold: 1024 * 10, // 10kb
+      algorithm: 'gzip',
+      ext: '.gz',
+      deleteOriginFile: false,
+    }),
+    visualizer({ open: true }),
   ],
   resolve: {
     alias: {
@@ -44,28 +53,5 @@ export default defineConfig({
   build: {
     outDir: '../../build/front',
     emptyOutDir: true,
-    // rollupOptions: {
-    //   output: {
-    //     manualChunks(id) {
-    //       if (id.includes('node_modules')) {
-    //         const packageName = id
-    //           .toString()
-    //           .split('node_modules/')[1]
-    //           .split('/')[0]
-    //         // 希望合并的库, 合并成 vendor.[hash].js，减少请求数。
-    //         const vendorPackages = [
-    //           'lodash-es',
-    //           'axios',
-    //           'antd',
-    //           '@ant-design/x',
-    //           '@ant-design/icons',
-    //           'typescript',
-    //           'vite',
-    //         ]
-    //         return vendorPackages.includes(packageName) ? 'vendor' : packageName
-    //       }
-    //     },
-    //   },
-    // },
   },
 })
