@@ -14,6 +14,7 @@
 ![GitHub License](https://img.shields.io/github/license/xiaojunnanya/whaledev)
 ![language](https://img.shields.io/github/languages/top/xiaojunnanya/whaledev)
 ![last](https://img.shields.io/github/last-commit/xiaojunnanya/whaledev.svg)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/xiaojunnanya/whaledev)
 
 </div>
 
@@ -50,7 +51,6 @@ npm run start # 同时启动前端、后端和文档服务
 | packages/frontEnd | 前端项目 |
 | packages/backEnd  | 后端服务 |
 | packages/document | 文档服务 |
-| packages/monitor  | 监控系统 |
 
 ## Star History
 
