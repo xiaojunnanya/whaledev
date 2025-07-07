@@ -30,8 +30,10 @@ export default memo(() => {
 
   useEffect(() => {
     if (!compilerWorkerRef.current) {
+      // 初始化 Worker
       compilerWorkerRef.current = new CompilerWorker()
       compilerWorkerRef.current.addEventListener('message', ({ data }) => {
+        // 监听内容变化拿到编译后的code
         if (data.type === 'COMPILED_CODE') {
           setCompiledCode(data.data)
         }
@@ -40,6 +42,7 @@ export default memo(() => {
   }, [])
 
   useEffect(
+    // 触发编译
     debounce(() => {
       compilerWorkerRef.current?.postMessage(files)
     }, 500),
@@ -76,6 +79,12 @@ export default memo(() => {
       setError('')
     }
   }
+
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(iframeUrl)
+    }
+  }, [iframeUrl])
 
   useEffect(() => {
     // window.addEventListener('message', handleMessage)
