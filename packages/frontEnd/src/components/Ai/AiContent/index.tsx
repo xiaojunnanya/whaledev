@@ -317,8 +317,8 @@ export default memo(() => {
                 borderStartStartRadius: 4,
               }}
               icon={<OpenAIOutlined style={{ fontSize: 40 }} />}
-              title="你好，我是精灵开发平台智能助手灵析AI，有什么可以帮助你的。"
-              description="灵析AI是一个基于大模型的智能助手，可以帮助您快速了解灵开发的功能和使用方法。"
+              title="你好，我是鲸灵开发平台智能助手灵析AI，有什么可以帮助你的。"
+              description="灵析AI是一个基于大模型的智能助手，可以帮助您快速了解鲸灵开发低代码平台的功能和使用方法。"
             />
             <Prompts
               className="ai_container_prompts"
