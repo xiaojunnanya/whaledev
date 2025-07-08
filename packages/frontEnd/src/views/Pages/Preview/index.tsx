@@ -102,7 +102,7 @@ export default memo(() => {
       if (!config?.component.prod) {
         return null
       }
-      // handleEvent(component)
+
       return createElement(
         config.component.prod,
         {
