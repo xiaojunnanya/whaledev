@@ -2,7 +2,7 @@ import { ComponentConfig } from '@/materials/interface'
 import ContainerDev from './dev'
 import ContainerProd from './prod'
 
-export const ContainerConfig: ComponentConfig = {
+const ContainerConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '布局',
   name: 'Container',
@@ -30,3 +30,5 @@ export const ContainerConfig: ComponentConfig = {
   //   },
   // ],
 }
+
+export default ContainerConfig

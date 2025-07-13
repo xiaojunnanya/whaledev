@@ -2,7 +2,7 @@ import { ComponentConfig } from '@/materials/interface'
 import PageDev from './dev'
 import PageProd from './prod'
 
-export const PageConfig: ComponentConfig = {
+const PageConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '布局',
   name: 'Page',
@@ -13,3 +13,5 @@ export const PageConfig: ComponentConfig = {
     prod: PageProd,
   },
 }
+
+export default PageConfig

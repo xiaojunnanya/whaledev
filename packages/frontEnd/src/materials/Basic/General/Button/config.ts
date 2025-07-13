@@ -2,7 +2,7 @@ import { ComponentConfig } from '@/materials/interface'
 import ButtonDev from './dev'
 import ButtonProd from './prod'
 
-export const ButtonConfig: ComponentConfig = {
+const ButtonConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '通用',
   name: 'Button',
@@ -138,3 +138,5 @@ export const ButtonConfig: ComponentConfig = {
     },
   ],
 }
+
+export default ButtonConfig

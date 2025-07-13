@@ -39,7 +39,7 @@ const ignoredProps = {
   ],
 }
 
-export const InputConfig: ComponentConfig = {
+const InputConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '数据录入',
   name: 'Input',
@@ -218,3 +218,5 @@ export const InputConfig: ComponentConfig = {
     },
   ],
 }
+
+export default InputConfig

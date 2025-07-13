@@ -2,7 +2,7 @@ import { ComponentConfig } from '@/materials/interface'
 import dev from './dev'
 import prod from './prod'
 
-export const DividerConfig: ComponentConfig = {
+const DividerConfig: ComponentConfig = {
   firstTitle: '基础组件',
   secondaryTitle: '布局',
   name: 'Divider',
@@ -72,3 +72,5 @@ export const DividerConfig: ComponentConfig = {
     },
   ],
 }
+
+export default DividerConfig
