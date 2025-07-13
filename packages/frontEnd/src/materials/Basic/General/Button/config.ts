@@ -132,10 +132,6 @@ const ButtonConfig: ComponentConfig = {
       name: 'onClick',
       label: '点击事件',
     },
-    {
-      name: 'onDoubleClick',
-      label: '双击事件',
-    },
   ],
 }
 
