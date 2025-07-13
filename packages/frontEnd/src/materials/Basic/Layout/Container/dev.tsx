@@ -5,10 +5,7 @@ import { ContainerStyled } from './style'
 const Container = (props: CommonComponentProps) => {
   const { id, styles, children } = props
 
-  const { drop } = useMaterailDrop(
-    ['Button', 'Container', 'Divider', 'Input'],
-    id,
-  )
+  const { drop } = useMaterailDrop('all', id)
 
   return (
     <ContainerStyled ref={drop} data-component-id={id} style={styles}>

@@ -4,10 +4,7 @@ import { PageStyled } from './style'
 
 const Page = (props: CommonComponentProps) => {
   const { children, id, styles } = props
-  const { drop } = useMaterailDrop(
-    ['Button', 'Container', 'Divider', 'Input'],
-    id,
-  )
+  const { drop } = useMaterailDrop('all', id)
 
   return (
     <PageStyled ref={drop} data-component-id={id} style={styles}>

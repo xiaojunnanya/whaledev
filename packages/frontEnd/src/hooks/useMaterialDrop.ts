@@ -12,17 +12,20 @@ export interface ItemType {
 
 /**
  * 将组件放置容器中
- * @param accept 接受的组件
+ * @param accept 接受的组件，如果传入 'all' 则接受所有组件类型
  * @param id 当前组件的容器id
  * @returns
  */
-export function useMaterailDrop(accept: string[], id: string) {
+export function useMaterailDrop(accept: string[] | 'all', id: string) {
   const { addComponent, components, deleteComponent } = useComponetsStore()
   const { componentMap } = useComponentMapStore()
 
+  // 如果 accept 是 'all'，则获取所有组件类型
+  const acceptedTypes = accept === 'all' ? Object.keys(componentMap) : accept
+
   const [{ canDrop }, drop] = useDrop(
     () => ({
-      accept,
+      accept: acceptedTypes,
       drop: (item: ItemType, monitor) => {
         // 处理过的就不在处理了
         const didDrop = monitor.didDrop()
