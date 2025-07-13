@@ -4,7 +4,6 @@ import { Popconfirm } from 'antd'
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
-  CopyOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
 import { getComponentById } from '@/utils/components'
@@ -176,7 +175,7 @@ const SelectedMask = memo(
                         move('down')
                       }}
                     />
-                    <CopyOutlined />
+                    {/* <CopyOutlined /> */}
                     <Popconfirm
                       title="确认删除？"
                       okText={'确认'}
