@@ -32,7 +32,7 @@ export const getAiTream = async (
     onDone()
   } catch (err: any) {
     if (err.name === 'AbortError') {
-      console.log('请求被取消')
+      console.info('请求被取消')
     }
     onError(err)
   }

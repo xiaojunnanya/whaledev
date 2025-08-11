@@ -190,8 +190,6 @@ export class ProjectService {
       },
     })
 
-    console.log(allPages, 'allPages')
-
     // 将 pages 按 project_id 分组
     const pagesMap = new Map<
       string,

@@ -13,7 +13,6 @@ import { ErrorException } from '@/config'
 @Catch()
 export default class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
-    console.log(exception, 'exception')
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
 

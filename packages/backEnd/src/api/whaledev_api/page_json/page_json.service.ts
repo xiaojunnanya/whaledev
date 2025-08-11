@@ -16,9 +16,7 @@ export class PageJsonService {
 
   async savePageJson(data: savePageJsonDto) {
     const { page_id, page_json } = data
-    console.log(page_id, page_json)
     const result = await this.checkPermission(page_id)
-    console.log(result, 'result')
     if (result !== 'ok') return result
 
     // 先查询是否有这个page_id，upsert没有则创建，有则更新
