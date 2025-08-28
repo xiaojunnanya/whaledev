@@ -1,6 +1,9 @@
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0"
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "antd": "https://esm.sh/antd?deps=react@18,react-dom@18&bundle",
+    "@ant-design/icons": "https://esm.sh/@ant-design/icons?deps=react@18,react-dom@18&bundle",
+    "dayjs": "https://esm.sh/dayjs"
   }
 }

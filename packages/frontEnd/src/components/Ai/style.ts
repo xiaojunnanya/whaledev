@@ -12,7 +12,7 @@ export const AiStyled = styled.div.withConfig({
   bottom: 80px;
   right: 80px;
   z-index: 999;
-  width: 800px;
+  width: 50vw;
   height: 80vh;
   background-color: ${props => props.theme.defaultColor.white};
   box-shadow: 0 0 10px ${props => props.theme.blackOpacity[5]};
