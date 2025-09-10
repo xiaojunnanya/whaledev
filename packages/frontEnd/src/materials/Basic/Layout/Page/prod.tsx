@@ -1,9 +1,9 @@
 import { CommonComponentProps } from '@/materials/interface'
 import { PageStyled } from './style'
 
-const Page = ({ children, style, ...props }: CommonComponentProps) => {
+const Page = ({ children, styles, ...props }: CommonComponentProps) => {
   return (
-    <PageStyled {...props} style={style}>
+    <PageStyled {...props} style={styles}>
       {children}
     </PageStyled>
   )

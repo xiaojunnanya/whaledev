@@ -52,7 +52,7 @@ export default memo(() => {
         
         /* 其他自定义样式 */
         body{
-          height: 100%;
+          height: 100vh;
           overflow: auto;
         }
       `
